@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.gms.google.services)
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -19,7 +22,7 @@ android {
     }
     packaging {
         resources {
-            excludes += "META-INF/native-image/**"  // META-INF dosyalarını dışla
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
     buildTypes {
@@ -45,10 +48,10 @@ android {
 
 dependencies {
 
-    implementation ("org.mongodb:mongodb-driver-sync:4.10.0" )// MongoDB için
-    implementation ("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2") // JSON-Model dönüşümü için
-    //implementation ("io.realm:realm-gradle-plugin:10.16.1")
-
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.51.1")
+    implementation(libs.firebase.firestore)
     val nav_version = "2.8.4"
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation(libs.androidx.core.ktx)

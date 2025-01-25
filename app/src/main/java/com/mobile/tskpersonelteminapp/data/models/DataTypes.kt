@@ -1,5 +1,7 @@
 package com.mobile.tskpersonelteminapp.data.models
 
+import com.google.firebase.Timestamp
+
 
 data class Announcement(
     val _id: String?="",
@@ -8,8 +10,8 @@ data class Announcement(
     val detail_url: String?="",
     val detail_content: String?="",
     val state: String?="",
-    val created_at: String?="",
-    val updated_at: String?=""
+    val created_at: Timestamp? = null,
+    val updated_at: Timestamp? = null
 )
 
 data class Assurances(
@@ -19,6 +21,6 @@ data class Assurances(
     val detail_url: String?="",
     val detail_content: String?="",
     val state: String?="",
-    val created_at: String?="",
-    val updated_at: String?=""
+    val created_at: Timestamp? = null,
+    val updated_at: Timestamp? = null
 )

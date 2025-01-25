@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "465331865874",
+    "project_id": "tskpersonelteminapp",
+    "storage_bucket": "tskpersonelteminapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465331865874:android:ba3ef1f696a4bc162b4bcb",
+        "android_client_info": {
+          "package_name": "com.mobile.tskpersonelteminapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC8olJQ-oGZjhp1EBKzge85BRMqiuKoHU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

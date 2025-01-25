@@ -1,44 +1,51 @@
 package com.mobile.tskpersonelteminapp.viewmodels
 
+
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.google.firebase.firestore.Filter
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.toObjects
+import com.mobile.tskpersoneltemin.data.ANNOUNCEMENTS
 import com.mobile.tskpersonelteminapp.data.models.Announcement
-import com.mobile.tskpersonelteminapp.data.repository.AnnouncementRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class AnnouncementsViewModels(
-    private val repository: AnnouncementRepository
+@HiltViewModel
+class AnnouncementsViewModels @Inject constructor(
+    val db: FirebaseFirestore
 ) : ViewModel() {
 
-    private val _announcements = MutableStateFlow<List<Announcement>>(emptyList())
-    val announcements : StateFlow<List<Announcement>> get() = _announcements
-
-    val isLoading = mutableStateOf(false)
-
+    val inProcess = mutableStateOf(false)
     val errorMessage = mutableStateOf<String?>(null)
+    val announcements = mutableStateOf<List<Announcement>>(listOf())
 
     init {
         getAnnouncements()
     }
+    fun getAnnouncements() {
+        inProcess.value = true
+        try {
+            db.collection(ANNOUNCEMENTS).where(
+                Filter.equalTo("state", "active")
+            ).addSnapshotListener { value, error ->
+                if (error != null) {
+                    //daha sonra hata mesajları için metot yazacağım
+                    errorMessage.value = error.message
+                    println(errorMessage.value)
+                    error.printStackTrace()
+                }
+                if (value != null) {
+                    announcements.value = value.toObjects<Announcement>()
 
-    fun getAnnouncements(){
-
-        viewModelScope.launch {
-            isLoading.value=true
-            try {
-                val result = repository.getAllAnnouncements()
-                _announcements.value=result
-                errorMessage.value=null
-            }catch (e : Exception){
-                errorMessage.value=e.message
-            }finally {
-                isLoading.value=false
+                }
+                inProcess.value = false
             }
-        }
 
+        } catch (e: Exception) {
+            e.printStackTrace()
+            inProcess.value = false
+        }
     }
 
 }
