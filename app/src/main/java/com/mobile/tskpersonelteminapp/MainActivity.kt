@@ -14,17 +14,30 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.mobile.tskpersonelteminapp.ui.screens.AnnouncementDetailScreen
 import com.mobile.tskpersonelteminapp.ui.screens.AnnouncementsScreen
-import com.mobile.tskpersonelteminapp.ui.screens.ScreenTest
+import com.mobile.tskpersonelteminapp.ui.screens.ComminityScreen
+import com.mobile.tskpersonelteminapp.ui.screens.MenuScreen
+import com.mobile.tskpersonelteminapp.ui.screens.RecruitmentScreen
 import com.mobile.tskpersonelteminapp.ui.theme.TskPersonelTeminAppTheme
 import com.mobile.tskpersonelteminapp.viewmodels.AnnouncementsViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 
 sealed class DestinationScreen(var route: String) {
-    object current_supplies : DestinationScreen("current_supplies")
+    object current_recruitment : DestinationScreen("current_recruitment")
     object announcements : DestinationScreen("announcements")
+    object announcement_detail : DestinationScreen("announcement_detail/{detail_url}") {
+
+        fun createRoute(detail_url: String): String {
+            val encodedUrl = URLEncoder.encode(detail_url, StandardCharsets.UTF_8.toString())
+            return "announcement_detail/$encodedUrl"
+        }
+    }
+
     object menu : DestinationScreen("menu")
     object community : DestinationScreen("community")
 }
@@ -60,18 +73,26 @@ class MainActivity : ComponentActivity() {
                 AnnouncementsScreen(navController, announcementsViewModels)
             }
 
-            composable(DestinationScreen.current_supplies.route) {
+            composable(DestinationScreen.current_recruitment.route) {
                 // screen
-
+                RecruitmentScreen(navController)
             }
 
             composable(DestinationScreen.menu.route) {
                 // screen
-                ScreenTest(navController)
+                MenuScreen(navController)
             }
 
             composable(DestinationScreen.community.route) {
-                // screen
+                ComminityScreen(navController)
+            }
+
+            composable(DestinationScreen.announcement_detail.route) {
+                val detail_url = it.arguments?.getString("detail_url")
+                detail_url?.let {
+                    AnnouncementDetailScreen(detail_url)
+                }
+
             }
         }
     }

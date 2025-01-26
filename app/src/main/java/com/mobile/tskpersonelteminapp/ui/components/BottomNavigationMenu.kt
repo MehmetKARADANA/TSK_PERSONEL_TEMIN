@@ -21,6 +21,7 @@ import com.mobile.tskpersonelteminapp.R
 
 enum class BottomNavigationMenuItem(val image: Int, val navDestinationScreen: DestinationScreen) {
     ANNOUNCEMENT(R.drawable.announcement, DestinationScreen.announcements),
+    RECRUITMENT(R.drawable.recruitment,DestinationScreen.current_recruitment),
     COMMINITY(R.drawable.comminity, DestinationScreen.community),
     MENU(R.drawable.menu, DestinationScreen.menu)
 }

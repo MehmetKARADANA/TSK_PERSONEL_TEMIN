@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AnnouncementsViewModels @Inject constructor(
-    val db: FirebaseFirestore
+    private val db: FirebaseFirestore
 ) : ViewModel() {
 
     val inProcess = mutableStateOf(false)
@@ -23,7 +23,7 @@ class AnnouncementsViewModels @Inject constructor(
     init {
         getAnnouncements()
     }
-    fun getAnnouncements() {
+    private fun getAnnouncements() {
         inProcess.value = true
         try {
             db.collection(ANNOUNCEMENTS).where(
