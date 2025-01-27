@@ -12,7 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class AnnouncementsViewModels @Inject constructor(
+class AnnouncementsViewModel @Inject constructor(
     private val db: FirebaseFirestore
 ) : ViewModel() {
 
@@ -32,12 +32,10 @@ class AnnouncementsViewModels @Inject constructor(
                 if (error != null) {
                     //daha sonra hata mesajları için metot yazacağım
                     errorMessage.value = error.message
-                    println(errorMessage.value)
                     error.printStackTrace()
                 }
                 if (value != null) {
                     announcements.value = value.toObjects<Announcement>()
-
                 }
                 inProcess.value = false
             }

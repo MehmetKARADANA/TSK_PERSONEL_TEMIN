@@ -14,7 +14,7 @@ data class Announcement(
     val updated_at: Timestamp? = null
 )
 
-data class Assurances(
+data class Recruitment(
     val _id: String?="",
     val title: String?="",
     val date: String?="",
