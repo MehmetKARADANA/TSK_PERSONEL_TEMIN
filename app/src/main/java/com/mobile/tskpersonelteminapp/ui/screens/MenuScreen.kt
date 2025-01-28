@@ -9,11 +9,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.mobile.tskpersoneltemin.ui.components.BottomNavigationMenu
-import com.mobile.tskpersoneltemin.ui.components.BottomNavigationMenuItem
+import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
+import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 
 @Composable
 fun MenuScreen(navController: NavController) {

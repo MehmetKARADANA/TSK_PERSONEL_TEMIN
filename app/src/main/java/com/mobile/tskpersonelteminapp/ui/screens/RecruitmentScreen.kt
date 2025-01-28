@@ -14,9 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.mobile.tskpersoneltemin.ui.components.BottomNavigationMenu
-import com.mobile.tskpersoneltemin.ui.components.BottomNavigationMenuItem
-import com.mobile.tskpersoneltemin.utils.navigateTo
+import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
+import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
+import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.viewmodels.RecruitmentViewModel
 
@@ -56,7 +56,7 @@ fun RecruitmentScreen(navController: NavController,viewModel: RecruitmentViewMod
                         Text(text = it.title.toString(), modifier = Modifier.clickable {
                             navigateTo(
                                 navController=navController,
-                                route = DestinationScreen.recruitment_detail.createRoute(it.detail_url!!)
+                                route = DestinationScreen.RecruitmentDetail.createRoute(it.detail_url!!)
                             )
                         })
                         Text(text = "---------")

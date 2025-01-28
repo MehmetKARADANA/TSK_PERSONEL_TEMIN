@@ -1,4 +1,4 @@
-package com.mobile.tskpersoneltemin.utils
+package com.mobile.tskpersonelteminapp.utils
 
 import androidx.navigation.NavController
 

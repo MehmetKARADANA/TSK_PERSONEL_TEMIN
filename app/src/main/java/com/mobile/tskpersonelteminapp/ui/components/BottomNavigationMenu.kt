@@ -1,4 +1,4 @@
-package com.mobile.tskpersoneltemin.ui.components
+package com.mobile.tskpersonelteminapp.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,15 +15,15 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.mobile.tskpersoneltemin.utils.navigateTo
+import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.R
 
 enum class BottomNavigationMenuItem(val image: Int, val navDestinationScreen: DestinationScreen) {
-    ANNOUNCEMENT(R.drawable.announcement, DestinationScreen.announcements),
-    RECRUITMENT(R.drawable.recruitment,DestinationScreen.current_recruitment),
-    COMMINITY(R.drawable.comminity, DestinationScreen.community),
-    MENU(R.drawable.menu, DestinationScreen.menu)
+    ANNOUNCEMENT(R.drawable.announcement, DestinationScreen.Announcements),
+    RECRUITMENT(R.drawable.recruitment,DestinationScreen.CurrentRecruitment),
+    COMMINITY(R.drawable.comminity, DestinationScreen.Community),
+    MENU(R.drawable.menu, DestinationScreen.Menu)
 }
 
 @Composable

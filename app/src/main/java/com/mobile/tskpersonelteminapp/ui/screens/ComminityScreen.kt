@@ -11,12 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.mobile.tskpersoneltemin.ui.components.BottomNavigationMenu
-import com.mobile.tskpersoneltemin.ui.components.BottomNavigationMenuItem
+import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
+import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
+import com.mobile.tskpersonelteminapp.ui.components.ComminityHeader
 
 @Composable
 fun ComminityScreen(navController: NavController) {
     Column(modifier = Modifier.fillMaxSize()) {
+        ComminityHeader("Comminity", onBackClicked = {}, onAccountClicked = {}, onAddClicked = {})
         Row(
             modifier = Modifier
                 .fillMaxWidth()

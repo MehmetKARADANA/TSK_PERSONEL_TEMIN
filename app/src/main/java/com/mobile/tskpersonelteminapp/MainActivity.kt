@@ -16,8 +16,10 @@ import androidx.navigation.compose.rememberNavController
 import com.mobile.tskpersonelteminapp.ui.screens.AnnouncementDetailScreen
 import com.mobile.tskpersonelteminapp.ui.screens.AnnouncementsScreen
 import com.mobile.tskpersonelteminapp.ui.screens.ComminityScreen
+import com.mobile.tskpersonelteminapp.ui.screens.LoginScreen
 import com.mobile.tskpersonelteminapp.ui.screens.MenuScreen
 import com.mobile.tskpersonelteminapp.ui.screens.RecruitmentScreen
+import com.mobile.tskpersonelteminapp.ui.screens.SignUpScreen
 import com.mobile.tskpersonelteminapp.ui.theme.TskPersonelTeminAppTheme
 import com.mobile.tskpersonelteminapp.viewmodels.AnnouncementsViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.RecruitmentViewModel
@@ -28,16 +30,16 @@ import java.nio.charset.StandardCharsets
 
 
 sealed class DestinationScreen(var route: String) {
-    object current_recruitment : DestinationScreen("current_recruitment")
-    object recruitment_detail : DestinationScreen("recruitment_detail/{detail_url}") {
+    object CurrentRecruitment : DestinationScreen("current_recruitment")
+    object RecruitmentDetail : DestinationScreen("recruitment_detail/{detail_url}") {
         fun createRoute(detail_url: String): String {
             val encodeUrl = URLEncoder.encode(detail_url,StandardCharsets.UTF_8.toString())
             return "recruitment_detail/$encodeUrl"
         }
     }
 
-    object announcements : DestinationScreen("announcements")
-    object announcement_detail : DestinationScreen("announcement_detail/{detail_url}") {
+    object Announcements : DestinationScreen("announcements")
+    object AnnouncementDetail : DestinationScreen("announcement_detail/{detail_url}") {
 
         fun createRoute(detail_url: String): String {
             val encodedUrl = URLEncoder.encode(detail_url, StandardCharsets.UTF_8.toString())
@@ -45,8 +47,10 @@ sealed class DestinationScreen(var route: String) {
         }
     }
 
-    object menu : DestinationScreen("menu")
-    object community : DestinationScreen("community")
+    object Menu : DestinationScreen("menu")
+    object Community : DestinationScreen("community")
+    object SignUp : DestinationScreen("signup")
+    object Login : DestinationScreen("login")
 }
 
 
@@ -74,28 +78,28 @@ class MainActivity : ComponentActivity() {
         val announcementsViewModel = hiltViewModel<AnnouncementsViewModel>()
         val recruitmentViewModel = hiltViewModel<RecruitmentViewModel>()
 
-        NavHost(navController = navController, startDestination = DestinationScreen.menu.route) {
-            composable(DestinationScreen.announcements.route) {
+        NavHost(navController = navController, startDestination = DestinationScreen.Menu.route) {
+            composable(DestinationScreen.Announcements.route) {
                 //announcement screen
                 //   screentest()
                 AnnouncementsScreen(navController, announcementsViewModel)
             }
 
-            composable(DestinationScreen.current_recruitment.route) {
+            composable(DestinationScreen.CurrentRecruitment.route) {
                 // screen
                 RecruitmentScreen(navController, recruitmentViewModel)
             }
 
-            composable(DestinationScreen.menu.route) {
+            composable(DestinationScreen.Menu.route) {
                 // screen
                 MenuScreen(navController)
             }
 
-            composable(DestinationScreen.community.route) {
+            composable(DestinationScreen.Community.route) {
                 ComminityScreen(navController)
             }
 
-            composable(DestinationScreen.announcement_detail.route) {
+            composable(DestinationScreen.AnnouncementDetail.route) {
                 val detail_url = it.arguments?.getString("detail_url")
                 detail_url?.let {
                     AnnouncementDetailScreen(detail_url)
@@ -103,12 +107,19 @@ class MainActivity : ComponentActivity() {
 
             }
 
-            composable(DestinationScreen.recruitment_detail.route) {
+            composable(DestinationScreen.RecruitmentDetail.route) {
                 val detail_url = it.arguments?.getString("detail_url")
                 detail_url?.let {
                     AnnouncementDetailScreen(detail_url)
                     println("detail_url : $detail_url")
                 }
+            }
+
+            composable(DestinationScreen.SignUp.route) {
+                SignUpScreen(navController)
+            }
+            composable(DestinationScreen.Login.route) {
+                LoginScreen(navController)
             }
         }
     }

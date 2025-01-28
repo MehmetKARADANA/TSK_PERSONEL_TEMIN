@@ -50,6 +50,7 @@ dependencies {
 
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation("com.google.dagger:hilt-android:2.51.1")
+    implementation(libs.firebase.auth)
     ksp("com.google.dagger:hilt-android-compiler:2.51.1")
     implementation(libs.firebase.firestore)
     val nav_version = "2.8.4"

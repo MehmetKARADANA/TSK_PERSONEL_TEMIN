@@ -16,9 +16,9 @@ import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.mobile.tskpersoneltemin.ui.components.BottomNavigationMenu
-import com.mobile.tskpersoneltemin.ui.components.BottomNavigationMenuItem
-import com.mobile.tskpersoneltemin.utils.navigateTo
+import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
+import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
+import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.viewmodels.AnnouncementsViewModel
 
@@ -52,7 +52,7 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
                         Text(text = it.title.toString(), modifier = Modifier.clickable {
                             navigateTo(
                                 navController = navController,
-                                route = DestinationScreen.announcement_detail.createRoute(it.detail_url!!)
+                                route = DestinationScreen.AnnouncementDetail.createRoute(it.detail_url!!)
                             )
                         })
                         Text("------------------")
