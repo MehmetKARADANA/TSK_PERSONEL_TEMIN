@@ -11,14 +11,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.ui.components.ComminityHeader
+import com.mobile.tskpersonelteminapp.utils.navigateTo
 
 @Composable
 fun ComminityScreen(navController: NavController) {
     Column(modifier = Modifier.fillMaxSize()) {
-        ComminityHeader("Comminity", onBackClicked = {}, onAccountClicked = {}, onAddClicked = {})
+        ComminityHeader("Comminity", onBackClicked = {
+
+        }, onAccountClicked = {
+            //burrayı user varmı kontrol fonksiyonu eklencek navigateide onun içine ekleyeceğim
+            navigateTo(navController,DestinationScreen.Profile.route)
+        }, onAddClicked = {
+
+        })
         Row(
             modifier = Modifier
                 .fillMaxWidth()

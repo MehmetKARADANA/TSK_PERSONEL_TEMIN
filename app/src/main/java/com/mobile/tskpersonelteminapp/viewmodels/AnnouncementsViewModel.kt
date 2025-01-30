@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObjects
-import com.mobile.tskpersoneltemin.data.ANNOUNCEMENTS
+import com.mobile.tskpersonelteminapp.data.ANNOUNCEMENTS
 import com.mobile.tskpersonelteminapp.data.models.Announcement
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

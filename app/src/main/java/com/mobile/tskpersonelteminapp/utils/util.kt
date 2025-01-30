@@ -1,5 +1,6 @@
 package com.mobile.tskpersonelteminapp.utils
 
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 
 fun navigateTo(navController: NavController,route : String){
@@ -7,4 +8,9 @@ fun navigateTo(navController: NavController,route : String){
         popUpTo(route)
         launchSingleTop=true
     }
+}
+
+@Composable
+fun LoggedIn(){
+
 }

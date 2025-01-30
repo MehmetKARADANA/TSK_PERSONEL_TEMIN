@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObjects
-import com.mobile.tskpersoneltemin.data.RECRUITMENTS
+import com.mobile.tskpersonelteminapp.data.RECRUITMENTS
 import com.mobile.tskpersonelteminapp.data.models.Recruitment
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

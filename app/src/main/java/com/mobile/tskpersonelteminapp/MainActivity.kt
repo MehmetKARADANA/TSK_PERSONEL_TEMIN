@@ -18,10 +18,12 @@ import com.mobile.tskpersonelteminapp.ui.screens.AnnouncementsScreen
 import com.mobile.tskpersonelteminapp.ui.screens.ComminityScreen
 import com.mobile.tskpersonelteminapp.ui.screens.LoginScreen
 import com.mobile.tskpersonelteminapp.ui.screens.MenuScreen
+import com.mobile.tskpersonelteminapp.ui.screens.ProfileScreen
 import com.mobile.tskpersonelteminapp.ui.screens.RecruitmentScreen
 import com.mobile.tskpersonelteminapp.ui.screens.SignUpScreen
 import com.mobile.tskpersonelteminapp.ui.theme.TskPersonelTeminAppTheme
 import com.mobile.tskpersonelteminapp.viewmodels.AnnouncementsViewModel
+import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.RecruitmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
@@ -33,11 +35,10 @@ sealed class DestinationScreen(var route: String) {
     object CurrentRecruitment : DestinationScreen("current_recruitment")
     object RecruitmentDetail : DestinationScreen("recruitment_detail/{detail_url}") {
         fun createRoute(detail_url: String): String {
-            val encodeUrl = URLEncoder.encode(detail_url,StandardCharsets.UTF_8.toString())
+            val encodeUrl = URLEncoder.encode(detail_url, StandardCharsets.UTF_8.toString())
             return "recruitment_detail/$encodeUrl"
         }
     }
-
     object Announcements : DestinationScreen("announcements")
     object AnnouncementDetail : DestinationScreen("announcement_detail/{detail_url}") {
 
@@ -51,6 +52,7 @@ sealed class DestinationScreen(var route: String) {
     object Community : DestinationScreen("community")
     object SignUp : DestinationScreen("signup")
     object Login : DestinationScreen("login")
+    object Profile : DestinationScreen("profile")
 }
 
 
@@ -77,8 +79,9 @@ class MainActivity : ComponentActivity() {
         val navController = rememberNavController()
         val announcementsViewModel = hiltViewModel<AnnouncementsViewModel>()
         val recruitmentViewModel = hiltViewModel<RecruitmentViewModel>()
+        val authenticationViewModel = hiltViewModel<AuthenticationViewModel>()
 
-        NavHost(navController = navController, startDestination = DestinationScreen.Menu.route) {
+        NavHost(navController = navController, startDestination = DestinationScreen.Community.route) {
             composable(DestinationScreen.Announcements.route) {
                 //announcement screen
                 //   screentest()
@@ -120,6 +123,10 @@ class MainActivity : ComponentActivity() {
             }
             composable(DestinationScreen.Login.route) {
                 LoginScreen(navController)
+            }
+
+            composable(DestinationScreen.Profile.route) {
+                ProfileScreen(navController,authenticationViewModel)
             }
         }
     }
