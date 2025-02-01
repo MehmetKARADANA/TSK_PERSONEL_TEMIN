@@ -1,15 +1,19 @@
 package com.mobile.tskpersonelteminapp.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -26,8 +30,15 @@ import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.ComminityViewModel
 
 @Composable
-fun TopicsScreen(navController: NavController,commnityVm: ComminityViewModel,authViewModel: AuthenticationViewModel,themeId : String){
+fun TopicsScreen(navController: NavController,comminityVm: ComminityViewModel,authViewModel: AuthenticationViewModel,themeId : String){
     // val signIn = viewModel.signIn.value
+
+    LaunchedEffect(Unit) {
+        comminityVm.getTopics(themeId)
+    }
+
+    val topics=comminityVm.topics.value
+    //val topics=comminityVm
 
     val userData =authViewModel.userData.value
     val user  =User(name = userData?.name, userId = userData?.userId, email = userData?.email)
@@ -57,7 +68,7 @@ fun TopicsScreen(navController: NavController,commnityVm: ComminityViewModel,aut
         onDismiss = onDismissCommentAdd,
         authVm = authViewModel,
         navController = navController,
-        commnityVm = commnityVm,
+        commnityVm = comminityVm,
         themeId = themeId,
         user=user
     )
@@ -69,8 +80,15 @@ fun TopicsScreen(navController: NavController,commnityVm: ComminityViewModel,aut
         }, onAddClicked = {
             onViewCommentAdd.invoke()
         })
+LazyColumn (modifier = Modifier.fillMaxWidth().weight(1f)){
+    items(topics){
+        Text(text = it.topic!!, modifier = Modifier.clickable {  })
+        Text(text = it.user?.name!!)
+        Text(text = "-------")
+    }
+}
         //topics
-        Row(
+        /*Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
@@ -78,7 +96,9 @@ fun TopicsScreen(navController: NavController,commnityVm: ComminityViewModel,aut
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = "Topics")
-        }
+        }*/
+
+
     }
 }
 

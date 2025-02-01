@@ -16,66 +16,98 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ComminityViewModel @Inject constructor(
-    val db : FirebaseFirestore
+    val db: FirebaseFirestore
 ) : ViewModel() {
 
     val inProcess = mutableStateOf(false)
     val errorMessage = mutableStateOf<String?>(null)
 
     val themes = mutableStateOf<List<Theme>>(emptyList())
+    val topics = mutableStateOf<List<Topic>>(emptyList())
+
 
     init {
         getThemes()
     }
-    private fun getThemes(){
-        inProcess.value=true
+
+    private fun getThemes() {
+        inProcess.value = true
         try {
-            db.collection(THEMES).addSnapshotListener{value,error->
-                if (error != null){
-                    errorMessage.value=error.message
+            db.collection(THEMES).addSnapshotListener { value, error ->
+                if (error != null) {
+                    errorMessage.value = error.message
                 }
-                if(value !=null){
-                    themes.value=value.toObjects<Theme>()
+                if (value != null) {
+                    themes.value = value.toObjects<Theme>()
                 }
-                inProcess.value=false
+                inProcess.value = false
             }
-        }catch (e : Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
-            inProcess.value=false
+            inProcess.value = false
         }
     }
 
-   fun  addTheme(themeName :String ){
-       inProcess.value=true
-       try {
-           val id=db.collection(THEMES).document().id
-           val theme = Theme(themeId = id,theme =themeName, date = Timestamp.now())
-           db.collection(THEMES).document(id).set(theme)
-           inProcess.value=false
-       }catch (e :Exception){
-           errorMessage.value=e.message
-           e.printStackTrace()
-           inProcess.value=false
-       }
-   }
-
-    fun addTopics(topic :String,user: User,themeId :String){
-        inProcess.value=true
+    fun addTheme(themeName: String) {
+        inProcess.value = true
         try {
-            val id =db.collection(THEMES).document(themeId).collection(TOPICS).document().id
-            val topic=Topic(topicId = id, topic =topic,user=user, date = Timestamp.now() )
+            val id = db.collection(THEMES).document().id
+            val theme = Theme(themeId = id, theme = themeName, date = Timestamp.now())
+            db.collection(THEMES).document(id).set(theme).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    inProcess.value = false
+                } else {
+                    errorMessage.value = it.exception?.message
+                    inProcess.value = false
+                }
+            }
+            inProcess.value = false
+        } catch (e: Exception) {
+            errorMessage.value = e.message
+            e.printStackTrace()
+            inProcess.value = false
+        }
+    }
+
+    fun addTopics(topic: String, user: User, themeId: String) {
+        inProcess.value = true
+        try {
+            val id = db.collection(THEMES).document(themeId).collection(TOPICS).document().id
+            val newtopic = Topic(topicId = id, topic = topic, user = user, date = Timestamp.now())
             db.collection(THEMES)
                 .document(themeId)
                 .collection(TOPICS)
                 .document(id)
-                .set(topic)
+                .set(newtopic).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        inProcess.value = false
+                    } else {
+                        errorMessage.value = it.exception?.message
+                        inProcess.value = false
+                    }
+                }
 
-            inProcess.value=false
-        }catch (e :Exception){
-              errorMessage.value=e.message
+            inProcess.value = false
+        } catch (e: Exception) {
+            errorMessage.value = e.message
             e.printStackTrace()
-            inProcess.value=false
+            inProcess.value = false
         }
     }
 
+    fun getTopics(themeId: String) {
+        inProcess.value = true
+
+        db.collection(THEMES).document(themeId).collection(TOPICS)
+            .addSnapshotListener { value, error ->
+                inProcess.value = false
+                if (error != null) {
+                    errorMessage.value = error.message
+                    return@addSnapshotListener
+                }
+
+                topics.value = value?.toObjects<Topic>().orEmpty()
+            }
+
+    }
 }

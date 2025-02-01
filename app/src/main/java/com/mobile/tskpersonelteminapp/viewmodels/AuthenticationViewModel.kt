@@ -65,7 +65,6 @@ class AuthenticationViewModel @Inject constructor(
             Filter.equalTo("email",email)
         )).get().addOnSuccessListener {
             if (it.isEmpty){
-
                 auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener{
                     if(it.isSuccessful){
                         signIn.value=true
