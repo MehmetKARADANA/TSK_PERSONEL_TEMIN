@@ -29,11 +29,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.R
+import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
 import com.mobile.tskpersonelteminapp.utils.navigateTo
+import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 
 @Composable
-fun LoginScreen(navController: NavController){
+fun LoginScreen(navController: NavController,viewModel: AuthenticationViewModel){
 
+    CheckSignedIn(viewModel,navController)
     //authenticate kontrol fonksiyonu
     if(false){
         //commonprogresbar
@@ -88,7 +91,8 @@ fun LoginScreen(navController: NavController){
                     , label = { Text(text = "En az 6 karakter şifre") })
 
                 Button(onClick = {
-                    //kullanıcı kayıt
+                    //kullanıcı giriş
+                    viewModel.login(email = emailState.value.text,password=passwordState.value.text)
                 }, modifier = Modifier.padding(8.dp)) {
                     Text(text = "Giriş yap")
                 }

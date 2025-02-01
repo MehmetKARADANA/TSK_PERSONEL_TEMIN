@@ -7,14 +7,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
+import com.mobile.tskpersonelteminapp.data.models.User
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.ui.components.ComminityHeader
@@ -23,8 +26,11 @@ import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.ComminityViewModel
 
 @Composable
-fun TopicsScreen(navController: NavController,commnityVm: ComminityViewModel,authViewModel: AuthenticationViewModel){
+fun TopicsScreen(navController: NavController,commnityVm: ComminityViewModel,authViewModel: AuthenticationViewModel,themeId : String){
     // val signIn = viewModel.signIn.value
+
+    val userData =authViewModel.userData.value
+    val user  =User(name = userData?.name, userId = userData?.userId, email = userData?.email)
 
     val showDialogAccount = remember {
         mutableStateOf(false)
@@ -49,8 +55,11 @@ fun TopicsScreen(navController: NavController,commnityVm: ComminityViewModel,aut
     ShowADComment(
         showDialog = showDialogComment.value,
         onDismiss = onDismissCommentAdd,
-        viewModel = authViewModel,
-        navController = navController
+        authVm = authViewModel,
+        navController = navController,
+        commnityVm = commnityVm,
+        themeId = themeId,
+        user=user
     )
     Column(modifier = Modifier.fillMaxSize()) {
         ComminityHeader("Konular", onBackClicked = {
@@ -126,10 +135,17 @@ fun ShowADAccount(
 fun ShowADComment(
     showDialog: Boolean,
     onDismiss: () -> Unit,
-    viewModel: AuthenticationViewModel,
-    navController: NavController
+    authVm: AuthenticationViewModel,
+    navController: NavController,
+    commnityVm: ComminityViewModel,
+    themeId : String,
+    user: User
 ) {
-    val signIn = viewModel.signIn.value
+    val signIn = authVm.signIn.value
+
+    val topicState = remember {
+        mutableStateOf(TextFieldValue())
+    }
     if (showDialog) {
         if (signIn) {
             AlertDialog(
@@ -138,16 +154,17 @@ fun ShowADComment(
                 },
                 confirmButton = {
                     Button(onClick = {
-                        navigateTo(
-                            navController = navController,
-                            DestinationScreen.Profile.route
-                        )
+                        //soru sor
+                        commnityVm.addTopics(topic = topicState.value.text, user , themeId =themeId )
+                        onDismiss.invoke()
                     }) {
                         Text(text = "Soru sor")
                     }
                 },
                 title = { Text(text = "Soru") },
-                text = { Text(text = "Soruu...") })
+                text = { OutlinedTextField(value = topicState.value, onValueChange = {
+                    topicState.value=it
+                }) })
         } else {
             AlertDialog(
                 onDismissRequest = {

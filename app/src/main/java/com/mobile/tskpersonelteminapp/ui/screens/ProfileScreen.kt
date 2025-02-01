@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.R
+import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 
 @Composable
@@ -68,8 +67,13 @@ fun ProfileScreen(navController: NavController, viewModel: AuthenticationViewMod
         }
 
         Column(modifier = Modifier.fillMaxSize()) {
-            ProfileHeader(onBackClicked = { navController.popBackStack() },
-                onLogoutClicked = { viewModel.logout() }, "Profilim")
+            ProfileHeader(
+                onBackClicked = { navController.popBackStack() },
+                onLogoutClicked = {
+                    viewModel.logout()
+                    navController.popBackStack()
+                }, "Profilim"
+            )
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -122,11 +126,11 @@ fun ProfileContent(name: String?, email: String?) {
 
 
     OutlinedTextField(
-        value = "Mail Adresi",
+        value = email!!,
         modifier = Modifier.padding(8.dp),
         enabled = false,
         onValueChange = {},
-        label = { Text(text = email!!) },
+        label = { Text(text = "Mail Adresi") },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             disabledTextColor = Color.Black, // Metin rengi
             disabledLabelColor = Color.Black, // Label rengi

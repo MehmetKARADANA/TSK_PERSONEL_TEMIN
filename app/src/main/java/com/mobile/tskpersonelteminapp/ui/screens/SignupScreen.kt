@@ -21,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -30,12 +29,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.R
+import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
 import com.mobile.tskpersonelteminapp.utils.navigateTo
+import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 
 @Composable
-fun SignUpScreen(navController: NavController) {
+fun SignUpScreen(navController: NavController,viewModel: AuthenticationViewModel) {
     //mevcut kullanıcı varmı kontrol fonksiyonu
 
+    CheckSignedIn(viewModel,navController)
     if (false) {
         //progresbarr
     } else {
@@ -103,6 +105,7 @@ fun SignUpScreen(navController: NavController) {
 
                 Button(onClick = {
                     //kullanıcı kayıt
+                    viewModel.signUp(name = nameState.value.text,password=passwordState.value.text, email = emailState.value.text)
                 }, modifier = Modifier.padding(8.dp)) {
                     Text(text = "Kayıt ol")
                 }

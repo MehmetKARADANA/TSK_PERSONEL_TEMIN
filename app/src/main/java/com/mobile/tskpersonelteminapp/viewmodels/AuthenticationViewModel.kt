@@ -1,9 +1,11 @@
 package com.mobile.tskpersonelteminapp.viewmodels
 
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
 import com.mobile.tskpersonelteminapp.data.USERS
@@ -50,10 +52,86 @@ class AuthenticationViewModel @Inject constructor(
 
     }
 
-    fun logout(){
+    fun signUp(name: String, email: String,password :String) {
+        inProcess.value = true
+        if(name.isEmpty() or email.isEmpty() or password.isEmpty()){
+            //handle exception ("Alanları doldurun")
+            inProcess.value=false
+            return
+        }
+
+        db.collection(USERS).where(Filter.or(
+            Filter.equalTo("name",name),
+            Filter.equalTo("email",email)
+        )).get().addOnSuccessListener {
+            if (it.isEmpty){
+
+                auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener{
+                    if(it.isSuccessful){
+                        signIn.value=true
+                        Log.d("SignUp", "signUp: User Logged In")
+                        createProfile(name,email)
+                        inProcess.value=false
+                    }else{
+                        //handle exception signUpFailed
+                        inProcess.value=false
+                    }
+                }
+
+            }else{
+                //handle exception aynı  kullanıcı var
+                inProcess.value=false
+            }
+        }
+
+
+
+
+    }
+
+    fun login(email: String,password: String) {
+        inProcess.value=true
+        if(email.isEmpty() or password.isEmpty()){
+            //handle Exception
+            return
+        }
+        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener{
+            if(it.isSuccessful){
+                signIn.value=true
+                inProcess.value=false
+                auth.currentUser?.uid?.let {
+                    getUserData(it)
+                }
+            }else{
+                //HandleException login failed
+                inProcess.value=false
+            }
+        }
+
+
+
+    }
+
+    fun createProfile(name: String,email: String) {
+        var uid=auth.currentUser?.uid
+        val userData = User(
+            userId = uid,
+            name=name,
+            email=email
+        )
+
+        uid?.let {
+            inProcess.value=true
+            db.collection(USERS).document(uid).set(userData)
+            inProcess.value=false
+            getUserData(uid)
+        }
+    }
+
+    fun logout() {
         auth.signOut()
-        userData.value=null
-        signIn.value=false
+        userData.value = null
+        signIn.value = false
         //log Logged Out
     }
 }

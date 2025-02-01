@@ -54,11 +54,14 @@ sealed class DestinationScreen(var route: String) {
 
     object Menu : DestinationScreen("menu")
     object Community : DestinationScreen("community")
+
     object CommunityAdmin : DestinationScreen("communityAdmin")
     object SignUp : DestinationScreen("signup")
     object Login : DestinationScreen("login")
     object Profile : DestinationScreen("profile")
-    object Topics : DestinationScreen("topics")
+    object Topics : DestinationScreen("topics/{themeId}"){
+        fun createRoute(themeId  :String) = "topics/$themeId"
+    }
 }
 
 
@@ -114,7 +117,12 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(DestinationScreen.Topics.route) {
-                TopicsScreen(navController,comminityViewModel,authenticationViewModel)
+                val themeId = it.arguments?.getString("themeId")
+
+                themeId?.let {
+                    TopicsScreen(navController,comminityViewModel,authenticationViewModel,it)
+                }
+
             }
 
             composable(DestinationScreen.AnnouncementDetail.route) {
@@ -134,10 +142,10 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(DestinationScreen.SignUp.route) {
-                SignUpScreen(navController)
+                SignUpScreen(navController,authenticationViewModel)
             }
             composable(DestinationScreen.Login.route) {
-                LoginScreen(navController)
+                LoginScreen(navController,authenticationViewModel)
             }
 
             composable(DestinationScreen.Profile.route) {

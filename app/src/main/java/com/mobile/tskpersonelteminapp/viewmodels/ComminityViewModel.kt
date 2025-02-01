@@ -1,12 +1,16 @@
 package com.mobile.tskpersonelteminapp.viewmodels
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObjects
 import com.mobile.tskpersonelteminapp.data.THEMES
+import com.mobile.tskpersonelteminapp.data.TOPICS
 import com.mobile.tskpersonelteminapp.data.models.Theme
+import com.mobile.tskpersonelteminapp.data.models.Topic
+import com.mobile.tskpersonelteminapp.data.models.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -54,5 +58,24 @@ class ComminityViewModel @Inject constructor(
            inProcess.value=false
        }
    }
+
+    fun addTopics(topic :String,user: User,themeId :String){
+        inProcess.value=true
+        try {
+            val id =db.collection(THEMES).document(themeId).collection(TOPICS).document().id
+            val topic=Topic(topicId = id, topic =topic,user=user, date = Timestamp.now() )
+            db.collection(THEMES)
+                .document(themeId)
+                .collection(TOPICS)
+                .document(id)
+                .set(topic)
+
+            inProcess.value=false
+        }catch (e :Exception){
+              errorMessage.value=e.message
+            e.printStackTrace()
+            inProcess.value=false
+        }
+    }
 
 }
