@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
-import com.mobile.tskpersonelteminapp.data.USER
+import com.mobile.tskpersonelteminapp.data.USERS
 import com.mobile.tskpersonelteminapp.data.models.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -32,7 +32,7 @@ class AuthenticationViewModel @Inject constructor(
     private fun getUserData(uid: String) {
         inProcess.value = true
         try {
-            db.collection(USER).document(uid).addSnapshotListener { value, error ->
+            db.collection(USERS).document(uid).addSnapshotListener { value, error ->
 
                 error?.printStackTrace()
 

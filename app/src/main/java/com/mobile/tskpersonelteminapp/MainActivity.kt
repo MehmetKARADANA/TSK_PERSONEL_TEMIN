@@ -15,15 +15,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mobile.tskpersonelteminapp.ui.screens.AnnouncementDetailScreen
 import com.mobile.tskpersonelteminapp.ui.screens.AnnouncementsScreen
+import com.mobile.tskpersonelteminapp.ui.screens.ComminityAdminScreen
+import com.mobile.tskpersonelteminapp.ui.screens.ComminityAdminScreen
 import com.mobile.tskpersonelteminapp.ui.screens.ComminityScreen
 import com.mobile.tskpersonelteminapp.ui.screens.LoginScreen
 import com.mobile.tskpersonelteminapp.ui.screens.MenuScreen
 import com.mobile.tskpersonelteminapp.ui.screens.ProfileScreen
 import com.mobile.tskpersonelteminapp.ui.screens.RecruitmentScreen
 import com.mobile.tskpersonelteminapp.ui.screens.SignUpScreen
+import com.mobile.tskpersonelteminapp.ui.screens.TopicsScreen
 import com.mobile.tskpersonelteminapp.ui.theme.TskPersonelTeminAppTheme
 import com.mobile.tskpersonelteminapp.viewmodels.AnnouncementsViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
+import com.mobile.tskpersonelteminapp.viewmodels.ComminityViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.RecruitmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
@@ -50,9 +54,11 @@ sealed class DestinationScreen(var route: String) {
 
     object Menu : DestinationScreen("menu")
     object Community : DestinationScreen("community")
+    object CommunityAdmin : DestinationScreen("communityAdmin")
     object SignUp : DestinationScreen("signup")
     object Login : DestinationScreen("login")
     object Profile : DestinationScreen("profile")
+    object Topics : DestinationScreen("topics")
 }
 
 
@@ -80,8 +86,8 @@ class MainActivity : ComponentActivity() {
         val announcementsViewModel = hiltViewModel<AnnouncementsViewModel>()
         val recruitmentViewModel = hiltViewModel<RecruitmentViewModel>()
         val authenticationViewModel = hiltViewModel<AuthenticationViewModel>()
-
-        NavHost(navController = navController, startDestination = DestinationScreen.Community.route) {
+        val comminityViewModel = hiltViewModel<ComminityViewModel>()
+        NavHost(navController = navController, startDestination = DestinationScreen.Menu.route) {
             composable(DestinationScreen.Announcements.route) {
                 //announcement screen
                 //   screentest()
@@ -98,8 +104,17 @@ class MainActivity : ComponentActivity() {
                 MenuScreen(navController)
             }
 
+            composable(DestinationScreen.CommunityAdmin.route) {
+            //    ComminityAdminScreen(navController, viewModel = authenticationViewModel)
+            ComminityAdminScreen(comminityViewModel)
+            }
+
             composable(DestinationScreen.Community.route) {
-                ComminityScreen(navController)
+                ComminityScreen(navController,comminityViewModel)
+            }
+
+            composable(DestinationScreen.Topics.route) {
+                TopicsScreen(navController,comminityViewModel,authenticationViewModel)
             }
 
             composable(DestinationScreen.AnnouncementDetail.route) {

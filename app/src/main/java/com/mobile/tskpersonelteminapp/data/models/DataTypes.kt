@@ -28,21 +28,26 @@ data class Recruitment(
 data class Theme(
     val themeId: String?="",
     val theme : String="",
-    val topicList : List<Topic>?= emptyList()
-)
+    val topicList : List<Topic>?= emptyList(),
+   // val timestamp: Any? = null
+    val date : Timestamp?=null,
+    )
 
 data class Topic(
     val topicId: String?="",
     val topic: String?="",
     val user : User?=null,
-    val comments : List<Comment>?= emptyList()
+    val comments : List<Comment>?= emptyList(),
+    //val timestamp: Any? = null
+    val date : Timestamp?=null,
 )
 
 data class Comment(
     val commentId : String?="",
     val user : User?=null,
     val comment : String?="",
-    val date : Timestamp?=null
+    val date : Timestamp?=null,
+   // val timestamp: Any? = null
 )
 
 data class User(
