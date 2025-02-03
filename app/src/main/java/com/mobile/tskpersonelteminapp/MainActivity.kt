@@ -2,6 +2,7 @@ package com.mobile.tskpersonelteminapp
 
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,17 +14,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.mobile.tskpersonelteminapp.ui.screens.AboutUsScreen
 import com.mobile.tskpersonelteminapp.ui.screens.AnnouncementDetailScreen
 import com.mobile.tskpersonelteminapp.ui.screens.AnnouncementsScreen
 import com.mobile.tskpersonelteminapp.ui.screens.CommentScreen
-import com.mobile.tskpersonelteminapp.ui.screens.ComminityAdminScreen
 import com.mobile.tskpersonelteminapp.ui.screens.ComminityAdminScreen
 import com.mobile.tskpersonelteminapp.ui.screens.ComminityScreen
 import com.mobile.tskpersonelteminapp.ui.screens.LoginScreen
 import com.mobile.tskpersonelteminapp.ui.screens.MenuScreen
 import com.mobile.tskpersonelteminapp.ui.screens.ProfileScreen
 import com.mobile.tskpersonelteminapp.ui.screens.RecruitmentScreen
+import com.mobile.tskpersonelteminapp.ui.screens.SettingsScreen
 import com.mobile.tskpersonelteminapp.ui.screens.SignUpScreen
+import com.mobile.tskpersonelteminapp.ui.screens.SuggestionScreen
 import com.mobile.tskpersonelteminapp.ui.screens.TopicsScreen
 import com.mobile.tskpersonelteminapp.ui.theme.TskPersonelTeminAppTheme
 import com.mobile.tskpersonelteminapp.viewmodels.AnnouncementsViewModel
@@ -60,7 +63,7 @@ sealed class DestinationScreen(var route: String) {
     object CommunityAdmin : DestinationScreen("communityAdmin")
     object SignUp : DestinationScreen("signup")
     object Login : DestinationScreen("login")
-    object Profile : DestinationScreen("profile")
+
     object Topics : DestinationScreen("topics/{themeId}") {
         fun createRoute(themeId: String) = "topics/$themeId"
     }
@@ -68,6 +71,14 @@ sealed class DestinationScreen(var route: String) {
     object Comments : DestinationScreen("comments/{themeId}/{topicId}") {
         fun createRoute(themeId: String, topicId: String) = "comments/$themeId/$topicId"
     }
+
+
+    object Settings : DestinationScreen("settings")
+    object Profile : DestinationScreen("profile")
+    object AboutUs  : DestinationScreen("aboutUs")
+    object Suggestion : DestinationScreen("suggestion")
+
+
 }
 
 
@@ -92,6 +103,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun AppNavigation() {
         val navController = rememberNavController()
+
         val announcementsViewModel = hiltViewModel<AnnouncementsViewModel>()
         val recruitmentViewModel = hiltViewModel<RecruitmentViewModel>()
         val authenticationViewModel = hiltViewModel<AuthenticationViewModel>()
@@ -169,6 +181,19 @@ class MainActivity : ComponentActivity() {
             composable(DestinationScreen.Profile.route) {
                 ProfileScreen(navController, authenticationViewModel)
             }
+
+            composable(DestinationScreen.Settings.route) {
+                SettingsScreen(navController = navController)
+            }
+
+            composable(DestinationScreen.AboutUs.route) {
+                AboutUsScreen(navController = navController)
+            }
+
+            composable(DestinationScreen.Suggestion.route) {
+                SuggestionScreen(navController = navController)
+            }
+
         }
     }
 }

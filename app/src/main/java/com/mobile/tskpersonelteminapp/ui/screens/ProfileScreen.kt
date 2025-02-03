@@ -35,8 +35,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.R
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
@@ -44,47 +44,55 @@ import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 @Composable
 fun ProfileScreen(navController: NavController, viewModel: AuthenticationViewModel) {
 
+    val signIn = viewModel.signIn.value
+
     val inProcess = viewModel.inProcess.value
     val userData = viewModel.userData.value
 
     BackHandler {
         navController.popBackStack()
     }
+
+
     if (inProcess) {
 
         // CommonProgressBar()
     } else {
-        val name by remember {
-            mutableStateOf(
-                userData?.name ?: ""
-            )
-        }
-
-        val email by remember {
-            mutableStateOf(
-                userData?.email ?: ""
-            )
-        }
-
-        Column(modifier = Modifier.fillMaxSize()) {
-            ProfileHeader(
-                onBackClicked = { navController.popBackStack() },
-                onLogoutClicked = {
-                    viewModel.logout()
-                    navController.popBackStack()
-                }, "Profilim"
-            )
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .wrapContentHeight()
-                    .padding(bottom = 150.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                ProfileContent(name = name, email = email)
-
+            val name by remember {
+                mutableStateOf(
+                    userData?.name ?: ""
+                )
             }
+
+            val email by remember {
+                mutableStateOf(
+                    userData?.email ?: ""
+                )
+            }
+            Column(modifier = Modifier.fillMaxSize()) {
+                ProfileHeader(
+                    onBackClicked = { navController.popBackStack() },
+                    onLogoutClicked = {
+                        viewModel.logout()
+                        navController.popBackStack()
+                    }, "Profilim"
+                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .wrapContentHeight()
+                        .padding(bottom = 150.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    ProfileContent(name = name, email = email)
+                    if (!signIn){
+                    Text(text = "Giriş yapmak için tıklayın.", color = Color.Black,modifier = Modifier.padding(8.dp).clickable {
+                        navigateTo(navController,DestinationScreen.Login.route)
+                    })}
+
+                }
         }
+
     }
 }
 
@@ -92,7 +100,6 @@ fun ProfileScreen(navController: NavController, viewModel: AuthenticationViewMod
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileContent(name: String?, email: String?) {
-
 
     Image(
         painter = painterResource(R.drawable.user),
