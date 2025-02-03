@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mobile.tskpersonelteminapp.ui.screens.AnnouncementDetailScreen
 import com.mobile.tskpersonelteminapp.ui.screens.AnnouncementsScreen
+import com.mobile.tskpersonelteminapp.ui.screens.CommentScreen
 import com.mobile.tskpersonelteminapp.ui.screens.ComminityAdminScreen
 import com.mobile.tskpersonelteminapp.ui.screens.ComminityAdminScreen
 import com.mobile.tskpersonelteminapp.ui.screens.ComminityScreen
@@ -43,6 +44,7 @@ sealed class DestinationScreen(var route: String) {
             return "recruitment_detail/$encodeUrl"
         }
     }
+
     object Announcements : DestinationScreen("announcements")
     object AnnouncementDetail : DestinationScreen("announcement_detail/{detail_url}") {
 
@@ -59,8 +61,12 @@ sealed class DestinationScreen(var route: String) {
     object SignUp : DestinationScreen("signup")
     object Login : DestinationScreen("login")
     object Profile : DestinationScreen("profile")
-    object Topics : DestinationScreen("topics/{themeId}"){
-        fun createRoute(themeId  :String) = "topics/$themeId"
+    object Topics : DestinationScreen("topics/{themeId}") {
+        fun createRoute(themeId: String) = "topics/$themeId"
+    }
+
+    object Comments : DestinationScreen("comments/{themeId}/{topicId}") {
+        fun createRoute(themeId: String, topicId: String) = "comments/$themeId/$topicId"
     }
 }
 
@@ -108,19 +114,31 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(DestinationScreen.CommunityAdmin.route) {
-            //    ComminityAdminScreen(navController, viewModel = authenticationViewModel)
-            ComminityAdminScreen(comminityViewModel)
+                //    ComminityAdminScreen(navController, viewModel = authenticationViewModel)
+                ComminityAdminScreen(comminityViewModel)
             }
 
             composable(DestinationScreen.Community.route) {
-                ComminityScreen(navController,comminityViewModel)
+                ComminityScreen(navController, comminityViewModel)
             }
 
             composable(DestinationScreen.Topics.route) {
                 val themeId = it.arguments?.getString("themeId")
 
                 themeId?.let {
-                    TopicsScreen(navController,comminityViewModel,authenticationViewModel,it)
+                    TopicsScreen(navController, comminityViewModel, authenticationViewModel, it)
+                }
+
+            }
+
+            composable(DestinationScreen.Comments.route) {
+                val themeId = it.arguments?.getString("themeId")
+                val topicId = it.arguments?.getString("topicId")
+
+                themeId?.let { theme->
+                    topicId?.let {
+                        CommentScreen(themeId = theme, topicId = it, navController = navController, cominityVm = comminityViewModel, authenticationViewModel = authenticationViewModel)
+                    }
                 }
 
             }
@@ -142,14 +160,14 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(DestinationScreen.SignUp.route) {
-                SignUpScreen(navController,authenticationViewModel)
+                SignUpScreen(navController, authenticationViewModel)
             }
             composable(DestinationScreen.Login.route) {
-                LoginScreen(navController,authenticationViewModel)
+                LoginScreen(navController, authenticationViewModel)
             }
 
             composable(DestinationScreen.Profile.route) {
-                ProfileScreen(navController,authenticationViewModel)
+                ProfileScreen(navController, authenticationViewModel)
             }
         }
     }

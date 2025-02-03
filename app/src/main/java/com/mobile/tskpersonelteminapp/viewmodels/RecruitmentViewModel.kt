@@ -25,22 +25,20 @@ class RecruitmentViewModel @Inject constructor(
 
     private fun getRecruitment(){
         inProcess.value=true
-        try {
+
             db.collection(RECRUITMENTS).where(
                 Filter.equalTo("state","active")
             ).addSnapshotListener{value ,error ->
+                inProcess.value = false
                 if(error != null){
                     errorMessage.value=error.message
                     error.printStackTrace()
+                    return@addSnapshotListener
                 }
                 if(value !=null){
                     recruitments.value=value.toObjects<Recruitment>()
                 }
                 inProcess.value=false
             }
-        }catch (e : Exception){
-            e.printStackTrace()
-            inProcess.value=false
-        }
     }
 }

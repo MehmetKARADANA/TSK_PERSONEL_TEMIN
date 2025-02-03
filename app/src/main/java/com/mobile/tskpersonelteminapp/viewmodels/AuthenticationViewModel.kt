@@ -23,6 +23,7 @@ class AuthenticationViewModel @Inject constructor(
     val userData = mutableStateOf<User?>(null)
     val signIn = mutableStateOf(false)
 
+
     init {
         val currentUser = auth.currentUser
         signIn.value = currentUser != null
@@ -33,22 +34,20 @@ class AuthenticationViewModel @Inject constructor(
 
     private fun getUserData(uid: String) {
         inProcess.value = true
-        try {
+
             db.collection(USERS).document(uid).addSnapshotListener { value, error ->
-
-                error?.printStackTrace()
-
+                inProcess.value = false
+                error?.let {
+                    it.printStackTrace()
+                    return@addSnapshotListener
+                }
                 if (value != null) {
                     var user = value.toObject<User>()
                     userData.value = user
-                    inProcess.value = false
                 }
 
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            inProcess.value = false
-        }
+
 
     }
 
@@ -121,8 +120,10 @@ class AuthenticationViewModel @Inject constructor(
 
         uid?.let {
             inProcess.value=true
-            db.collection(USERS).document(uid).set(userData)
-            inProcess.value=false
+            db.collection(USERS).document(uid).set(userData).addOnCompleteListener {
+                inProcess.value = false
+             //   it.exception?.let { errorMessage.value = it.message }
+            }
             getUserData(uid)
         }
     }

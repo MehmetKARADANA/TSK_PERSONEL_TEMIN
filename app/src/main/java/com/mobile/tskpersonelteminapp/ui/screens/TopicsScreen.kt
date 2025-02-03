@@ -38,7 +38,6 @@ fun TopicsScreen(navController: NavController,comminityVm: ComminityViewModel,au
     }
 
     val topics=comminityVm.topics.value
-    //val topics=comminityVm
 
     val userData =authViewModel.userData.value
     val user  =User(name = userData?.name, userId = userData?.userId, email = userData?.email)
@@ -50,12 +49,12 @@ fun TopicsScreen(navController: NavController,comminityVm: ComminityViewModel,au
     val onDismissAAD: () -> Unit = { showDialogAccount.value = false }//AccountAlertDialog
     val onViewAAD: () -> Unit = { showDialogAccount.value = true }
 
-    val showDialogComment = remember {
+    val showDialogTopic = remember {
         mutableStateOf(false)
     }
 
-    val onDismissCommentAdd: () -> Unit = { showDialogComment.value = false }
-    val onViewCommentAdd: () -> Unit = { showDialogComment.value = true }
+    val onDismissTopicAdd: () -> Unit = { showDialogTopic.value = false }
+    val onViewTopicAdd: () -> Unit = { showDialogTopic.value = true }
 
     ShowADAccount(
         onDismiss = onDismissAAD,
@@ -63,9 +62,9 @@ fun TopicsScreen(navController: NavController,comminityVm: ComminityViewModel,au
         showDialog = showDialogAccount.value,
         navController = navController
     )
-    ShowADComment(
-        showDialog = showDialogComment.value,
-        onDismiss = onDismissCommentAdd,
+    ShowADTopic(
+        showDialog = showDialogTopic.value,
+        onDismiss = onDismissTopicAdd,
         authVm = authViewModel,
         navController = navController,
         commnityVm = comminityVm,
@@ -78,27 +77,19 @@ fun TopicsScreen(navController: NavController,comminityVm: ComminityViewModel,au
         }, onAccountClicked = {
             onViewAAD.invoke()
         }, onAddClicked = {
-            onViewCommentAdd.invoke()
+            onViewTopicAdd.invoke()
         })
+        Text(text = comminityVm.themes.value.find { it.themeId==themeId }?.theme.toString())
+        Text(text = "---------")
 LazyColumn (modifier = Modifier.fillMaxWidth().weight(1f)){
     items(topics){
-        Text(text = it.topic!!, modifier = Modifier.clickable {  })
+        Text(text = it.topic!!, modifier = Modifier.clickable {
+            navigateTo(navController,DestinationScreen.Comments.createRoute(themeId = themeId, topicId = it.topicId!!))
+        })
         Text(text = it.user?.name!!)
         Text(text = "-------")
     }
 }
-        //topics
-        /*Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(text = "Topics")
-        }*/
-
-
     }
 }
 
@@ -152,7 +143,7 @@ fun ShowADAccount(
 }
 
 @Composable
-fun ShowADComment(
+fun ShowADTopic(
     showDialog: Boolean,
     onDismiss: () -> Unit,
     authVm: AuthenticationViewModel,
