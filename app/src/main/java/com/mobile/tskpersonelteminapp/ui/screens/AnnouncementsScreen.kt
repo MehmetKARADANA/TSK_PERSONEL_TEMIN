@@ -21,6 +21,7 @@ import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.DestinationScreen
+import com.mobile.tskpersonelteminapp.ui.components.CustomCard
 import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.viewmodels.AnnouncementsViewModel
@@ -59,13 +60,12 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
                     .fillMaxWidth()
                     .weight(1f)) {
                     items(announcements) {
-                        Text(text = it.title.toString(), modifier = Modifier.clickable {
+                        CustomCard(title = it.title!!, date = it.date!!, modifier = Modifier.clickable {
                             navigateTo(
                                 navController = navController,
                                 route = DestinationScreen.AnnouncementDetail.createRoute(it.detail_url!!)
                             )
                         })
-                        Text("------------------")
                     }
 
                 }

@@ -28,7 +28,6 @@ data class Recruitment(
 data class Theme(
     val themeId: String?="",
     val theme : String="",
-  //  val topicList : List<Topic>?= emptyList(),
    // val timestamp: Any? = null
     val date : Timestamp?=null,
     )

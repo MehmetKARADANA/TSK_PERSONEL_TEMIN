@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
+import com.mobile.tskpersonelteminapp.ui.components.ComminityCustomCard
 import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
@@ -56,10 +57,13 @@ fun ComminityScreen(navController: NavController, viewModel: ComminityViewModel)
                         .fillMaxWidth()
                         .weight(1f)) {
                     items(themes) {
-                        Text(text = it.theme, modifier = Modifier.clickable {
+                     /*   Text(text = it.theme, modifier = Modifier.clickable {
                            navigateTo(navController,DestinationScreen.Topics.createRoute(themeId = it.themeId!!))
                         })
-                        Text(text = "-------")
+                        Text(text = "-------")*/
+                        ComminityCustomCard(content = it.theme, modifier = Modifier.clickable {
+                            navigateTo(navController,DestinationScreen.Topics.createRoute(themeId = it.themeId!!))
+                        })
                     }
                 }
             }else{

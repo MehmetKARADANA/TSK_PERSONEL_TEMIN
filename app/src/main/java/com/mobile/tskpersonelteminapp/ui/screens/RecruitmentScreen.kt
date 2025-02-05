@@ -20,6 +20,7 @@ import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
+import com.mobile.tskpersonelteminapp.ui.components.CustomCard
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.viewmodels.RecruitmentViewModel
 
@@ -35,15 +36,6 @@ fun RecruitmentScreen(navController: NavController,viewModel: RecruitmentViewMod
     val recruitments = viewModel.recruitments.value
 
     Column(modifier = Modifier.fillMaxSize()) {
-       /* Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text("Current Recruitment")
-        }*/
         if(inProcess){
             CommonProgressBar()
         }else if(errorMessage != null){
@@ -60,13 +52,12 @@ fun RecruitmentScreen(navController: NavController,viewModel: RecruitmentViewMod
             if(recruitments.isNotEmpty()){
                 LazyColumn (modifier = Modifier.fillMaxWidth().weight(1f)){
                     items(recruitments){
-                        Text(text = it.title.toString(), modifier = Modifier.clickable {
+                        CustomCard(title = it.title!!, date = it.date!!, modifier = Modifier.clickable {
                             navigateTo(
-                                navController=navController,
-                                route = DestinationScreen.RecruitmentDetail.createRoute(it.detail_url!!)
+                                navController = navController,
+                                route = DestinationScreen.AnnouncementDetail.createRoute(it.detail_url!!)
                             )
                         })
-                        Text(text = "---------")
                     }
                 }
             }
