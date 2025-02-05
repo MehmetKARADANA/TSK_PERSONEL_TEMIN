@@ -38,11 +38,17 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.R
+import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
+import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 
 @Composable
 fun ProfileScreen(navController: NavController, viewModel: AuthenticationViewModel) {
+
+    val errorMessageAuth by viewModel.errorMessage
+
+    ObserveErrorMessage(errorMessageAuth)
 
     val signIn = viewModel.signIn.value
 
@@ -56,7 +62,7 @@ fun ProfileScreen(navController: NavController, viewModel: AuthenticationViewMod
 
     if (inProcess) {
 
-        // CommonProgressBar()
+         CommonProgressBar()
     } else {
             val name by remember {
                 mutableStateOf(

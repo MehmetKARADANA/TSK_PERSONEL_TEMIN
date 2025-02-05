@@ -149,7 +149,7 @@ class MainActivity : ComponentActivity() {
 
                 themeId?.let { theme->
                     topicId?.let {
-                        CommentScreen(themeId = theme, topicId = it, navController = navController, cominityVm = comminityViewModel, authenticationViewModel = authenticationViewModel)
+                        CommentScreen(themeId = theme, topicId = it, navController = navController, comminityVm = comminityViewModel, authenticationViewModel = authenticationViewModel)
                     }
                 }
 

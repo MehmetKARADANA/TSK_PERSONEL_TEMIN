@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.Modifier
@@ -20,15 +21,24 @@ import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.DestinationScreen
+import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
+import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.viewmodels.AnnouncementsViewModel
 
 
 @Composable
 fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsViewModel) {
 
+    val errorMessage by viewModel.errorMessage
+
+    // Hata mesajını dinle ve göster
+    ObserveErrorMessage(errorMessage)
+
+
     val inProcess = viewModel.inProcess.value
-    val errorMessage = viewModel.errorMessage.value
+
     val announcements = viewModel.announcements.value
+
     Column(modifier = Modifier.fillMaxSize()) {
         if (inProcess) {
             CircularProgressIndicator()

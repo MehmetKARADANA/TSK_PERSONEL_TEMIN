@@ -15,6 +15,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -29,17 +30,24 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.R
+import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
 import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
+import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 
 @Composable
 fun LoginScreen(navController: NavController,viewModel: AuthenticationViewModel){
 
+    val errorMessage by viewModel.errorMessage
+
+    // Hata mesajını dinle ve göster
+    ObserveErrorMessage(errorMessage)
     CheckSignedIn(viewModel,navController)
     //authenticate kontrol fonksiyonu
-    if(false){
-        //commonprogresbar
+    val inProcess =viewModel.inProcess.value
+    if(inProcess){
+        CommonProgressBar()
     }else{
         Box(modifier = Modifier.fillMaxSize()){
             val focus = LocalFocusManager.current

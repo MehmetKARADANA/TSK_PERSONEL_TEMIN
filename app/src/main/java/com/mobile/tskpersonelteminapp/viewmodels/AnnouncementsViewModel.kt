@@ -14,32 +14,32 @@ import javax.inject.Inject
 @HiltViewModel
 class AnnouncementsViewModel @Inject constructor(
     private val db: FirebaseFirestore
-) : ViewModel() {
+) : BaseViewModel() {
 
     val inProcess = mutableStateOf(false)
-    val errorMessage = mutableStateOf<String?>(null)
     val announcements = mutableStateOf<List<Announcement>>(listOf())
 
     init {
         getAnnouncements()
     }
+
     private fun getAnnouncements() {
         inProcess.value = true
 
-            db.collection(ANNOUNCEMENTS).where(
-                Filter.equalTo("state", "active")
-            ).addSnapshotListener { value, error ->
-                inProcess.value = false
-                if (error != null) {
-                    //daha sonra hata mesajları için metot yazacağım
-                    errorMessage.value = error.message
-                    error.printStackTrace()
-                        return@addSnapshotListener
-                }
-                if (value != null) {
-                    announcements.value = value.toObjects<Announcement>()
-                }
+        db.collection(ANNOUNCEMENTS).where(
+            Filter.equalTo("state", "active")
+        ).addSnapshotListener { value, error ->
+            inProcess.value = false
+            if (error != null) {
+                //daha sonra hata mesajları için metot yazacağım
+                handleException(error,error.message.toString())
+                error.printStackTrace()
+                return@addSnapshotListener
             }
+            if (value != null) {
+                announcements.value = value.toObjects<Announcement>()
+            }
+        }
 
     }
 

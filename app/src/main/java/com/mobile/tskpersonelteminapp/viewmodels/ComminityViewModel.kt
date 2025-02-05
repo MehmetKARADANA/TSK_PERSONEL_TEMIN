@@ -19,10 +19,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ComminityViewModel @Inject constructor(
     val db: FirebaseFirestore
-) : ViewModel() {
+) : BaseViewModel() {
 
     val inProcess = mutableStateOf(false)
-    val errorMessage = mutableStateOf<String?>(null)
 
     val themes = mutableStateOf<List<Theme>>(emptyList())
     val topics = mutableStateOf<List<Topic>>(emptyList())
@@ -38,7 +37,7 @@ class ComminityViewModel @Inject constructor(
         db.collection(THEMES).addSnapshotListener { value, error ->
                 inProcess.value = false
                 if (error != null) {
-                    errorMessage.value = error.message
+                    handleException(error,error.message.toString())
                     return@addSnapshotListener
                 }
                 if (value != null) {
@@ -54,7 +53,9 @@ class ComminityViewModel @Inject constructor(
             val theme = Theme(themeId = id, theme = themeName, date = Timestamp.now())
             db.collection(THEMES).document(id).set(theme).addOnCompleteListener {
                 inProcess.value = false
-                it.exception?.let { errorMessage.value = it.message }
+                it.exception?.let {
+                    handleException(it,it.message.toString())
+                }
             }
 
     }
@@ -70,19 +71,20 @@ class ComminityViewModel @Inject constructor(
                 .document(id)
                 .set(newtopic).addOnCompleteListener {
                     inProcess.value = false
-                    it.exception?.let { errorMessage.value = it.message }
+                    it.exception?.let {
+                        handleException(it,it.message.toString())
+                      }
                 }
 
     }
 
     fun getTopics(themeId: String) {
         inProcess.value = true
-
         db.collection(THEMES).document(themeId).collection(TOPICS)
             .addSnapshotListener { value, error ->
                 inProcess.value = false
                 if (error != null) {
-                    errorMessage.value = error.message
+                    handleException(error,error.message.toString())
                     return@addSnapshotListener
                 }
                 topics.value = value?.toObjects<Topic>().orEmpty()
@@ -102,7 +104,9 @@ class ComminityViewModel @Inject constructor(
             db.collection(THEMES).document(themeId).collection(TOPICS).document(topicId).collection(
                 COMMENTS).document(id).set(newComment).addOnCompleteListener {
                   inProcess.value=false
-                it.exception?.let { errorMessage.value=it.message }
+                it.exception?.let {
+                    handleException(it,"Cevap eklenemedi.")
+                }
             }
 
     }
@@ -113,7 +117,7 @@ class ComminityViewModel @Inject constructor(
             COMMENTS).addSnapshotListener{value,error->
                 inProcess.value=false
             error?.let {
-                errorMessage.value=it.message
+                handleException(it,it.message.toString())
                 return@addSnapshotListener
             }
             comments.value=value?.toObjects<Comment>().orEmpty()

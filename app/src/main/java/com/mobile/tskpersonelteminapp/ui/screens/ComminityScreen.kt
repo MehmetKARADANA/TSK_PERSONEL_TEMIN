@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.motionEventSpy
@@ -18,19 +19,25 @@ import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
+import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
+import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.ComminityViewModel
 
 @Composable
 fun ComminityScreen(navController: NavController, viewModel: ComminityViewModel) {
+
+    val errorMessageCv by viewModel.errorMessage
+
+    ObserveErrorMessage(errorMessageCv)
+
     val inProcess = viewModel.inProcess.value
     val errorMessage = viewModel.errorMessage.value
     val themes = viewModel.themes.value
     Column(modifier = Modifier.fillMaxSize()) {
         if (inProcess) {
-            //progressbar
-            Box(modifier = Modifier.fillMaxWidth().weight(1f))
+            CommonProgressBar()
         } else if (errorMessage != null) {
 
             Row(

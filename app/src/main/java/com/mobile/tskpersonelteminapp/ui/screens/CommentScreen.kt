@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -20,6 +21,8 @@ import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.data.models.User
 import com.mobile.tskpersonelteminapp.ui.components.ComminityHeader
+import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
+import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.ComminityViewModel
@@ -27,16 +30,22 @@ import com.mobile.tskpersonelteminapp.viewmodels.ComminityViewModel
 @Composable
 fun CommentScreen(
     navController: NavController,
-    cominityVm: ComminityViewModel,
+    comminityVm: ComminityViewModel,
     authenticationViewModel: AuthenticationViewModel,
     themeId: String,
     topicId: String
 ) {
+    val errorMessageCv by comminityVm.errorMessage
+    val errorMessageAuth by authenticationViewModel.errorMessage
+
+    ObserveErrorMessage(errorMessageAuth)
+    ObserveErrorMessage(errorMessageCv)
+
     LaunchedEffect(Unit) {
-        cominityVm.getComments(themeId = themeId, topicId = topicId)
+        comminityVm.getComments(themeId = themeId, topicId = topicId)
     }
 
-    val comments = cominityVm.comments.value
+    val comments = comminityVm.comments.value
 
     val userData =authenticationViewModel.userData.value
     val user  =User(name = userData?.name, userId = userData?.userId, email = userData?.email)
@@ -56,7 +65,7 @@ fun CommentScreen(
     val onDismissCommentAdd : () -> Unit ={showDialogComment.value=false}
     val onViewCommentAdd : () -> Unit = {showDialogComment.value=true}
 
-    ShowADComment(showDialog = showDialogComment.value, themeId = themeId, topicId = topicId,onDismiss = {onDismissCommentAdd.invoke()}, commnityVm = cominityVm, authVm = authenticationViewModel, navController = navController, user =user )
+    ShowADComment(showDialog = showDialogComment.value, themeId = themeId, topicId = topicId,onDismiss = {onDismissCommentAdd.invoke()}, commnityVm = comminityVm, authVm = authenticationViewModel, navController = navController, user =user )
 
     ShowADAccount(//in topicscreen
         showDialog = showDialogAccount.value,
@@ -73,7 +82,7 @@ fun CommentScreen(
         }, onAccountClicked = {
             onViewAAD.invoke()
         })
-        Text(text = cominityVm.topics.value.find { it.topicId == topicId }?.topic.toString())
+        Text(text = comminityVm.topics.value.find { it.topicId == topicId }?.topic.toString())
         Text("-----------")
         LazyColumn(
             modifier = Modifier

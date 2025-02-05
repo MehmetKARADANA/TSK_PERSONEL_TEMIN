@@ -16,6 +16,7 @@ import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 
 @Composable
 fun AboutUsScreen(navController: NavController) {
+
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
             modifier = Modifier

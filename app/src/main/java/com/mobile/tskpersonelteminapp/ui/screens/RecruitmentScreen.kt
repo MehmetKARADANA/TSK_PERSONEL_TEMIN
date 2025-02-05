@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
@@ -18,13 +19,19 @@ import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.DestinationScreen
+import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
+import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.viewmodels.RecruitmentViewModel
 
 @Composable
 fun RecruitmentScreen(navController: NavController,viewModel: RecruitmentViewModel) {
 
+    val errorMessage by viewModel.errorMessage
+
+    ObserveErrorMessage(errorMessage)
+
+
     val inProcess=viewModel.inProcess.value
-    val errorMessage=viewModel.errorMessage.value
     val recruitments = viewModel.recruitments.value
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -38,7 +45,7 @@ fun RecruitmentScreen(navController: NavController,viewModel: RecruitmentViewMod
             Text("Current Recruitment")
         }*/
         if(inProcess){
-            CircularProgressIndicator()
+            CommonProgressBar()
         }else if(errorMessage != null){
             Row(
                 modifier = Modifier
