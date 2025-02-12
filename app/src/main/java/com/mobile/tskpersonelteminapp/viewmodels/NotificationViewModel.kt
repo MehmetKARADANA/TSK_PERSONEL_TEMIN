@@ -7,12 +7,15 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.firebase.Firebase
+import com.google.firebase.messaging.messaging
 import com.mobile.tskpersonelteminapp.data.FcmApi
 import com.mobile.tskpersonelteminapp.data.models.ChatState
 import com.mobile.tskpersonelteminapp.data.models.NotificationBody
 import com.mobile.tskpersonelteminapp.data.models.SendMessageDto
 import com.squareup.moshi.JsonReader.Token
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import okio.IOException
 import retrofit2.HttpException
 import retrofit2.Retrofit
@@ -29,6 +32,12 @@ class NotificationViewModel : ViewModel() {
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
         .create()
+
+    init {
+        viewModelScope.launch {
+            Firebase.messaging.subscribeToTopic("testTopic").await()
+        }
+    }
 
     fun onRemoteTokenChange(newToken: String) {
         state = state.copy(

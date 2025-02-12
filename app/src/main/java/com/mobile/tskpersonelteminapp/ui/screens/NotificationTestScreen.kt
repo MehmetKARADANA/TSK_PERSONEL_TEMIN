@@ -42,7 +42,6 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.ContextCompat
 import com.google.firebase.Firebase
 import com.google.firebase.messaging.messaging
-import com.mobile.tskpersonelteminapp.Manifest
 import com.mobile.tskpersonelteminapp.viewmodels.NotificationViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
