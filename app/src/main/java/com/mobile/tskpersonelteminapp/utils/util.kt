@@ -6,9 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import com.google.firebase.Timestamp
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.data.Event
 import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun ObserveErrorMessage(event: Event<String>?) {
@@ -28,7 +31,12 @@ fun navigateTo(navController: NavController, route: String) {
     }
 }
 
-
+fun formatTimestamp(timestamp: Timestamp, zone: String = "UTC+3"): String {
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    return timestamp.toInstant()
+        .atZone(ZoneId.of(zone))
+        .format(formatter)
+}
 fun CheckSignedIn(
     viewModel: AuthenticationViewModel,
     navController: NavController

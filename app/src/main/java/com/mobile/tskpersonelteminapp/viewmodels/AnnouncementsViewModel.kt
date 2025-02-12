@@ -2,7 +2,6 @@ package com.mobile.tskpersonelteminapp.viewmodels
 
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObjects
@@ -21,6 +20,7 @@ class AnnouncementsViewModel @Inject constructor(
 
     init {
         getAnnouncements()
+
     }
 
     private fun getAnnouncements() {

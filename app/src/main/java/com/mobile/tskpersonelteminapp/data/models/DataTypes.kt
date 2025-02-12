@@ -8,7 +8,7 @@ data class Announcement(
     val title: String?="",
     val date: String?="",
     val detail_url: String?="",
-    val detail_content: String?="",
+  //  val detail_content: String?="",
     val state: String?="",
     val created_at: Timestamp? = null,
     val updated_at: Timestamp? = null
@@ -19,7 +19,7 @@ data class Recruitment(
     val title: String?="",
     val date: String?="",
     val detail_url: String?="",
-    val detail_content: String?="",
+  //  val detail_content: String?="",
     val state: String?="",
     val created_at: Timestamp? = null,
     val updated_at: Timestamp? = null

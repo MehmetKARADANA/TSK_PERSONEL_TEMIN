@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontFamily
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
@@ -68,6 +69,16 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
                         })
                     }
 
+                }
+            }else{
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text("Mevcut Duyuru Bulunmuyor", fontFamily = FontFamily.SansSerif)
                 }
             }
 

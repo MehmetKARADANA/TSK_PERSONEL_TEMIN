@@ -25,14 +25,21 @@ import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.data.models.User
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
+import com.mobile.tskpersonelteminapp.ui.components.ComminityCustomCard
 import com.mobile.tskpersonelteminapp.ui.components.ComminityHeader
+import com.mobile.tskpersonelteminapp.ui.components.TopicCustomCard
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.ComminityViewModel
 
 @Composable
-fun TopicsScreen(navController: NavController,comminityVm: ComminityViewModel,authViewModel: AuthenticationViewModel,themeId : String){
+fun TopicsScreen(
+    navController: NavController,
+    comminityVm: ComminityViewModel,
+    authViewModel: AuthenticationViewModel,
+    themeId: String
+) {
     // val signIn = viewModel.signIn.value
 
     val errorMessageCv by comminityVm.errorMessage
@@ -45,10 +52,10 @@ fun TopicsScreen(navController: NavController,comminityVm: ComminityViewModel,au
         comminityVm.getTopics(themeId)
     }
 
-    val topics=comminityVm.topics.value
+    val topics = comminityVm.topics.value
 
-    val userData =authViewModel.userData.value
-    val user  =User(name = userData?.name, userId = userData?.userId, email = userData?.email)
+    val userData = authViewModel.userData.value
+    val user = User(name = userData?.name, userId = userData?.userId, email = userData?.email)
 
     val showDialogAccount = remember {
         mutableStateOf(false)
@@ -77,7 +84,7 @@ fun TopicsScreen(navController: NavController,comminityVm: ComminityViewModel,au
         navController = navController,
         commnityVm = comminityVm,
         themeId = themeId,
-        user=user
+        user = user
     )
     Column(modifier = Modifier.fillMaxSize()) {
         ComminityHeader("Konular", onBackClicked = {
@@ -87,17 +94,19 @@ fun TopicsScreen(navController: NavController,comminityVm: ComminityViewModel,au
         }, onAddClicked = {
             onViewTopicAdd.invoke()
         })
-        Text(text = comminityVm.themes.value.find { it.themeId==themeId }?.theme.toString())
-        Text(text = "---------")
-LazyColumn (modifier = Modifier.fillMaxWidth().weight(1f)){
-    items(topics){
-        Text(text = it.topic!!, modifier = Modifier.clickable {
-            navigateTo(navController,DestinationScreen.Comments.createRoute(themeId = themeId, topicId = it.topicId!!))
-        })
-        Text(text = it.user?.name!!)
-        Text(text = "-------")
-    }
-}
+        ComminityCustomCard(
+            content = comminityVm.themes.value.find { it.themeId == themeId }?.theme.toString(),
+            modifier = Modifier
+        )
+        LazyColumn(modifier = Modifier
+            .fillMaxWidth()
+            .weight(1f)) {
+            items(topics) {
+                TopicCustomCard(content = it.topic!!, modifier = Modifier.clickable {
+                    navigateTo(navController,DestinationScreen.Comments.createRoute(themeId=themeId, topicId = it.topicId!!))
+                }, date = it.date!!, userName = it.user?.name!!)
+            }
+        }
     }
 }
 
@@ -157,7 +166,7 @@ fun ShowADTopic(
     authVm: AuthenticationViewModel,
     navController: NavController,
     commnityVm: ComminityViewModel,
-    themeId : String,
+    themeId: String,
     user: User
 ) {
     val signIn = authVm.signIn.value
@@ -174,16 +183,18 @@ fun ShowADTopic(
                 confirmButton = {
                     Button(onClick = {
                         //soru sor
-                        commnityVm.addTopics(topic = topicState.value.text, user , themeId =themeId )
+                        commnityVm.addTopics(topic = topicState.value.text, user, themeId = themeId)
                         onDismiss.invoke()
                     }) {
                         Text(text = "Soru sor")
                     }
                 },
                 title = { Text(text = "Soru") },
-                text = { OutlinedTextField(value = topicState.value, onValueChange = {
-                    topicState.value=it
-                }) })
+                text = {
+                    OutlinedTextField(value = topicState.value, onValueChange = {
+                        topicState.value = it
+                    })
+                })
         } else {
             AlertDialog(
                 onDismissRequest = {

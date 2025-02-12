@@ -51,6 +51,11 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation("com.google.dagger:hilt-android:2.51.1")
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.messaging.ktx)
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+
     ksp("com.google.dagger:hilt-android-compiler:2.51.1")
     implementation(libs.firebase.firestore)
     val nav_version = "2.8.4"

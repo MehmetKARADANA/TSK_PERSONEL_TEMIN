@@ -14,11 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontFamily
 import androidx.navigation.NavController
-import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.DestinationScreen
+import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
 import com.mobile.tskpersonelteminapp.ui.components.CustomCard
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
@@ -55,10 +56,20 @@ fun RecruitmentScreen(navController: NavController,viewModel: RecruitmentViewMod
                         CustomCard(title = it.title!!, date = it.date!!, modifier = Modifier.clickable {
                             navigateTo(
                                 navController = navController,
-                                route = DestinationScreen.AnnouncementDetail.createRoute(it.detail_url!!)
+                                route = DestinationScreen.RecruitmentDetail.createRoute(it.detail_url!!)
                             )
                         })
                     }
+                }
+            }else{
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text("Mevcut Temin Bulunmuyor", fontFamily = FontFamily.SansSerif)
                 }
             }
         }

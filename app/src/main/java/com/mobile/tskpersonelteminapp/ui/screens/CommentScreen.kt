@@ -1,12 +1,16 @@
 package com.mobile.tskpersonelteminapp.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -16,11 +20,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.data.models.User
+import com.mobile.tskpersonelteminapp.ui.components.ComminityCustomCard
 import com.mobile.tskpersonelteminapp.ui.components.ComminityHeader
+import com.mobile.tskpersonelteminapp.ui.components.TopicCustomCard
 import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
@@ -47,8 +55,8 @@ fun CommentScreen(
 
     val comments = comminityVm.comments.value
 
-    val userData =authenticationViewModel.userData.value
-    val user  =User(name = userData?.name, userId = userData?.userId, email = userData?.email)
+    val userData = authenticationViewModel.userData.value
+    val user = User(name = userData?.name, userId = userData?.userId, email = userData?.email)
 
 
     val showDialogAccount = remember {
@@ -62,10 +70,19 @@ fun CommentScreen(
         mutableStateOf(false)
     }
 
-    val onDismissCommentAdd : () -> Unit ={showDialogComment.value=false}
-    val onViewCommentAdd : () -> Unit = {showDialogComment.value=true}
+    val onDismissCommentAdd: () -> Unit = { showDialogComment.value = false }
+    val onViewCommentAdd: () -> Unit = { showDialogComment.value = true }
 
-    ShowADComment(showDialog = showDialogComment.value, themeId = themeId, topicId = topicId,onDismiss = {onDismissCommentAdd.invoke()}, commnityVm = comminityVm, authVm = authenticationViewModel, navController = navController, user =user )
+    ShowADComment(
+        showDialog = showDialogComment.value,
+        themeId = themeId,
+        topicId = topicId,
+        onDismiss = { onDismissCommentAdd.invoke() },
+        commnityVm = comminityVm,
+        authVm = authenticationViewModel,
+        navController = navController,
+        user = user
+    )
 
     ShowADAccount(//in topicscreen
         showDialog = showDialogAccount.value,
@@ -82,17 +99,25 @@ fun CommentScreen(
         }, onAccountClicked = {
             onViewAAD.invoke()
         })
-        Text(text = comminityVm.topics.value.find { it.topicId == topicId }?.topic.toString())
-        Text("-----------")
+
+        TopicCustomCard(
+            content = comminityVm.topics.value.find { it.topicId == topicId }?.topic.toString(),
+            modifier = Modifier.padding(4.dp),
+            date = comminityVm.topics.value.find { it.topicId == topicId }?.date!!,
+            userName = comminityVm.topics.value.find { it.topicId == topicId }?.user?.name.toString()
+        )
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
         ) {
             items(comments) {
-                Text(text = it.comment!!)
-                Text(text = it.user?.name!!)
-                Text("-------")
+                TopicCustomCard(
+                    content = it.comment!!,
+                    date = it.date!!,
+                    modifier = Modifier,
+                    userName = it.user?.name!!
+                )
             }
         }
     }
@@ -108,7 +133,7 @@ fun ShowADComment(
     authVm: AuthenticationViewModel,
     navController: NavController,
     commnityVm: ComminityViewModel,
-    themeId : String,
+    themeId: String,
     topicId: String,
     user: User
 ) {
@@ -126,16 +151,23 @@ fun ShowADComment(
                 confirmButton = {
                     Button(onClick = {
                         //soru sor
-                        commnityVm.addComments(comment = commentState.value.text,themeId=themeId,topicId=topicId,user=user)
+                        commnityVm.addComments(
+                            comment = commentState.value.text,
+                            themeId = themeId,
+                            topicId = topicId,
+                            user = user
+                        )
                         onDismiss.invoke()
                     }) {
                         Text(text = "Yorum yap")
                     }
                 },
                 title = { Text(text = "Yorum") },
-                text = { OutlinedTextField(value = commentState.value, onValueChange = {
-                    commentState.value=it
-                }) })
+                text = {
+                    OutlinedTextField(value = commentState.value, onValueChange = {
+                        commentState.value = it
+                    })
+                })
         } else {
             AlertDialog(
                 onDismissRequest = {

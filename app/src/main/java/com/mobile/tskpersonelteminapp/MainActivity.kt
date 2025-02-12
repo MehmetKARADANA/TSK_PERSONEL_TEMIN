@@ -1,16 +1,23 @@
 package com.mobile.tskpersonelteminapp
 
 import android.app.Application
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.core.content.ContextCompat
+import androidx.core.content.PackageManagerCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -22,6 +29,7 @@ import com.mobile.tskpersonelteminapp.ui.screens.ComminityAdminScreen
 import com.mobile.tskpersonelteminapp.ui.screens.ComminityScreen
 import com.mobile.tskpersonelteminapp.ui.screens.LoginScreen
 import com.mobile.tskpersonelteminapp.ui.screens.MenuScreen
+import com.mobile.tskpersonelteminapp.ui.screens.NotificationTestScreen
 import com.mobile.tskpersonelteminapp.ui.screens.ProfileScreen
 import com.mobile.tskpersonelteminapp.ui.screens.RecruitmentScreen
 import com.mobile.tskpersonelteminapp.ui.screens.SettingsScreen
@@ -32,6 +40,7 @@ import com.mobile.tskpersonelteminapp.ui.theme.TskPersonelTeminAppTheme
 import com.mobile.tskpersonelteminapp.viewmodels.AnnouncementsViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.ComminityViewModel
+import com.mobile.tskpersonelteminapp.viewmodels.NotificationViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.RecruitmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
@@ -78,6 +87,8 @@ sealed class DestinationScreen(var route: String) {
     object AboutUs  : DestinationScreen("aboutUs")
     object Suggestion : DestinationScreen("suggestion")
 
+    object TestNotification  : DestinationScreen("notification")
+
 
 }
 
@@ -86,7 +97,11 @@ sealed class DestinationScreen(var route: String) {
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+      /*  fun requestNotificationPermission(){
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+                val hasPermissions = ContextCompat.checkSelfPermission(this,Manifest.permission.)== PackageManager.PERMISSION_GRANTED
+            }
+        }*/
         setContent {
             TskPersonelTeminAppTheme {
                 Surface(
@@ -108,11 +123,28 @@ class MainActivity : ComponentActivity() {
         val recruitmentViewModel = hiltViewModel<RecruitmentViewModel>()
         val authenticationViewModel = hiltViewModel<AuthenticationViewModel>()
         val comminityViewModel = hiltViewModel<ComminityViewModel>()
-        NavHost(navController = navController, startDestination = DestinationScreen.Menu.route) {
+       val notificationViewModel : NotificationViewModel by viewModels()
+
+
+
+        NavHost(navController = navController, startDestination = DestinationScreen.TestNotification.route) {
             composable(DestinationScreen.Announcements.route) {
                 //announcement screen
                 //   screentest()
                 AnnouncementsScreen(navController, announcementsViewModel)
+            }
+            composable(DestinationScreen.TestNotification.route) {
+                NotificationTestScreen(
+                    messageText = notificationViewModel.state.messageText,
+                    onMessageChange = notificationViewModel::onMessageChange,
+                    onMessageSend = {
+                        notificationViewModel.sendMessage(isBroadcast = false)
+                    },
+                    onMessageBroadcast = {
+                        notificationViewModel.sendMessage(isBroadcast = true)
+                    },
+                    viewModel = notificationViewModel
+                )
             }
 
             composable(DestinationScreen.CurrentRecruitment.route) {
