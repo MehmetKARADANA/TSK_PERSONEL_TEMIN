@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -27,8 +28,12 @@ import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,7 +41,9 @@ import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.ContextCompat
@@ -46,6 +53,64 @@ import com.mobile.tskpersonelteminapp.viewmodels.NotificationViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
+
+
+@Composable
+fun NotificationScreen(viewModel: NotificationViewModel) {
+    var message by remember { mutableStateOf("") }
+    var isBroadcast by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Bildirim Gönder",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+        OutlinedTextField(
+            value = message,
+            onValueChange = { message = it },
+            label = { Text("Mesajınızı Girin") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = false,
+            maxLines = 3
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Checkbox(
+                checked = isBroadcast,
+                onCheckedChange = { isBroadcast = it }
+            )
+            Text(text = "Tüm Kullanıcılara Gönder")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = {
+                viewModel.sendMessage(message, isBroadcast)
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Gönder")
+        }
+    }
+}
+
+
+
+/*
 @Composable
 fun NotificationTestScreen(
     messageText: String,
@@ -59,7 +124,7 @@ fun NotificationTestScreen(
         color = MaterialTheme.colorScheme.background,
         modifier = Modifier.fillMaxSize()
     ) {
-        val state = viewModel.state
+
         if (state.isEnteringToken) {
             TokenDialog(
                 token = state.remoteToken,
@@ -161,4 +226,4 @@ fun TokenDialog(
     }
 
 
-}
+}*/

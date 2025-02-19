@@ -44,6 +44,7 @@ android {
     buildFeatures {
         compose = true
     }
+
 }
 
 dependencies {
@@ -53,13 +54,14 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.messaging.ktx)
 
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-
-    ksp("com.google.dagger:hilt-android-compiler:2.51.1")
+    implementation(libs.retrofit)
+  //  implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.google.code.gson:gson:2.10.1") // Gson kütüphanesi
+    ksp(libs.hilt.android.compiler)
     implementation(libs.firebase.firestore)
     val nav_version = "2.8.4"
-    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

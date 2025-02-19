@@ -1,90 +1,96 @@
 package com.mobile.tskpersonelteminapp.viewmodels
 
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+
+
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+
+import android.os.Build
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.firebase.Firebase
-import com.google.firebase.messaging.messaging
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.Gson
+import com.mobile.tskpersonelteminapp.R
 import com.mobile.tskpersonelteminapp.data.FcmApi
-import com.mobile.tskpersonelteminapp.data.models.ChatState
 import com.mobile.tskpersonelteminapp.data.models.NotificationBody
 import com.mobile.tskpersonelteminapp.data.models.SendMessageDto
-import com.squareup.moshi.JsonReader.Token
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import okio.IOException
-import retrofit2.HttpException
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 class NotificationViewModel : ViewModel() {
 
-    var state by mutableStateOf(ChatState())
-        private set
-
     private val api: FcmApi = Retrofit.Builder()
-        .baseUrl("http:10.0.2.2:8080/")
-        .addConverterFactory(MoshiConverterFactory.create())
+        .baseUrl("http://10.0.2.2:8080/") // Local backend için
+        .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create()
 
+    var userToken: String? = null // Kullanıcı token'ı buraya kaydedilecek
+
     init {
         viewModelScope.launch {
-            Firebase.messaging.subscribeToTopic("testTopic").await()
+            try {
+                FirebaseMessaging.getInstance().subscribeToTopic("chat").await()
+                Log.d("FCM", "Chat konusuna başarıyla abone olundu")
+            } catch (e: Exception) {
+                Log.e("FCM", "Chat konusuna abone olunamadı", e)
+            }
+            fetchFirebaseToken()
         }
+
+
     }
 
-    fun onRemoteTokenChange(newToken: String) {
-        state = state.copy(
-            remoteToken = newToken
-        )
+    private fun fetchFirebaseToken() {
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    userToken = task.result
+                    Log.d("FCM_TOKEN", "Firebase Token: $userToken")
+                } else {
+                    Log.e("FCM_TOKEN", "Token alınamadı", task.exception)
+                }
+            }
     }
 
-    fun onSubmitToken() {
-        state = state.copy(
-            isEnteringToken = false
-        )
-    }
 
-    fun onMessageChange(message: String) {
-        state = state.copy(
-            messageText = message
-        )
-    }
-
-    fun sendMessage(isBroadcast: Boolean) {
+    fun sendMessage(message: String, isBroadcast: Boolean) {
         viewModelScope.launch {
+            if (message.isBlank()) {
+                Log.e("FCM_SEND", "Mesaj boş olamaz")
+                return@launch
+            }
 
             val messageDto = SendMessageDto(
-                to = if (isBroadcast) null else state.remoteToken,
+                to = if (isBroadcast) null else userToken, // Eğer broadcast ise `to=null`
                 notification = NotificationBody(
-                    title = "NewMessage",
-                    body = state.messageText
+                    title = "Yeni Mesaj",
+                    body = message
                 )
             )
 
+            Log.d("FCM_REQUEST", "Gönderilen JSON: ${Gson().toJson(messageDto)}")
+
             try {
-                if (isBroadcast) {
+                val response = if (isBroadcast) {
                     api.broadcast(messageDto)
                 } else {
                     api.sendMessage(messageDto)
                 }
-
-                state = state.copy(
-                    messageText = ""
-                )
-            } catch (e: HttpException) {
-                e.printStackTrace()
-//handleexception
-            }catch (e : IOException){
-                e.printStackTrace()
+                if (response.isSuccessful) {
+                    Log.d("FCM_SEND", "Bildirim başarıyla gönderildi")
+                } else {
+                    Log.e("FCM_SEND", "Bildirim gönderme başarısız: ${response.errorBody()?.string()}")
+                }
+            } catch (e: Exception) {
+                Log.e("FCM_SEND", "Hata oluştu", e)
             }
-
         }
     }
 }

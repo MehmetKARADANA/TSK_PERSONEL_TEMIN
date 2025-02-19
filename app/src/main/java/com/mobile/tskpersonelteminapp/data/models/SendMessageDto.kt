@@ -1,11 +1,14 @@
 package com.mobile.tskpersonelteminapp.data.models
 
+import com.google.gson.annotations.SerializedName
+
+
 data class SendMessageDto(
-    val to : String?,
-    val notification : NotificationBody
+    val to: String?, // Tek kullanıcı için `to=token`, broadcast için `to=null`
+    val notification: NotificationBody
 )
 
 data class NotificationBody(
-    var title : String,
-    val body : String
+    val title: String,
+    val body: String
 )

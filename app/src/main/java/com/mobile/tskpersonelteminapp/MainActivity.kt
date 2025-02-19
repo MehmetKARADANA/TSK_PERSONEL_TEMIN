@@ -26,7 +26,7 @@ import com.mobile.tskpersonelteminapp.ui.screens.ComminityAdminScreen
 import com.mobile.tskpersonelteminapp.ui.screens.ComminityScreen
 import com.mobile.tskpersonelteminapp.ui.screens.LoginScreen
 import com.mobile.tskpersonelteminapp.ui.screens.MenuScreen
-import com.mobile.tskpersonelteminapp.ui.screens.NotificationTestScreen
+import com.mobile.tskpersonelteminapp.ui.screens.NotificationScreen
 import com.mobile.tskpersonelteminapp.ui.screens.ProfileScreen
 import com.mobile.tskpersonelteminapp.ui.screens.RecruitmentScreen
 import com.mobile.tskpersonelteminapp.ui.screens.SettingsScreen
@@ -43,6 +43,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
+import android.Manifest
+
 
 
 sealed class DestinationScreen(var route: String) {
@@ -110,11 +112,11 @@ class MainActivity : ComponentActivity() {
     fun requestNotificationPermission(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
             val hasPermissions = ContextCompat.checkSelfPermission(
-                this.applicationContext,"android.permission.POST_NOTIFICATIONS")== PackageManager.PERMISSION_GRANTED
+                this.applicationContext,Manifest.permission.POST_NOTIFICATIONS)== PackageManager.PERMISSION_GRANTED
 
             if(!hasPermissions){
                 ActivityCompat.requestPermissions(
-                    this, arrayOf("android.permission.POST_NOTIFICATIONS"),
+                    this, arrayOf(Manifest.permission.POST_NOTIFICATIONS),
                     0
                 )
             }
@@ -139,17 +141,7 @@ class MainActivity : ComponentActivity() {
                 AnnouncementsScreen(navController, announcementsViewModel)
             }
             composable(DestinationScreen.TestNotification.route) {
-                NotificationTestScreen(
-                    messageText = notificationViewModel.state.messageText,
-                    onMessageChange = notificationViewModel::onMessageChange,
-                    onMessageSend = {
-                        notificationViewModel.sendMessage(isBroadcast = false)
-                    },
-                    onMessageBroadcast = {
-                        notificationViewModel.sendMessage(isBroadcast = true)
-                    },
-                    viewModel = notificationViewModel
-                )
+                NotificationScreen(notificationViewModel)
             }
 
             composable(DestinationScreen.CurrentRecruitment.route) {
