@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
 
 //three click functions and title
 @Composable
@@ -35,7 +36,7 @@ fun ComminityHeader(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .background(color = Color.Yellow),
+            .background(color = toolbarColor),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

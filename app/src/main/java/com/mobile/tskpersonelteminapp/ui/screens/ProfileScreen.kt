@@ -39,6 +39,7 @@ import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.R
 import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
+import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
@@ -160,7 +161,7 @@ fun ProfileHeader(onBackClicked: () -> Unit, onLogoutClicked: () -> Unit, header
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .background(color = Color.Yellow),
+            .background(color = toolbarColor),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -179,7 +180,7 @@ fun ProfileHeader(onBackClicked: () -> Unit, onLogoutClicked: () -> Unit, header
         )
         Icon(Icons.Default.ExitToApp, contentDescription = "Exit",
             modifier = Modifier
-                .padding(start = 8.dp)
+                .padding(start = 8.dp, end = 8.dp)
                 .size(30.dp)
                 .clickable {
                     onLogoutClicked.invoke()

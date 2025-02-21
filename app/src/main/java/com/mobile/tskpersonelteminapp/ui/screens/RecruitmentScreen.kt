@@ -1,5 +1,6 @@
 package com.mobile.tskpersonelteminapp.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,8 @@ import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
 import com.mobile.tskpersonelteminapp.ui.components.CustomCard
+import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
+import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.viewmodels.RecruitmentViewModel
 
@@ -36,7 +39,7 @@ fun RecruitmentScreen(navController: NavController,viewModel: RecruitmentViewMod
     val inProcess=viewModel.inProcess.value
     val recruitments = viewModel.recruitments.value
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(color = primaryColor)) {
         if(inProcess){
             CommonProgressBar()
         }else if(errorMessage != null){

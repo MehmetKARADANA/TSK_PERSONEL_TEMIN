@@ -19,23 +19,7 @@ class NotificationService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
-      /*  super.onMessageReceived(message)
-        //respond to message received
-       /* message.notification?.let {
-            Log.d("FCM_RECEIVE", "Bildirim alındı: ${it.title} - ${it.body}")
-            showNotification(it.title ?: "Başlık Yok", it.body ?: "İçerik Yok")
-        }*/
-        if (message.notification != null) {
-            // Bildirim içeriği varsa
-            Log.d("FCM_RECEIVE", "Bildirim alındı: ${message.notification?.title} - ${message.notification?.body}")
-            showNotification(message.notification?.title ?: "Başlık Yok", message.notification?.body ?: "İçerik Yok")
-        } else if (message.data.isNotEmpty()) {
-            // Data içeriği varsa
-            Log.d("FCM_RECEIVE", "FCM Data Mesajı Alındı: ${message.data}")
-            val title = message.data["title"] ?: "Başlık Yok"
-            val body = message.data["body"] ?: "İçerik Yok"
-            showNotification(title, body)
-        }*/
+
         super.onMessageReceived(message)
 
         // Tüm mesaj içeriğini detaylı loglama
@@ -58,10 +42,7 @@ class NotificationService : FirebaseMessagingService() {
             } catch (e: Exception) {
                 Log.e("FCM_ERROR", "Notification bildirimi gösterme hatası", e)
             }
-        }
-
-        // Data mesajları için ayrı bir if bloğu (else if değil)
-        if (message.data.isNotEmpty()) {
+        }else if (message.data.isNotEmpty()) {
             Log.d("FCM_RECEIVE", "Data mesajı içeriği: ${message.data}")
 
             try {
@@ -90,6 +71,7 @@ class NotificationService : FirebaseMessagingService() {
             Log.d("FCM_DEBUG", "Bildirim ve data içeriği boş, işlenecek bir şey yok")
         }
     }
+    @SuppressLint("ObsoleteSdkInt")
     private fun showNotification(title: String, message: String) {
         val channelId = "default_channel"
         val notificationManager =
@@ -107,13 +89,14 @@ class NotificationService : FirebaseMessagingService() {
         }
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.announcement)
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
-
-        notificationManager.notify(0, notificationBuilder.build())
+        val notificationId = System.currentTimeMillis().toInt() // Benzersiz ID
+        notificationManager.notify(notificationId, notificationBuilder.build())
+        //notificationManager.notify(0, notificationBuilder.build())
     }
 
 }

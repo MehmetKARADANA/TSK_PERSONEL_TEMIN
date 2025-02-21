@@ -1,6 +1,7 @@
 package com.mobile.tskpersonelteminapp.ui.screens
 
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,7 +23,10 @@ import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.DestinationScreen
+import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
 import com.mobile.tskpersonelteminapp.ui.components.CustomCard
+import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
+import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
 import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.viewmodels.AnnouncementsViewModel
@@ -41,9 +45,9 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
 
     val announcements = viewModel.announcements.value
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(color = primaryColor)) {
         if (inProcess) {
-            CircularProgressIndicator()
+            CommonProgressBar()
         } else if (errorMessage != null) {
          //   Text(text = "Error :b$errorMessage")
             Row(

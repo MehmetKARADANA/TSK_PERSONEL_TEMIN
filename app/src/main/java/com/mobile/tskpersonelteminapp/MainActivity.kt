@@ -109,7 +109,7 @@ class MainActivity : ComponentActivity() {
 
         }
     }
-    fun requestNotificationPermission(){
+    private fun requestNotificationPermission(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
             val hasPermissions = ContextCompat.checkSelfPermission(
                 this.applicationContext,Manifest.permission.POST_NOTIFICATIONS)== PackageManager.PERMISSION_GRANTED
@@ -134,7 +134,7 @@ class MainActivity : ComponentActivity() {
 
 
 
-        NavHost(navController = navController, startDestination = DestinationScreen.TestNotification.route) {
+        NavHost(navController = navController, startDestination = DestinationScreen.Announcements.route) {
             composable(DestinationScreen.Announcements.route) {
                 //announcement screen
                 //   screentest()
