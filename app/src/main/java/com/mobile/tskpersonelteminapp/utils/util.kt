@@ -40,11 +40,7 @@ fun formatTimestamp(timestamp: Timestamp, zone: String = "UTC+3"): String {
 fun CheckSignedIn(
     viewModel: AuthenticationViewModel,
     navController: NavController
-) {/*
-    val alreadySignIn = remember {
-        mutableStateOf(false)
-    }*/
-
+) {
     val signIn = viewModel.signIn.value
     if(signIn){
         navigateTo(navController,DestinationScreen.Menu.route)

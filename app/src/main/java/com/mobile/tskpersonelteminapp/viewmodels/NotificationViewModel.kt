@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 class NotificationViewModel : ViewModel() {
-
+//kalkıcak
     private val api: FcmApi = Retrofit.Builder()
         .baseUrl("http://10.0.2.2:8080/") // Local backend için
         .addConverterFactory(GsonConverterFactory.create())
@@ -34,7 +34,7 @@ class NotificationViewModel : ViewModel() {
     var userToken: String? = null // Kullanıcı token'ı buraya kaydedilecek
 
     init {
-        viewModelScope.launch {
+       /* viewModelScope.launch {
             try {
                 FirebaseMessaging.getInstance().subscribeToTopic("chat").await()
                 Log.d("FCM", "Chat konusuna başarıyla abone olundu")
@@ -42,7 +42,7 @@ class NotificationViewModel : ViewModel() {
                 Log.e("FCM", "Chat konusuna abone olunamadı", e)
             }
             fetchFirebaseToken()
-        }
+        }*/
 
 
     }
@@ -59,7 +59,7 @@ class NotificationViewModel : ViewModel() {
             }
     }
 
-
+//Bu fonksiyon kalkıcak
     fun sendMessage(message: String, isBroadcast: Boolean) {
         viewModelScope.launch {
             if (message.isBlank()) {

@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.mobile.tskpersonelteminapp.data.Event
 
-open class BaseViewModel : ViewModel() {
+open class BaseViewModel() : ViewModel() {
 
     // Hata mesajını saklamak için mutableStateOf
     private val _errorMessage = mutableStateOf<Event<String>?>(null)

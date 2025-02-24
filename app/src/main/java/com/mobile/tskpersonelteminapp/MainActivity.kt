@@ -44,7 +44,10 @@ import dagger.hilt.android.HiltAndroidApp
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import android.Manifest
-
+import androidx.lifecycle.lifecycleScope
+import com.mobile.tskpersonelteminapp.data.AppPreferences
+import com.mobile.tskpersonelteminapp.viewmodels.SettingsViewModel
+import kotlinx.coroutines.launch
 
 
 sealed class DestinationScreen(var route: String) {
@@ -83,10 +86,10 @@ sealed class DestinationScreen(var route: String) {
 
     object Settings : DestinationScreen("settings")
     object Profile : DestinationScreen("profile")
-    object AboutUs  : DestinationScreen("aboutUs")
+    object AboutUs : DestinationScreen("aboutUs")
     object Suggestion : DestinationScreen("suggestion")
 
-    object TestNotification  : DestinationScreen("notification")
+    object TestNotification : DestinationScreen("notification")
 
 
 }
@@ -96,6 +99,7 @@ sealed class DestinationScreen(var route: String) {
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         requestNotificationPermission()
         setContent {
             TskPersonelTeminAppTheme {
@@ -109,12 +113,14 @@ class MainActivity : ComponentActivity() {
 
         }
     }
-    private fun requestNotificationPermission(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-            val hasPermissions = ContextCompat.checkSelfPermission(
-                this.applicationContext,Manifest.permission.POST_NOTIFICATIONS)== PackageManager.PERMISSION_GRANTED
 
-            if(!hasPermissions){
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val hasPermissions = ContextCompat.checkSelfPermission(
+                this.applicationContext, Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+
+            if (!hasPermissions) {
                 ActivityCompat.requestPermissions(
                     this, arrayOf(Manifest.permission.POST_NOTIFICATIONS),
                     0
@@ -122,6 +128,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
     @Composable
     fun AppNavigation() {
         val navController = rememberNavController()
@@ -130,11 +137,15 @@ class MainActivity : ComponentActivity() {
         val recruitmentViewModel = hiltViewModel<RecruitmentViewModel>()
         val authenticationViewModel = hiltViewModel<AuthenticationViewModel>()
         val comminityViewModel = hiltViewModel<ComminityViewModel>()
-       val notificationViewModel : NotificationViewModel by viewModels()
+        val notificationViewModel: NotificationViewModel by viewModels()
+        val settingsViewModel : SettingsViewModel by viewModels()
 
 
 
-        NavHost(navController = navController, startDestination = DestinationScreen.Announcements.route) {
+        NavHost(
+            navController = navController,
+            startDestination = DestinationScreen.Announcements.route
+        ) {
             composable(DestinationScreen.Announcements.route) {
                 //announcement screen
                 //   screentest()
@@ -176,9 +187,15 @@ class MainActivity : ComponentActivity() {
                 val themeId = it.arguments?.getString("themeId")
                 val topicId = it.arguments?.getString("topicId")
 
-                themeId?.let { theme->
+                themeId?.let { theme ->
                     topicId?.let {
-                        CommentScreen(themeId = theme, topicId = it, navController = navController, comminityVm = comminityViewModel, authenticationViewModel = authenticationViewModel)
+                        CommentScreen(
+                            themeId = theme,
+                            topicId = it,
+                            navController = navController,
+                            comminityVm = comminityViewModel,
+                            authenticationViewModel = authenticationViewModel
+                        )
                     }
                 }
 
@@ -212,7 +229,7 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(DestinationScreen.Settings.route) {
-                SettingsScreen(navController = navController)
+                SettingsScreen(navController = navController, viewModel =settingsViewModel )
             }
 
             composable(DestinationScreen.AboutUs.route) {
