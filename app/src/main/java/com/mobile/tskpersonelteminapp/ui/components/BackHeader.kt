@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -44,9 +45,6 @@ fun BackHeader(onBackClicked: () -> Unit, headerText: String) {
             fontSize = 22.sp,
             modifier = Modifier.padding(bottom = 10.dp, top = 10.dp)
         )
-        Icon(Icons.Default.Star, contentDescription = "", modifier = Modifier
-            .padding(start = 8.dp)
-            .size(30.dp)
-            .clickable {} )
+        Spacer(modifier = Modifier.padding(30.dp))
     }
 }

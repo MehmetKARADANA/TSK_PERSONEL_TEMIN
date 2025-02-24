@@ -1,6 +1,7 @@
 package com.mobile.tskpersonelteminapp.ui.screens
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +23,7 @@ import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.ui.components.BackHeader
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
+import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.viewmodels.SettingsViewModel
 
@@ -37,10 +39,16 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel) {
         navController.popBackStack()
     }
 
-
+Column( modifier = Modifier
+    .fillMaxSize()
+    .background(primaryColor)) {
+    BackHeader(onBackClicked = {
+        navController.popBackStack()
+    },"Bildirim Ayarları")
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
+            .weight(1f)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -54,9 +62,9 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel) {
         }
 
         Spacer(modifier = Modifier.padding(8.dp))
-        Button(onClick ={/*diğer ayaraları aç*/} ){
+        Button(onClick = {/*diğer ayaraları aç*/ }) {
             Text("Diğer Ayarlar")
         }
     }
-
+}
 }
