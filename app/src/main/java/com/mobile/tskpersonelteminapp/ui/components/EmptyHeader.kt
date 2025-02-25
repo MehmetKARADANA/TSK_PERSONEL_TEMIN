@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,7 +26,7 @@ fun EmptyHeader(headerText: String) {
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = headerText,fontWeight = FontWeight.W500,
+        Text(text = headerText,fontWeight = FontWeight.W500, fontFamily = FontFamily.Serif,
             fontSize = 22.sp, modifier = Modifier.padding(bottom = 10.dp, top = 10.dp))
     }
 }

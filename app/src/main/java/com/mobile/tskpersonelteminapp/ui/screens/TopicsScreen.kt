@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -101,6 +102,7 @@ fun TopicsScreen(
             content = comminityVm.themes.value.find { it.themeId == themeId }?.theme.toString(),
             modifier = Modifier
         )
+        Divider()
         LazyColumn(modifier = Modifier
             .fillMaxWidth()
             .weight(1f)) {

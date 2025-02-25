@@ -18,10 +18,10 @@ import com.mobile.tskpersonelteminapp.data.FcmApi
 import com.mobile.tskpersonelteminapp.data.models.NotificationBody
 import com.mobile.tskpersonelteminapp.data.models.SendMessageDto
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+
 
 class NotificationViewModel : ViewModel() {
 //kalkıcak

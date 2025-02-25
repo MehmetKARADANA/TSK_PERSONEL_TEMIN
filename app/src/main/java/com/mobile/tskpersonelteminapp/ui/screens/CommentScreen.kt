@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -108,6 +109,7 @@ fun CommentScreen(
             date = comminityVm.topics.value.find { it.topicId == topicId }?.date!!,
             userName = comminityVm.topics.value.find { it.topicId == topicId }?.user?.name.toString()
         )
+        Divider()
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
