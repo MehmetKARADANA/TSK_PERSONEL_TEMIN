@@ -47,6 +47,7 @@ import android.Manifest
 import androidx.lifecycle.lifecycleScope
 import com.mobile.tskpersonelteminapp.data.AppPreferences
 import com.mobile.tskpersonelteminapp.viewmodels.SettingsViewModel
+import com.mobile.tskpersonelteminapp.viewmodels.SuggestionViewModel
 import kotlinx.coroutines.launch
 
 
@@ -139,6 +140,7 @@ class MainActivity : ComponentActivity() {
         val comminityViewModel = hiltViewModel<ComminityViewModel>()
         val notificationViewModel: NotificationViewModel by viewModels()
         val settingsViewModel : SettingsViewModel by viewModels()
+        val suggestionViewModel= hiltViewModel<SuggestionViewModel>()
 
 
 
@@ -237,7 +239,7 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(DestinationScreen.Suggestion.route) {
-                SuggestionScreen(navController = navController)
+                SuggestionScreen(navController = navController,suggestionViewModel)
             }
 
         }

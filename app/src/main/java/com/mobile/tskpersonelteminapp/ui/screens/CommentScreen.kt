@@ -19,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
@@ -34,6 +35,7 @@ import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.ComminityViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun CommentScreen(
@@ -78,7 +80,7 @@ fun CommentScreen(
         themeId = themeId,
         topicId = topicId,
         onDismiss = { onDismissCommentAdd.invoke() },
-        commnityVm = comminityVm,
+        comminityVm = comminityVm,
         authVm = authenticationViewModel,
         navController = navController,
         user = user
@@ -132,13 +134,12 @@ fun ShowADComment(
     onDismiss: () -> Unit,
     authVm: AuthenticationViewModel,
     navController: NavController,
-    commnityVm: ComminityViewModel,
+    comminityVm: ComminityViewModel,
     themeId: String,
     topicId: String,
     user: User
 ) {
     val signIn = authVm.signIn.value
-
     val commentState = remember {
         mutableStateOf(TextFieldValue())
     }
@@ -151,14 +152,16 @@ fun ShowADComment(
                 confirmButton = {
                     Button(onClick = {
                         //soru sor
-                        commnityVm.addComments(
+                        comminityVm.addComments(
                             comment = commentState.value.text,
                             themeId = themeId,
                             topicId = topicId,
                             user = user
                         )
+                       // commentState.value=TextFieldValue()
                         onDismiss.invoke()
-                    }) {
+                    }
+                    ) {
                         Text(text = "Yorum yap")
                     }
                 },

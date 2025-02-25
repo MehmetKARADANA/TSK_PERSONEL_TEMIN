@@ -1,5 +1,6 @@
 package com.mobile.tskpersonelteminapp.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +15,8 @@ import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.ui.components.ComminityCustomCard
+import com.mobile.tskpersonelteminapp.ui.components.EmptyHeader
+import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 
 enum class MenuItem(val itemName: String, val navDestinationScreen: DestinationScreen) {
@@ -28,7 +31,8 @@ enum class MenuItem(val itemName: String, val navDestinationScreen: DestinationS
 @Composable
 fun MenuScreen(navController: NavController) {
     Column (modifier = Modifier
-        .fillMaxSize()) {
+        .fillMaxSize().background(primaryColor)) {
+        EmptyHeader("Menü")
         Column (modifier = Modifier.fillMaxWidth().weight(1f).padding(4.dp)){
             for (item in MenuItem.entries) {
                 ComminityCustomCard(content = item.itemName, modifier = Modifier.clickable {

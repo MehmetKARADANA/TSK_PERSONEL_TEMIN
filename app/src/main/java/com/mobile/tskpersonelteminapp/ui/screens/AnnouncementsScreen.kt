@@ -25,6 +25,7 @@ import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
 import com.mobile.tskpersonelteminapp.ui.components.CustomCard
+import com.mobile.tskpersonelteminapp.ui.components.EmptyHeader
 import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
 import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
 import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
@@ -46,6 +47,7 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
     val announcements = viewModel.announcements.value
 
     Column(modifier = Modifier.fillMaxSize().background(color = primaryColor)) {
+        EmptyHeader("Duyurular")
         if (inProcess) {
             CommonProgressBar()
         } else if (errorMessage != null) {
