@@ -62,10 +62,6 @@ fun ComminityScreen(navController: NavController, viewModel: ComminityViewModel)
                         .fillMaxWidth()
                         .weight(1f)) {
                     items(themes) {
-                     /*   Text(text = it.theme, modifier = Modifier.clickable {
-                           navigateTo(navController,DestinationScreen.Topics.createRoute(themeId = it.themeId!!))
-                        })
-                        Text(text = "-------")*/
                         ComminityCustomCard(content = it.theme, modifier = Modifier.clickable {
                             navigateTo(navController,DestinationScreen.Topics.createRoute(themeId = it.themeId!!))
                         })
