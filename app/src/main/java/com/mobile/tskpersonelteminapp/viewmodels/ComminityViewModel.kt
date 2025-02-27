@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.toObjects
 import com.mobile.tskpersonelteminapp.data.COMMENTS
 import com.mobile.tskpersonelteminapp.data.THEMES
@@ -80,7 +81,9 @@ class ComminityViewModel @Inject constructor(
 
     fun getTopics(themeId: String) {
         inProcess.value = true
-        db.collection(THEMES).document(themeId).collection(TOPICS)
+
+
+        db.collection(THEMES).document(themeId).collection(TOPICS).orderBy("pinned", Query.Direction.DESCENDING)/*.orderBy("date", Query.Direction.DESCENDING)*/
             .addSnapshotListener { value, error ->
                 inProcess.value = false
                 if (error != null) {

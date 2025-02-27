@@ -37,6 +37,7 @@ data class Topic(
     val topic: String?="",
     val user : User?=null,
     val date : Timestamp?=null,
+    val pinned : Boolean?=false
 )
 
 data class Comment(
@@ -44,6 +45,7 @@ data class Comment(
     val user : User?=null,
     val comment : String?="",
     val date : Timestamp?=null,
+    val pinned : Boolean?=false
 )
 
 data class User(
