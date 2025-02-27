@@ -90,7 +90,11 @@ fun TopicsScreen(
         themeId = themeId,
         user = user
     )
-    Column(modifier = Modifier.fillMaxSize().background(color = primaryColor)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = primaryColor)
+    ) {
         ComminityHeader("Konular", onBackClicked = {
             navController.popBackStack()
         }, onAccountClicked = {
@@ -103,13 +107,24 @@ fun TopicsScreen(
             modifier = Modifier
         )
         Divider()
-        LazyColumn(modifier = Modifier
-            .fillMaxWidth()
-            .weight(1f)) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        ) {
             items(topics) {
-                TopicCustomCard(content = it.topic!!, modifier = Modifier.clickable {
-                    navigateTo(navController,DestinationScreen.Comments.createRoute(themeId=themeId, topicId = it.topicId!!))
-                }, date = it.date!!, userName = it.user?.name!!)
+                TopicCustomCard(
+                    content = it.topic!!, modifier = Modifier.clickable {
+                        navigateTo(
+                            navController,
+                            DestinationScreen.Comments.createRoute(
+                                themeId = themeId,
+                                topicId = it.topicId!!
+                            )
+                        )
+                    }, date = it.date!!, userName = it.user?.name!!,
+                    pinned = it.pinned ?: false
+                )
             }
         }
     }

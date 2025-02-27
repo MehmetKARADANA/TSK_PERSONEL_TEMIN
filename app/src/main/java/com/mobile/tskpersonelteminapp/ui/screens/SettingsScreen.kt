@@ -17,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -25,15 +26,21 @@ import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
+import com.mobile.tskpersonelteminapp.viewmodels.NotificationViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.SettingsViewModel
 
 @Composable
-fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel) {
-    val isChatNotificationEnabled by viewModel.isChatNotificationEnabled.collectAsState()
-    val isFirstLaunch = viewModel.isFirstLaunch
+fun SettingsScreen(navController: NavController, settingsViewModel : SettingsViewModel,notificationViewModel: NotificationViewModel) {
+
+    val errorMessage by notificationViewModel.errorMessage
+    val context = LocalContext.current
+    // Hata mesajını dinle ve göster
+    ObserveErrorMessage(errorMessage)
+    val isChatNotificationEnabled by settingsViewModel .isChatNotificationEnabled.collectAsState()
+    val isFirstLaunch = settingsViewModel .isFirstLaunch
     if (isFirstLaunch) {
-        viewModel.setNotificationEnabled("chat", true)
-        viewModel.setFirstLaunchDone()
+        settingsViewModel .setNotificationEnabled("chat", true)
+        settingsViewModel .setFirstLaunchDone()
     }
     BackHandler {
         navController.popBackStack()
@@ -58,12 +65,12 @@ Column( modifier = Modifier
 
             Switch(
                 checked = isChatNotificationEnabled,
-                onCheckedChange = { viewModel.setNotificationEnabled("chat", it) })
+                onCheckedChange = { settingsViewModel.setNotificationEnabled("chat", it) })
         }
 
         Spacer(modifier = Modifier.padding(8.dp))
-        Button(onClick = {/*diğer ayaraları aç*/ }) {
-            Text("Diğer Ayarlar")
+        Button(onClick = {notificationViewModel.openNotificationSettings(context) }) {
+            Text("Bildirim Ayarları")
         }
     }
 }

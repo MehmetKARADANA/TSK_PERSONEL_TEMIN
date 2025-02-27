@@ -107,7 +107,8 @@ fun CommentScreen(
             content = comminityVm.topics.value.find { it.topicId == topicId }?.topic.toString(),
             modifier = Modifier.padding(4.dp),
             date = comminityVm.topics.value.find { it.topicId == topicId }?.date!!,
-            userName = comminityVm.topics.value.find { it.topicId == topicId }?.user?.name.toString()
+            userName = comminityVm.topics.value.find { it.topicId == topicId }?.user?.name.toString(),
+            pinned = false
         )
         Divider()
         LazyColumn(
@@ -120,7 +121,8 @@ fun CommentScreen(
                     content = it.comment!!,
                     date = it.date!!,
                     modifier = Modifier,
-                    userName = it.user?.name!!
+                    userName = it.user?.name!!,
+                    pinned =it.pinned ?: false
                 )
             }
         }

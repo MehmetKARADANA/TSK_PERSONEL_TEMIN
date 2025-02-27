@@ -6,9 +6,13 @@ package com.mobile.tskpersonelteminapp.viewmodels
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 
 import android.os.Build
+import android.provider.Settings
 import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.messaging.FirebaseMessaging
@@ -22,8 +26,52 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
+class NotificationViewModel : BaseViewModel() {
 
-class NotificationViewModel : ViewModel() {
+    fun openNotificationSettings(context: Context) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                val isPermissionGranted = ContextCompat.checkSelfPermission(
+                    context,
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED
+
+                if (!isPermissionGranted) {
+                    try {
+                        val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                            putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                        }
+                        context.startActivity(intent)
+                    } catch (e: Exception) {
+                        handleException(customMessage = "Bildirim ayarları ekranı açılamadı: ${e.localizedMessage}")
+                    }
+                } else {
+                    handleException(customMessage = "Bildirim izni zaten verildi")
+                    try {
+                        val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                            putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                        }
+                        context.startActivity(intent)
+                    } catch (e: Exception) {
+                        handleException(customMessage = "Bildirim ayarları ekranı açılamadı: ${e.localizedMessage}")
+                    }
+                }
+            } else {
+                handleException(customMessage = "Android 12 ve öncesinde izin gerekmiyor")
+                try {
+                    val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                        putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                    }
+                    context.startActivity(intent)
+                } catch (e: Exception) {
+                    handleException(customMessage = "Bildirim ayarları ekranı açılamadı: ${e.localizedMessage}")
+                }
+            }
+        } catch (e: Exception) {
+            handleException(customMessage = "Beklenmeyen bir hata oluştu: ${e.localizedMessage}")
+        }
+    }
+
 //kalkıcak
     private val api: FcmApi = Retrofit.Builder()
         .baseUrl("http://10.0.2.2:8080/") // Local backend için

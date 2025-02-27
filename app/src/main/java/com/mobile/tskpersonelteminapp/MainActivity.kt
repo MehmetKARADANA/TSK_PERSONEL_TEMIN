@@ -139,8 +139,8 @@ class MainActivity : ComponentActivity() {
         val authenticationViewModel = hiltViewModel<AuthenticationViewModel>()
         val comminityViewModel = hiltViewModel<ComminityViewModel>()
         val notificationViewModel: NotificationViewModel by viewModels()
-        val settingsViewModel : SettingsViewModel by viewModels()
-        val suggestionViewModel= hiltViewModel<SuggestionViewModel>()
+        val settingsViewModel: SettingsViewModel by viewModels()
+        val suggestionViewModel = hiltViewModel<SuggestionViewModel>()
 
 
 
@@ -231,7 +231,11 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(DestinationScreen.Settings.route) {
-                SettingsScreen(navController = navController, viewModel =settingsViewModel )
+                SettingsScreen(
+                    navController = navController,
+                    settingsViewModel = settingsViewModel,
+                    notificationViewModel = notificationViewModel
+                )
             }
 
             composable(DestinationScreen.AboutUs.route) {
@@ -239,7 +243,7 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(DestinationScreen.Suggestion.route) {
-                SuggestionScreen(navController = navController,suggestionViewModel)
+                SuggestionScreen(navController = navController, suggestionViewModel)
             }
 
         }

@@ -31,7 +31,6 @@ class AnnouncementsViewModel @Inject constructor(
         ).addSnapshotListener { value, error ->
             inProcess.value = false
             if (error != null) {
-                //daha sonra hata mesajları için metot yazacağım
                 handleException(error,error.message.toString())
                 error.printStackTrace()
                 return@addSnapshotListener

@@ -1,7 +1,6 @@
 package com.mobile.tskpersonelteminapp.viewmodels
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.mobile.tskpersonelteminapp.NotificationManager
