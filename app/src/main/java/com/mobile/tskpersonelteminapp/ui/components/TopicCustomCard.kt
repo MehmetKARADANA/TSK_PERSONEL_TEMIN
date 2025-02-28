@@ -1,5 +1,6 @@
 package com.mobile.tskpersonelteminapp.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.google.firebase.Timestamp
 import com.mobile.tskpersonelteminapp.R
+import com.mobile.tskpersonelteminapp.ui.theme.line
+import com.mobile.tskpersonelteminapp.ui.theme.offWhite
 import com.mobile.tskpersonelteminapp.utils.formatTimestamp
 
 @Composable
@@ -37,6 +40,7 @@ fun TopicCustomCard(
     ) {
         Column(modifier = Modifier
             .fillMaxWidth()
+            .background(offWhite)
             .padding(4.dp)) {
             Row(
                 modifier
@@ -58,7 +62,7 @@ fun TopicCustomCard(
                 modifier = Modifier
                     .padding(4.dp)
                     .fillMaxWidth()
-            ) { Text(text = content) }
+            ) { Text(text = content, color = line) }
             Divider()
             Row(
                 modifier = Modifier
@@ -66,8 +70,8 @@ fun TopicCustomCard(
                     .padding(4.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Column { Text(text = formatTimestamp(date)) }
-                Column { Text(text = userName) }
+                Column { Text(text = formatTimestamp(date),color = line) }
+                Column { Text(text = userName,color = line) }
             }
         }
     }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
@@ -21,7 +22,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.data.models.User
@@ -30,6 +33,7 @@ import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.ui.components.ComminityCustomCard
 import com.mobile.tskpersonelteminapp.ui.components.ComminityHeader
 import com.mobile.tskpersonelteminapp.ui.components.TopicCustomCard
+import com.mobile.tskpersonelteminapp.ui.theme.background
 import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
 import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
@@ -93,7 +97,7 @@ fun TopicsScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = primaryColor)
+            .background(color = background)
     ) {
         ComminityHeader("Konular", onBackClicked = {
             navController.popBackStack()
@@ -106,7 +110,7 @@ fun TopicsScreen(
             content = comminityVm.themes.value.find { it.themeId == themeId }?.theme.toString(),
             modifier = Modifier
         )
-        Divider()
+        Divider(color = Color.Gray, modifier = Modifier.padding(start = 4.dp, end = 4.dp))
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()

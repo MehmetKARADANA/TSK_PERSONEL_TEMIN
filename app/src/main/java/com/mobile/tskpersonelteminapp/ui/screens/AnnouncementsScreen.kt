@@ -17,19 +17,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.navigation.NavController
+import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
-import com.mobile.tskpersonelteminapp.utils.navigateTo
-import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
 import com.mobile.tskpersonelteminapp.ui.components.CustomCard
 import com.mobile.tskpersonelteminapp.ui.components.EmptyHeader
-import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
-import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
-import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
+import com.mobile.tskpersonelteminapp.ui.theme.background
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
+import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AnnouncementsViewModel
 
 
@@ -46,12 +45,14 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
 
     val announcements = viewModel.announcements.value
 
-    Column(modifier = Modifier.fillMaxSize().background(color = primaryColor)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(color = background)) {
         EmptyHeader("Duyurular")
         if (inProcess) {
             CommonProgressBar()
         } else if (errorMessage != null) {
-         //   Text(text = "Error :b$errorMessage")
+            //   Text(text = "Error :b$errorMessage")
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -63,20 +64,25 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
             }
         } else {
             if (announcements.isNotEmpty()) {
-                LazyColumn(modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                ) {
                     items(announcements) {
-                        CustomCard(title = it.title!!, date = it.date!!, modifier = Modifier.clickable {
-                            navigateTo(
-                                navController = navController,
-                                route = DestinationScreen.AnnouncementDetail.createRoute(it.detail_url!!)
-                            )
-                        })
+                        CustomCard(
+                            title = it.title!!,
+                            date = it.date!!,
+                            modifier = Modifier.clickable {
+                                navigateTo(
+                                    navController = navController,
+                                    route = DestinationScreen.AnnouncementDetail.createRoute(it.detail_url!!)
+                                )
+                            })
                     }
 
                 }
-            }else{
+            } else {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

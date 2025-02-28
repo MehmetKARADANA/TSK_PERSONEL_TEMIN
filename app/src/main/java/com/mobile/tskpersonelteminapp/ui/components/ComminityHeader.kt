@@ -24,6 +24,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobile.tskpersonelteminapp.ui.theme.line
+import com.mobile.tskpersonelteminapp.ui.theme.offWhite
 import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
 
 //three click functions and title
@@ -48,11 +50,12 @@ fun ComminityHeader(
                 .size(30.dp)
                 .clickable {
                     onBackClicked.invoke()
-                })//fontweigth ??
+                }, tint = offWhite)//fontweigth ??
         Text(
             text = headerText,
             fontWeight = FontWeight.W500,
             fontFamily = FontFamily.Serif,
+            color = offWhite,
             fontSize = 22.sp,
             modifier = Modifier.padding(bottom = 10.dp, top = 10.dp)
         )
@@ -63,10 +66,11 @@ fun ComminityHeader(
                     .padding(end = 4.dp)
                     .clickable {
                         onAddClicked.invoke()
-                    })
+                    }, tint = offWhite)
                 Icon(
                     Icons.Default.AccountCircle,
                     contentDescription = "Account",
+                    tint = offWhite,
                     modifier = Modifier.size(30.dp).clickable {
                         onAccountClicked.invoke()
                     }

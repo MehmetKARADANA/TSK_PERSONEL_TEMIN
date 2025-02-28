@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.mobile.tskpersonelteminapp"
-        minSdk = 26
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -55,9 +55,8 @@ dependencies {
     implementation(libs.firebase.messaging.ktx)
 
     implementation(libs.retrofit)
-  //  implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.google.code.gson:gson:2.10.1") // Gson kütüphanesi
+    implementation("com.google.code.gson:gson:2.11.0") // Gson kütüphanesi 2.10.1
     ksp(libs.hilt.android.compiler)
     implementation(libs.firebase.firestore)
     val nav_version = "2.8.4"
@@ -77,4 +76,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+   /* implementation("androidx.compose.foundation:foundation:1.7.8")
+    implementation("androidx.compose.foundation:foundation-layout:1.7.8")*/
+
 }

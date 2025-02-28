@@ -23,6 +23,7 @@ import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.ui.components.ComminityCustomCard
 import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
 import com.mobile.tskpersonelteminapp.ui.components.EmptyHeader
+import com.mobile.tskpersonelteminapp.ui.theme.background
 import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
 import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
@@ -40,7 +41,7 @@ fun ComminityScreen(navController: NavController, viewModel: ComminityViewModel)
     val inProcess = viewModel.inProcess.value
     val errorMessage = viewModel.errorMessage.value
     val themes = viewModel.themes.value
-    Column(modifier = Modifier.fillMaxSize().background(color = primaryColor)) {
+    Column(modifier = Modifier.fillMaxSize().background(color = background)) {
         EmptyHeader("Topluluk")
         if (inProcess) {
             CommonProgressBar()

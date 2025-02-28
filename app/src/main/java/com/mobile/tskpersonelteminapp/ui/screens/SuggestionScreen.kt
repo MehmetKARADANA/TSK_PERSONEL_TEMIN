@@ -1,6 +1,7 @@
 package com.mobile.tskpersonelteminapp.ui.screens
 
 import android.icu.text.CaseMap.Title
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +26,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.ui.components.BackHeader
 import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
+import com.mobile.tskpersonelteminapp.ui.theme.background
+import com.mobile.tskpersonelteminapp.ui.theme.line
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.viewmodels.SettingsViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.SuggestionViewModel
@@ -39,7 +42,7 @@ fun SuggestionScreen(navController: NavController,viewModel: SuggestionViewModel
     if (inProcess){
         CommonProgressBar()
     }else{
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(background),) {
         BackHeader(onBackClicked = {navController.popBackStack()}, headerText = "Görüş/Öneri")
         Column (modifier = Modifier.fillMaxWidth().weight(1f),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -51,11 +54,11 @@ fun SuggestionScreen(navController: NavController,viewModel: SuggestionViewModel
                 mutableStateOf(TextFieldValue())
             }
 
-            OutlinedTextField(value =suggestion.value , modifier = Modifier.padding(8.dp),label = { Text(text = "Öneri/Görüş") } , onValueChange = {
+            OutlinedTextField(value =suggestion.value , modifier = Modifier.padding(8.dp),label = { Text(text = "Öneri/Görüş", color = line) } , onValueChange = {
                 suggestion.value=it
             })
             Spacer(modifier = Modifier.padding(8.dp))
-            OutlinedTextField(value =email.value , modifier = Modifier.padding(8.dp),label = { Text(text = "Mail Adresi") } , onValueChange = {
+            OutlinedTextField(value =email.value , modifier = Modifier.padding(8.dp),label = { Text(text = "Mail Adresi", color = line) } , onValueChange = {
                 email.value=it
             })
             Spacer(modifier = Modifier.padding(8.dp))
@@ -69,7 +72,7 @@ fun SuggestionScreen(navController: NavController,viewModel: SuggestionViewModel
 
             Spacer(modifier = Modifier.padding(24.dp))
 
-            Text(text ="Geri bildirimleriniz için teşekkür ederiz.", modifier = Modifier.padding(bottom = 8.dp))
+            Text(text ="Geri bildirimleriniz için teşekkür ederiz.", modifier = Modifier.padding(bottom = 8.dp), color = line)
         }
         Spacer(modifier = Modifier.padding(32.dp))
     }}

@@ -24,8 +24,7 @@ import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
 import com.mobile.tskpersonelteminapp.ui.components.CustomCard
 import com.mobile.tskpersonelteminapp.ui.components.EmptyHeader
-import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
-import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
+import com.mobile.tskpersonelteminapp.ui.theme.background
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.viewmodels.RecruitmentViewModel
 
@@ -40,7 +39,7 @@ fun RecruitmentScreen(navController: NavController,viewModel: RecruitmentViewMod
     val inProcess=viewModel.inProcess.value
     val recruitments = viewModel.recruitments.value
 
-    Column(modifier = Modifier.fillMaxSize().background(color = primaryColor)) {
+    Column(modifier = Modifier.fillMaxSize().background(color = background)) {
         EmptyHeader("Teminler")
         if(inProcess){
             CommonProgressBar()

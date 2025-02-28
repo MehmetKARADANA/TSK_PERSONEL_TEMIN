@@ -1,5 +1,6 @@
 package com.mobile.tskpersonelteminapp.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,17 +20,45 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.mobile.tskpersonelteminapp.R
+import com.mobile.tskpersonelteminapp.ui.theme.line
+import com.mobile.tskpersonelteminapp.ui.theme.offWhite
+
 
 @Composable
-fun CustomCard(title: String, date: String,modifier: Modifier) {
-    Card (modifier = modifier.wrapContentHeight().padding(4.dp).fillMaxWidth()){
-        Column (modifier=Modifier.padding(4.dp)){
-                Text(text = title,modifier=Modifier.padding(4.dp), fontFamily = FontFamily.Serif)
-                Divider()
-               Row (horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(4.dp)){
-                   Icon(painter = painterResource(R.drawable.calendar), modifier = Modifier.size(24.dp),tint = Color.Unspecified , contentDescription = "Calendar")
-                   Text(text=date,modifier=Modifier.padding(4.dp),fontFamily = FontFamily.Serif)
-               }
+fun CustomCard(title: String, date: String, modifier: Modifier) {
+    Card(
+        modifier = modifier
+            .wrapContentHeight()
+            .padding(4.dp)
+            .fillMaxWidth()
+
+    ) {
+        Column(modifier = Modifier.background(color = offWhite).padding(4.dp)) {
+            Text(
+                text = title,
+                modifier = Modifier.padding(4.dp),
+                fontFamily = FontFamily.Serif,
+                color = line
+            )
+            Divider()
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(4.dp)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.calendar),
+                    modifier = Modifier.size(24.dp),
+                    tint = Color.Unspecified,
+                    contentDescription = "Calendar"
+                )
+                Text(
+                    text = date,
+                    modifier = Modifier.padding(4.dp),
+                    fontFamily = FontFamily.Serif,
+                    color = line
+                )
+            }
         }
     }
 

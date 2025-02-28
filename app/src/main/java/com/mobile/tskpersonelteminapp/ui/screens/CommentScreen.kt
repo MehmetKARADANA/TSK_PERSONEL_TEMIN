@@ -28,9 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.data.models.User
-import com.mobile.tskpersonelteminapp.ui.components.ComminityCustomCard
 import com.mobile.tskpersonelteminapp.ui.components.ComminityHeader
 import com.mobile.tskpersonelteminapp.ui.components.TopicCustomCard
+import com.mobile.tskpersonelteminapp.ui.theme.background
 import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
@@ -94,7 +94,7 @@ fun CommentScreen(
         navController = navController
     )
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(background)) {
         ComminityHeader("Yorumlar", onBackClicked = {
             navController.popBackStack()
         }, onAddClicked = {
@@ -110,7 +110,7 @@ fun CommentScreen(
             userName = comminityVm.topics.value.find { it.topicId == topicId }?.user?.name.toString(),
             pinned = false
         )
-        Divider()
+        Divider(color = Color.Gray, modifier = Modifier.padding(start = 4.dp, end = 4.dp))
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()

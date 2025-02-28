@@ -18,6 +18,7 @@ import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.ui.components.ComminityCustomCard
 import com.mobile.tskpersonelteminapp.ui.components.EmptyHeader
 import com.mobile.tskpersonelteminapp.ui.components.MenuCustomCard
+import com.mobile.tskpersonelteminapp.ui.theme.background
 import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 
@@ -33,7 +34,7 @@ enum class MenuItem(val itemName: String, val navDestinationScreen: DestinationS
 @Composable
 fun MenuScreen(navController: NavController) {
     Column (modifier = Modifier
-        .fillMaxSize().background(primaryColor)) {
+        .fillMaxSize().background(background)) {
         EmptyHeader("Menü")
         Column (modifier = Modifier.fillMaxWidth().weight(1f).padding(4.dp)){
             for (item in MenuItem.entries) {

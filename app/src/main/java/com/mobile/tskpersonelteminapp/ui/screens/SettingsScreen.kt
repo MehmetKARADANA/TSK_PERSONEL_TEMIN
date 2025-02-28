@@ -10,13 +10,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,7 +29,11 @@ import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.ui.components.BackHeader
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
+import com.mobile.tskpersonelteminapp.ui.theme.gradientBrush
+import com.mobile.tskpersonelteminapp.ui.theme.gradientBrushTurk
+import com.mobile.tskpersonelteminapp.ui.theme.line
 import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
+import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.viewmodels.NotificationViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.SettingsViewModel
@@ -60,7 +69,7 @@ Column( modifier = Modifier
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Duyuru Bildirimleri")
+            Text("Duyuru Bildirimleri", color = line)
             Spacer(modifier = Modifier.padding(8.dp))
 
             Switch(

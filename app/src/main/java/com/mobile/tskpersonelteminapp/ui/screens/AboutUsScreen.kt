@@ -26,28 +26,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.ui.components.BackHeader
-import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
-import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
+import com.mobile.tskpersonelteminapp.ui.theme.background
+import com.mobile.tskpersonelteminapp.ui.theme.line
 import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
 
 @Composable
 fun AboutUsScreen(navController: NavController) {
 
-    /* Column(modifier = Modifier.fillMaxSize()) {
-         Row(
-             modifier = Modifier
-                 .fillMaxWidth()
-                 .weight(1f),
-             horizontalArrangement = Arrangement.Center,
-             verticalAlignment = Alignment.CenterVertically
-         ) {
-             Text(text = "Hakkımızda", fontSize = 22.sp)
-         }
-         BottomNavigationMenu(
-             selectedItem = BottomNavigationMenuItem.MENU,
-             navController = navController
-         )
-     }*/
     BackHandler {
         navController.popBackStack()
     }
@@ -55,7 +40,7 @@ fun AboutUsScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(primaryColor)
+            .background(background)
     ) {
         BackHeader(onBackClicked = {
             navController.popBackStack()
@@ -76,7 +61,8 @@ fun AboutUsScreen(navController: NavController) {
                         text = "Hakkımızda",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold, // Bold title
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        color = line
                     )
                 }
 
@@ -85,7 +71,8 @@ fun AboutUsScreen(navController: NavController) {
                     Text(
                         text = "TSK Personel Temin Uygulaması, Türk Silahlı Kuvvetleri'ne personel alımı süreçlerini takip etmenizi kolaylaştıran bir mobil uygulamadır. Bu uygulama sayesinde, güncel alım duyurularını takip edebilir, başvuru şartlarını inceleyebilir ve sürecinizin hangi aşamada olduğunu kolayca öğrenebilirsiniz.",
                         fontSize = 16.sp,
-                        modifier = Modifier.padding(bottom = 16.dp)
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        color = line
                     )
                 }
 
@@ -95,7 +82,8 @@ fun AboutUsScreen(navController: NavController) {
                         text = "Misyonumuz",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold, // Bold title
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        color = line
                     )
                 }
 
@@ -104,7 +92,8 @@ fun AboutUsScreen(navController: NavController) {
                     Text(
                         text = "Adayların, TSK personel alım süreçlerine hızlı ve güvenilir bir şekilde erişim sağlamasına yardımcı olmak.",
                         fontSize = 16.sp,
-                        modifier = Modifier.padding(bottom = 16.dp)
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        color = line
                     )
                 }
 
@@ -114,7 +103,8 @@ fun AboutUsScreen(navController: NavController) {
                         text = "Vizyonumuz",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold, // Bold title
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        color = line
                     )
                 }
 
@@ -123,7 +113,8 @@ fun AboutUsScreen(navController: NavController) {
                     Text(
                         text = "Teknolojiyi kullanarak şeffaf, erişilebilir ve kullanıcı dostu bir personel temin süreci oluşturmak.",
                         fontSize = 16.sp,
-                        modifier = Modifier.padding(bottom = 16.dp)
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        color = line
                     )
                 }
 
@@ -133,7 +124,8 @@ fun AboutUsScreen(navController: NavController) {
                         text = "Özelliklerimiz",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold, // Bold title
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        color = line
                     )
                 }
 
@@ -142,7 +134,8 @@ fun AboutUsScreen(navController: NavController) {
                     Text(
                         text = "✅ Güncel personel alım duyurularını görüntüleyin.\n✅ Başvuru şartlarını ve gerekli belgeleri öğrenin.\n✅ Başvuru sürecinizi adım adım takip edin.\n✅ Sonuçlar ve mülakat tarihleri hakkında anlık bildirimler alın.",
                         fontSize = 16.sp,
-                        modifier = Modifier.padding(bottom = 16.dp)
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        color = line
                     )
                 }
 
@@ -152,7 +145,8 @@ fun AboutUsScreen(navController: NavController) {
                         text = "İletişim ve Destek",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold, // Bold title
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        color = line
                     )
                 }
 
@@ -161,7 +155,8 @@ fun AboutUsScreen(navController: NavController) {
                     Text(
                         text = "Resmî duyurular ve güncellemeler için TSK Personel Temin Merkezi resmî web sitesini ziyaret edebilirsiniz:",
                         fontSize = 16.sp,
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        color = line
                     )
                 }
 
@@ -170,7 +165,8 @@ fun AboutUsScreen(navController: NavController) {
                     Text(
                         text = "personeltemin.msb.gov.tr",
                         fontSize = 16.sp,
-                        modifier = Modifier.padding(bottom = 16.dp)
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        color = line
                     )
                 }
 
@@ -180,12 +176,14 @@ fun AboutUsScreen(navController: NavController) {
                         Text(
                             text = "📞 Destek Hattı: (Varsa destek numarası)",
                             fontSize = 16.sp,
-                            modifier = Modifier.padding(bottom = 8.dp)
+                            modifier = Modifier.padding(bottom = 8.dp),
+                            color = line
                         )
                         Text(
                             text = AnnotatedString("✉️ E-Posta: karadanam519@gmail.com"),
                             fontSize = 16.sp,
-                            modifier = Modifier.padding(bottom = 8.dp)
+                            modifier = Modifier.padding(bottom = 8.dp),
+                            color = line
                         )
                     }
                 }
@@ -195,14 +193,16 @@ fun AboutUsScreen(navController: NavController) {
                     Text(
                         text = "📅 Versiyon: 1.0.0",
                         fontSize = 16.sp,
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        color = line
                     )
                 }
 
                 item {
                     Text(
                         text = "📅 Son Güncelleme: Şubat 2025",
-                        fontSize = 16.sp
+                        fontSize = 16.sp,
+                        color = line
                     )
                 }
             }

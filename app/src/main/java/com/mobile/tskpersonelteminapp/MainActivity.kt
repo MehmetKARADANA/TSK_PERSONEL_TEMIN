@@ -44,11 +44,8 @@ import dagger.hilt.android.HiltAndroidApp
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import android.Manifest
-import androidx.lifecycle.lifecycleScope
-import com.mobile.tskpersonelteminapp.data.AppPreferences
 import com.mobile.tskpersonelteminapp.viewmodels.SettingsViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.SuggestionViewModel
-import kotlinx.coroutines.launch
 
 
 sealed class DestinationScreen(var route: String) {
