@@ -11,6 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import com.mobile.tskpersonelteminapp.ui.theme.background
+import com.mobile.tskpersonelteminapp.ui.theme.offWhite
 
 
 @Composable
@@ -18,7 +20,7 @@ fun CommonProgressBar() {
 
     Row(modifier = Modifier
         .alpha(0.5f)
-        .background(Color.LightGray)
+        .background(background)
         .clickable(enabled = false) {}
         .fillMaxSize(),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center

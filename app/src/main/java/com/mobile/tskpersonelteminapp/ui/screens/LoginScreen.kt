@@ -1,6 +1,7 @@
 package com.mobile.tskpersonelteminapp.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,36 +33,50 @@ import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.R
 import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
+import com.mobile.tskpersonelteminapp.ui.theme.background
+import com.mobile.tskpersonelteminapp.ui.theme.buttonColor
+import com.mobile.tskpersonelteminapp.ui.theme.line
+import com.mobile.tskpersonelteminapp.ui.theme.offWhite
+import com.mobile.tskpersonelteminapp.ui.theme.outlinedColor
+import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
 import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 
 @Composable
-fun LoginScreen(navController: NavController,viewModel: AuthenticationViewModel){
+fun LoginScreen(navController: NavController, viewModel: AuthenticationViewModel) {
 
     val errorMessage by viewModel.errorMessage
 
     // Hata mesajını dinle ve göster
     ObserveErrorMessage(errorMessage)
-    CheckSignedIn(viewModel,navController)
+    CheckSignedIn(viewModel, navController)
     //authenticate kontrol fonksiyonu
-    val inProcess =viewModel.inProcess.value
-    if(inProcess){
+    val inProcess = viewModel.inProcess.value
+    if (inProcess) {
         CommonProgressBar()
-    }else{
-        Box(modifier = Modifier.fillMaxSize()){
+    } else {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(background)
+        ) {
             val focus = LocalFocusManager.current
 
-            Column(modifier = Modifier.fillMaxSize()
-                .wrapContentHeight()
-                .verticalScroll(
-                    rememberScrollState()
-                ).clickable {
-                    focus.clearFocus()
-                }, horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentHeight()
+                    .verticalScroll(
+                        rememberScrollState()
+                    )
+                    .clickable {
+                        focus.clearFocus()
+                    }, horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
-                val emailState= remember {
+                val emailState = remember {
                     mutableStateOf(TextFieldValue())
                 }
 
@@ -81,34 +97,56 @@ fun LoginScreen(navController: NavController,viewModel: AuthenticationViewModel)
 
                 Text(
                     text = "Giriş Yap", modifier = Modifier
-                        .padding(8.dp),
+                        .padding(8.dp), color = line,
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.Bold
                 )
 
 
 
-                OutlinedTextField(value = emailState.value, modifier = Modifier.padding(8.dp),
-                    onValueChange = { emailState.value = it }, label = { Text(text = "Mail Adresi") }
+                OutlinedTextField(
+                    value = emailState.value,
+                    modifier = Modifier.padding(8.dp),
+                    onValueChange = { emailState.value = it },
+                    label = { Text(text = "Mail Adresi", color = line) },
+                    colors = outlinedColor(),
+                    maxLines = 1
                 )
 
                 OutlinedTextField(
                     value = passwordState.value,
                     modifier = Modifier.padding(8.dp),
-                    onValueChange = { passwordState.value = it }
-                    , label = { Text(text = "En az 6 karakter şifre") })
+                    onValueChange = { passwordState.value = it },
+                    label = { Text(text = "En az 6 karakter şifre", color = line) }
+                    ,colors = outlinedColor(),
+                    maxLines = 1
+                )
 
-                Button(onClick = {
-                    //kullanıcı giriş
-                    viewModel.login(email = emailState.value.text,password=passwordState.value.text)
-                }, modifier = Modifier.padding(8.dp)) {
+                Button(
+                    onClick = {
+                        //kullanıcı giriş
+                        viewModel.login(
+                            email = emailState.value.text,
+                            password = passwordState.value.text
+                        )
+                    }, modifier = Modifier.padding(8.dp), colors = buttonColor()
+                ) {
                     Text(text = "Giriş yap")
                 }
 
-                Text(text = "Hesabın yok mu? Kayıt ol ->", modifier = Modifier.padding(8.dp).clickable {
-                    //navigate signup
-                    navigateTo(navController=navController, route = DestinationScreen.SignUp.route)
-                }, color = Color.Black)
+                Text(
+                    text = "Hesabın yok mu? Kayıt ol ->",
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clickable {
+                            //navigate signup
+                            navigateTo(
+                                navController = navController,
+                                route = DestinationScreen.SignUp.route
+                            )
+                        },
+                    color = Color.Black
+                )
 
             }
 

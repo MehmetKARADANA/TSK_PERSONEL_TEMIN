@@ -1,6 +1,5 @@
 package com.mobile.tskpersonelteminapp.ui.theme
 
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -15,7 +14,7 @@ val Pink40 = Color(0xFF7D5260)
 
 val primaryColor = Color(0xFFF5F5F5)
 val toolbarColor = Color(0xFFB03A2E)//Color(0xFF1CA9C9)
-
+val adContainerColor= primaryColor
 val line=Color(0xFF2C2C2C)//line gray
 
 val background=Color(0xFFE8E4D7)

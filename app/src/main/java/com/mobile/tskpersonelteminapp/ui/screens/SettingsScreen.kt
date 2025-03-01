@@ -14,6 +14,7 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchColors
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -29,9 +30,11 @@ import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.ui.components.BackHeader
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
+import com.mobile.tskpersonelteminapp.ui.theme.buttonColor
 import com.mobile.tskpersonelteminapp.ui.theme.gradientBrush
 import com.mobile.tskpersonelteminapp.ui.theme.gradientBrushTurk
 import com.mobile.tskpersonelteminapp.ui.theme.line
+import com.mobile.tskpersonelteminapp.ui.theme.offWhite
 import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
 import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
@@ -39,48 +42,63 @@ import com.mobile.tskpersonelteminapp.viewmodels.NotificationViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.SettingsViewModel
 
 @Composable
-fun SettingsScreen(navController: NavController, settingsViewModel : SettingsViewModel,notificationViewModel: NotificationViewModel) {
+fun SettingsScreen(
+    navController: NavController,
+    settingsViewModel: SettingsViewModel,
+    notificationViewModel: NotificationViewModel
+) {
 
     val errorMessage by notificationViewModel.errorMessage
     val context = LocalContext.current
-    // Hata mesajını dinle ve göster
+
     ObserveErrorMessage(errorMessage)
-    val isChatNotificationEnabled by settingsViewModel .isChatNotificationEnabled.collectAsState()
-    val isFirstLaunch = settingsViewModel .isFirstLaunch
+    val isChatNotificationEnabled by settingsViewModel.isChatNotificationEnabled.collectAsState()
+    val isFirstLaunch = settingsViewModel.isFirstLaunch
     if (isFirstLaunch) {
-        settingsViewModel .setNotificationEnabled("chat", true)
-        settingsViewModel .setFirstLaunchDone()
+        settingsViewModel.setNotificationEnabled("chat", true)
+        settingsViewModel.setFirstLaunchDone()
     }
     BackHandler {
         navController.popBackStack()
     }
 
-Column( modifier = Modifier
-    .fillMaxSize()
-    .background(primaryColor)) {
-    BackHeader(onBackClicked = {
-        navController.popBackStack()
-    },"Bildirim Ayarları")
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .weight(1f)
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxSize()
+            .background(primaryColor)
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Duyuru Bildirimleri", color = line)
+        BackHeader(onBackClicked = {
+            navController.popBackStack()
+        }, "Bildirim Ayarları")
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("Duyuru Bildirimleri", color = line)
+                Spacer(modifier = Modifier.padding(8.dp))
+
+                Switch(
+                    checked = isChatNotificationEnabled,
+                    onCheckedChange = { settingsViewModel.setNotificationEnabled("chat", it) },
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = offWhite, // Açıkken düğme rengi
+                        checkedTrackColor = toolbarColor, // Açıkken arka plan
+                        uncheckedThumbColor = Color.Gray, // Kapalıyken düğme rengi
+                        uncheckedTrackColor = Color.DarkGray // Kapalıyken arka plan
+                    ))
+            }
+
             Spacer(modifier = Modifier.padding(8.dp))
-
-            Switch(
-                checked = isChatNotificationEnabled,
-                onCheckedChange = { settingsViewModel.setNotificationEnabled("chat", it) })
-        }
-
-        Spacer(modifier = Modifier.padding(8.dp))
-        Button(onClick = {notificationViewModel.openNotificationSettings(context) }) {
-            Text("Bildirim Ayarları")
+            Button(
+                onClick = { notificationViewModel.openNotificationSettings(context) },
+                colors = buttonColor()
+            ) {
+                Text("Bildirim Ayarları")
+            }
         }
     }
-}
 }

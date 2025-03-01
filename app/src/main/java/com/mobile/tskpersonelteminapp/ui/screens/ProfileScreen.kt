@@ -52,41 +52,49 @@ fun ProfileScreen(navController: NavController, viewModel: AuthenticationViewMod
 
     if (inProcess) {
 
-         CommonProgressBar()
+        CommonProgressBar()
     } else {
-            val name by remember {
-                mutableStateOf(
-                    userData?.name ?: ""
-                )
-            }
+        val name by remember {
+            mutableStateOf(
+                userData?.name ?: ""
+            )
+        }
 
-            val email by remember {
-                mutableStateOf(
-                    userData?.email ?: ""
-                )
-            }
-            Column(modifier = Modifier.fillMaxSize().background(background)) {
-                ProfileHeader(
-                    onBackClicked = { navController.popBackStack() },
-                    onLogoutClicked = {
-                        viewModel.logout()
-                        navController.popBackStack()
-                    }, "Profilim"
-                )
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .wrapContentHeight()
-                        .padding(bottom = 150.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    ProfileContent(name = name, email = email)
-                    if (!signIn){
-                    Text(text = "Giriş yapmak için tıklayın.", color = Color.Black,modifier = Modifier.padding(8.dp).clickable {
-                        navigateTo(navController,DestinationScreen.Login.route)
-                    })}
-
+        val email by remember {
+            mutableStateOf(
+                userData?.email ?: ""
+            )
+        }
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .background(background)) {
+            ProfileHeader(
+                onBackClicked = { navController.popBackStack() },
+                onLogoutClicked = {
+                    viewModel.logout()
+                    navController.popBackStack()
+                }, "Profilim"
+            )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentHeight()
+                    .padding(bottom = 150.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                ProfileContent(name = name, email = email)
+                if (!signIn) {
+                    Text(
+                        text = "Giriş yapmak için tıklayın.",
+                        color = Color.Black,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .clickable {
+                                navigateTo(navController, DestinationScreen.Login.route)
+                            })
                 }
+
+            }
         }
 
     }

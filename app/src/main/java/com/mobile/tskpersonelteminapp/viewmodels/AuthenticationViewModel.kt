@@ -9,6 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
 import com.mobile.tskpersonelteminapp.data.USERS
 import com.mobile.tskpersonelteminapp.data.models.User
+import com.mobile.tskpersonelteminapp.utils.isShortOrLong
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -60,6 +61,12 @@ class AuthenticationViewModel @Inject constructor(
             return
         }
 
+        if(isShortOrLong(password)){
+            handleException(customMessage = "Şifreniz 6 karakterden kısa olamaz.")
+            inProcess.value = false
+            return
+        }
+
         db.collection(USERS).where(
             Filter.or(
                 Filter.equalTo("name", name),
@@ -73,6 +80,7 @@ class AuthenticationViewModel @Inject constructor(
                         Log.d("SignUp", "signUp: User Logged In")
                         createProfile(name, email)
                         inProcess.value = false
+                        handleException(customMessage = "Kayıt Olundu.")
                     } else {
                         //handle exception signUpFailed
                         handleException(it.exception,it.exception?.message.toString())
@@ -94,6 +102,13 @@ class AuthenticationViewModel @Inject constructor(
         inProcess.value = true
         if (email.isEmpty() or password.isEmpty()) {
             handleException(customMessage = "Alanları Doldurun")
+            inProcess.value=false
+            return
+        }
+
+        if(isShortOrLong(password)){
+            handleException(customMessage = "Şifreniz 6 karakterden kısa olamaz.")
+            inProcess.value = false
             return
         }
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
@@ -113,7 +128,7 @@ class AuthenticationViewModel @Inject constructor(
 
     }
 
-    fun createProfile(name: String, email: String) {
+    private fun createProfile(name: String, email: String) {
         var uid = auth.currentUser?.uid
         val userData = User(
             userId = uid,

@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
@@ -30,7 +31,14 @@ import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.data.models.User
 import com.mobile.tskpersonelteminapp.ui.components.ComminityHeader
 import com.mobile.tskpersonelteminapp.ui.components.TopicCustomCard
+import com.mobile.tskpersonelteminapp.ui.theme.adContainerColor
 import com.mobile.tskpersonelteminapp.ui.theme.background
+import com.mobile.tskpersonelteminapp.ui.theme.buttonColor
+import com.mobile.tskpersonelteminapp.ui.theme.line
+import com.mobile.tskpersonelteminapp.ui.theme.offWhite
+import com.mobile.tskpersonelteminapp.ui.theme.outlinedColor
+import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
+import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
 import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
@@ -148,8 +156,9 @@ fun ShowADComment(
         mutableStateOf(TextFieldValue())
     }
     if (showDialog) {
+        commentState.value=TextFieldValue()
         if (signIn) {
-            AlertDialog(
+            AlertDialog(containerColor = adContainerColor,
                 onDismissRequest = {
                     onDismiss.invoke()
                 },
@@ -164,19 +173,19 @@ fun ShowADComment(
                         )
                        // commentState.value=TextFieldValue()
                         onDismiss.invoke()
-                    }
+                    },colors = buttonColor()
                     ) {
                         Text(text = "Yorum yap")
                     }
                 },
-                title = { Text(text = "Yorum") },
+                title = { Text(text = "Yorum", color = line) },
                 text = {
-                    OutlinedTextField(value = commentState.value, onValueChange = {
+                    OutlinedTextField(value = commentState.value , maxLines = 3,onValueChange = {
                         commentState.value = it
-                    })
+                    }, colors = outlinedColor())
                 })
         } else {
-            AlertDialog(
+            AlertDialog(containerColor = adContainerColor,
                 onDismissRequest = {
                     onDismiss.invoke()
                 },
@@ -186,12 +195,12 @@ fun ShowADComment(
                             navController = navController,
                             DestinationScreen.SignUp.route
                         )
-                    }) {
+                    },colors = buttonColor()) {
                         Text(text = "Giriş yap")
                     }
                 },
-                title = { Text(text = "Giriş Yap") },
-                text = { Text(text = "Giriş yapmadan soru soramazsınız. Giriş yapmak için tıklayın.") })
+                title = { Text(text = "Giriş Yap", color = line) },
+                text = { Text(text = "Giriş yapmadan soru soramazsınız. Giriş yapmak için tıklayın.", color = line) })
         }
     }
 }

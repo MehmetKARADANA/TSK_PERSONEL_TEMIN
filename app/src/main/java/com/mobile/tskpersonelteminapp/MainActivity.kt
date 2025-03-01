@@ -44,11 +44,14 @@ import dagger.hilt.android.HiltAndroidApp
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import android.Manifest
+import android.window.SplashScreen
+import com.mobile.tskpersonelteminapp.ui.screens.SplashScreen
 import com.mobile.tskpersonelteminapp.viewmodels.SettingsViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.SuggestionViewModel
 
 
 sealed class DestinationScreen(var route: String) {
+    object Splash : DestinationScreen("splash")
     object CurrentRecruitment : DestinationScreen("current_recruitment")
     object RecruitmentDetail : DestinationScreen("recruitment_detail/{detail_url}") {
         fun createRoute(detail_url: String): String {
@@ -143,8 +146,18 @@ class MainActivity : ComponentActivity() {
 
         NavHost(
             navController = navController,
-            startDestination = DestinationScreen.Announcements.route
+            startDestination = DestinationScreen.Splash.route
         ) {
+
+            composable(DestinationScreen.Splash.route) {
+                SplashScreen(
+                    onNavigate = {
+                        navController.navigate(DestinationScreen.Announcements.route) {
+                            popUpTo(DestinationScreen.Splash.route) { inclusive = true } // Splash'i kaldır
+                        }
+                    }
+                )
+            }
             composable(DestinationScreen.Announcements.route) {
                 //announcement screen
                 //   screentest()

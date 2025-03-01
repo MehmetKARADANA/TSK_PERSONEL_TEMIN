@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -20,7 +21,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
@@ -28,14 +28,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.data.models.User
-import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
-import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.ui.components.ComminityCustomCard
 import com.mobile.tskpersonelteminapp.ui.components.ComminityHeader
 import com.mobile.tskpersonelteminapp.ui.components.TopicCustomCard
+import com.mobile.tskpersonelteminapp.ui.theme.adContainerColor
 import com.mobile.tskpersonelteminapp.ui.theme.background
-import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
-import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
+import com.mobile.tskpersonelteminapp.ui.theme.buttonColor
+import com.mobile.tskpersonelteminapp.ui.theme.line
+import com.mobile.tskpersonelteminapp.ui.theme.offWhite
+import com.mobile.tskpersonelteminapp.ui.theme.outlinedColor
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
@@ -146,7 +147,7 @@ fun ShowADAccount(
     val signIn = viewModel.signIn.value
     if (showDialog) {
         if (signIn) {
-            AlertDialog(
+            AlertDialog(containerColor = adContainerColor,
                 onDismissRequest = {
                     onDismiss.invoke()
                 },
@@ -156,14 +157,15 @@ fun ShowADAccount(
                             navController = navController,
                             DestinationScreen.Profile.route
                         )
-                    }) {
+                    }, colors = buttonColor()) {
                         Text(text = "Profilime git")
                     }
                 },
-                title = { Text(text = "Profilim") },
-                text = { Text(text = "Profili görüntülemek için tıklayın.") })
+                title = { Text(text = "Profilim", color = line) },
+                text = { Text(text = "Profili görüntülemek için tıklayın.", color = line) })
         } else {
             AlertDialog(
+                containerColor =adContainerColor,
                 onDismissRequest = {
                     onDismiss.invoke()
                 },
@@ -173,12 +175,12 @@ fun ShowADAccount(
                             navController = navController,
                             DestinationScreen.SignUp.route
                         )
-                    }) {
+                    }, colors = buttonColor()) {
                         Text(text = "Giriş yap")
                     }
                 },
-                title = { Text(text = "Giriş Yap") },
-                text = { Text(text = "Henüz giriş yapmadınız! Giriş yapmak için tıklayın.") })
+                title = { Text(text = "Giriş Yap", color = line) },
+                text = { Text(text = "Henüz giriş yapmadınız! Giriş yapmak için tıklayın.", color = line) })
         }
     }
 }
@@ -199,8 +201,9 @@ fun ShowADTopic(
         mutableStateOf(TextFieldValue())
     }
     if (showDialog) {
+        topicState.value=TextFieldValue()
         if (signIn) {
-            AlertDialog(
+            AlertDialog(containerColor = adContainerColor,
                 onDismissRequest = {
                     onDismiss.invoke()
                 },
@@ -209,18 +212,18 @@ fun ShowADTopic(
                         //soru sor
                         commnityVm.addTopics(topic = topicState.value.text, user, themeId = themeId)
                         onDismiss.invoke()
-                    }) {
+                    }, colors = buttonColor()) {
                         Text(text = "Soru sor")
                     }
                 },
-                title = { Text(text = "Soru") },
+                title = { Text(text = "Soru", color = line) },
                 text = {
-                    OutlinedTextField(value = topicState.value, onValueChange = {
+                    OutlinedTextField(value = topicState.value, maxLines = 3,onValueChange = {
                         topicState.value = it
-                    })
+                    }, colors = outlinedColor())
                 })
         } else {
-            AlertDialog(
+            AlertDialog(containerColor = adContainerColor,
                 onDismissRequest = {
                     onDismiss.invoke()
                 },
@@ -230,12 +233,12 @@ fun ShowADTopic(
                             navController = navController,
                             DestinationScreen.SignUp.route
                         )
-                    }) {
+                    },colors = buttonColor()) {
                         Text(text = "Giriş yap")
                     }
                 },
-                title = { Text(text = "Giriş Yap") },
-                text = { Text(text = "Giriş yapmadan soru soramazsınız. Giriş yapmak için tıklayın.") })
+                title = { Text(text = "Giriş Yap", color = line) },
+                text = { Text(text = "Giriş yapmadan soru soramazsınız. Giriş yapmak için tıklayın.", color = line) })
         }
     }
 }

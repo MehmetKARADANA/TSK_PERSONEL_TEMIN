@@ -2,6 +2,7 @@ package com.mobile.tskpersonelteminapp.ui.screens
 
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,8 +13,11 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +35,10 @@ import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.R
 import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
+import com.mobile.tskpersonelteminapp.ui.theme.background
+import com.mobile.tskpersonelteminapp.ui.theme.buttonColor
+import com.mobile.tskpersonelteminapp.ui.theme.line
+import com.mobile.tskpersonelteminapp.ui.theme.outlinedColor
 import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
@@ -50,7 +58,7 @@ fun SignUpScreen(navController: NavController,viewModel: AuthenticationViewModel
     if (inProcess) {
         CommonProgressBar()
     } else {
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.fillMaxSize().background(background)) {
             val focus = LocalFocusManager.current
 
             Column(
@@ -89,33 +97,34 @@ fun SignUpScreen(navController: NavController,viewModel: AuthenticationViewModel
                 )
 
                 Text(
-                    text = "Kayıt ol", modifier = Modifier
+                    text = "Kayıt ol", color = line,modifier = Modifier
                         .padding(8.dp),
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.Bold
                 )
 
-                OutlinedTextField(value = nameState.value, modifier = Modifier.padding(8.dp),
+                OutlinedTextField(value = nameState.value, modifier = Modifier.padding(8.dp), maxLines = 1,
                     onValueChange = {
                         nameState.value = it
-                    }, label = { Text(text = "Kullanıcı Adı") })
+                    }, label = { Text(text = "Kullanıcı Adı", color = line) }, colors = outlinedColor()
+                )
 
-                OutlinedTextField(value = emailState.value,
+                OutlinedTextField(value = emailState.value,maxLines = 1,
                     modifier = Modifier.padding(8.dp),
                     onValueChange = { emailState.value = it },
-                    label = { Text(text = "Mail Adresi") }
+                    label = { Text(text = "Mail Adresi", color = line) },colors = outlinedColor()
                 )
 
                 OutlinedTextField(
-                    value = passwordState.value,
+                    value = passwordState.value,maxLines = 1,
                     modifier = Modifier.padding(8.dp),
                     onValueChange = { passwordState.value = it },
-                    label = { Text(text = "En az 6 karakter şifre") })
+                    label = { Text(text = "En az 6 karakter şifre", color = line) },colors = outlinedColor())
 
                 Button(onClick = {
                     //kullanıcı kayıt
                     viewModel.signUp(name = nameState.value.text,password=passwordState.value.text, email = emailState.value.text)
-                }, modifier = Modifier.padding(8.dp)) {
+                }, modifier = Modifier.padding(8.dp),colors = buttonColor()) {
                     Text(text = "Kayıt ol")
                 }
 

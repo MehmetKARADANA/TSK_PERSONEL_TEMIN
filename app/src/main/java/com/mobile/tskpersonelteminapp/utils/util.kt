@@ -24,6 +24,7 @@ fun ObserveErrorMessage(event: Event<String>?) {
     }
 }
 
+
 fun navigateTo(navController: NavController, route: String) {
     navController.navigate(route) {
         popUpTo(route)
@@ -46,4 +47,8 @@ fun CheckSignedIn(
         navigateTo(navController,DestinationScreen.Menu.route)
     }
 
+}
+
+fun isShortOrLong(input: String): Boolean {
+    return input.length < 6
 }
