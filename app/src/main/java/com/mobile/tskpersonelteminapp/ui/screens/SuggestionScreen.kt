@@ -21,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -103,9 +104,10 @@ fun SuggestionScreen(navController: NavController, viewModel: SuggestionViewMode
                 Spacer(modifier = Modifier.padding(24.dp))
 
                 Text(
-                    text = "Geri bildirimleriniz için teşekkür ederiz.",
+                    text = "\uD83D\uDCAC Geri bildirimleriniz için teşekkür ederiz.",
                     modifier = Modifier.padding(bottom = 8.dp),
-                    color = line
+                    color = Color.Gray,
+                    fontSize = 12.sp
                 )
             }
             Spacer(modifier = Modifier.padding(32.dp))

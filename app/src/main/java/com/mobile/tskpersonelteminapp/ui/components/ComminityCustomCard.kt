@@ -19,7 +19,7 @@ fun ComminityCustomCard(content: String, modifier: Modifier) {
         .fillMaxWidth()
         .wrapContentHeight()
         .padding(4.dp)) {
-        Column(modifier=Modifier.fillMaxWidth().background(offWhite).padding(8.dp)) {  Text(text = content, color = line)
+        Column(modifier=Modifier.fillMaxWidth().background(offWhite).padding(8.dp)) {  Text(text = "\uD83D\uDC65 "+content, color = line)
         }
     }
 }

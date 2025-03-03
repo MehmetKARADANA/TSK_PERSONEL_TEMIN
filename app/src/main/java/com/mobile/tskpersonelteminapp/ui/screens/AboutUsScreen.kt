@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Button
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -52,9 +54,11 @@ fun AboutUsScreen(navController: NavController) {
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LazyColumn(modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            ) {
                 item {
                     // About Us Title (Bold)
                     Text(
@@ -162,12 +166,14 @@ fun AboutUsScreen(navController: NavController) {
 
                 item {
                     // Official website link
-                    Text(
-                        text = "personeltemin.msb.gov.tr",
-                        fontSize = 16.sp,
-                        modifier = Modifier.padding(bottom = 16.dp),
-                        color = line
-                    )
+                    SelectionContainer {
+                        Text(
+                            text = "personeltemin.msb.gov.tr",
+                            fontSize = 16.sp,
+                            modifier = Modifier.padding(bottom = 16.dp),
+                            color = line
+                        )
+                    }
                 }
 
                 item {
@@ -179,12 +185,14 @@ fun AboutUsScreen(navController: NavController) {
                             modifier = Modifier.padding(bottom = 8.dp),
                             color = line
                         )
-                        Text(
-                            text = AnnotatedString("✉️ E-Posta: karadanam519@gmail.com"),
-                            fontSize = 16.sp,
-                            modifier = Modifier.padding(bottom = 8.dp),
-                            color = line
-                        )
+                        SelectionContainer {
+                            Text(
+                                text = AnnotatedString("✉️ E-Posta: karadanam519@gmail.com"),
+                                fontSize = 16.sp,
+                                modifier = Modifier.padding(bottom = 8.dp),
+                                color = line
+                            )
+                        }
                     }
                 }
 

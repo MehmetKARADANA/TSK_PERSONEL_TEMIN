@@ -78,7 +78,7 @@ fun SettingsScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Duyuru Bildirimleri", color = line)
+                Text("\uD83D\uDD14 Duyuru Bildirimleri", color = line)
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 Switch(
@@ -89,7 +89,8 @@ fun SettingsScreen(
                         checkedTrackColor = toolbarColor, // Açıkken arka plan
                         uncheckedThumbColor = Color.Gray, // Kapalıyken düğme rengi
                         uncheckedTrackColor = Color.DarkGray // Kapalıyken arka plan
-                    ))
+                    )
+                )
             }
 
             Spacer(modifier = Modifier.padding(8.dp))
@@ -99,6 +100,12 @@ fun SettingsScreen(
             ) {
                 Text("Bildirim Ayarları")
             }
+
+            Spacer(modifier = Modifier.padding(16.dp))
+            Text(
+                "ℹ\uFE0F Bildirimleriniz açık olmasına rağmen herhangi bir bildirim almıyorsanız, cihazınızın bildirim ayarlarını kontrol etmek için Bildirim Ayarları sekmesini ziyaret edebilirsiniz.",
+                modifier = Modifier.padding(8.dp), fontSize = 12.sp, color = Color.Gray
+            )
         }
     }
 }

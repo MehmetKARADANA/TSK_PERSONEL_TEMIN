@@ -85,7 +85,7 @@ fun ProfileScreen(navController: NavController, viewModel: AuthenticationViewMod
                 ProfileContent(name = name, email = email)
                 if (!signIn) {
                     Text(
-                        text = "Giriş yapmak için tıklayın.",
+                        text = "\uD83D\uDC49 Giriş yapmak için tıklayın.",
                         color = Color.Black,
                         modifier = Modifier
                             .padding(8.dp)

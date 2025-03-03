@@ -62,7 +62,7 @@ fun TopicCustomCard(
                 modifier = Modifier
                     .padding(4.dp)
                     .fillMaxWidth()
-            ) { Text(text = content, color = line) }
+            ) { Text(text = "\uD83D\uDCAC $content", color = line) }
             Divider()
             Row(
                 modifier = Modifier

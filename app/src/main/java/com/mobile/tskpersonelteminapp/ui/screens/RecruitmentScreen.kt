@@ -73,7 +73,7 @@ fun RecruitmentScreen(navController: NavController,viewModel: RecruitmentViewMod
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text("Mevcut Temin Bulunmuyor", fontFamily = FontFamily.SansSerif)
+                    Text("❌ Mevcut Temin Bulunmuyor", fontFamily = FontFamily.SansSerif)
                 }
             }
         }

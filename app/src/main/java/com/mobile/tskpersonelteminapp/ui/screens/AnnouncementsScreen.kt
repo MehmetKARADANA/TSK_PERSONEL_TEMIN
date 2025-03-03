@@ -90,7 +90,7 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text("Mevcut Duyuru Bulunmuyor", fontFamily = FontFamily.SansSerif)
+                    Text("❌ Mevcut Duyuru Bulunmuyor", fontFamily = FontFamily.SansSerif)
                 }
             }
 
