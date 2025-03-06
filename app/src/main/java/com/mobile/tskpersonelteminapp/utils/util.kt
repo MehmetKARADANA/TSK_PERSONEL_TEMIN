@@ -52,3 +52,4 @@ fun CheckSignedIn(
 fun isShortOrLong(input: String): Boolean {
     return input.length < 6
 }
+

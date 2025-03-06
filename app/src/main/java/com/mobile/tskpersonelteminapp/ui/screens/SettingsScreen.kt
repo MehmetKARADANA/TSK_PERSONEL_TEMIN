@@ -10,10 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,18 +18,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.ui.components.BackHeader
-import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
-import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.ui.theme.buttonColor
-import com.mobile.tskpersonelteminapp.ui.theme.gradientBrush
-import com.mobile.tskpersonelteminapp.ui.theme.gradientBrushTurk
 import com.mobile.tskpersonelteminapp.ui.theme.line
 import com.mobile.tskpersonelteminapp.ui.theme.offWhite
 import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
@@ -50,14 +42,14 @@ fun SettingsScreen(
 
     val errorMessage by notificationViewModel.errorMessage
     val context = LocalContext.current
-
     ObserveErrorMessage(errorMessage)
+
     val isChatNotificationEnabled by settingsViewModel.isChatNotificationEnabled.collectAsState()
     val isFirstLaunch = settingsViewModel.isFirstLaunch
-    if (isFirstLaunch) {
+   /* if (isFirstLaunch) {
         settingsViewModel.setNotificationEnabled("chat", true)
         settingsViewModel.setFirstLaunchDone()
-    }
+    }*/
     BackHandler {
         navController.popBackStack()
     }

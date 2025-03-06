@@ -43,9 +43,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
-import android.Manifest
-import android.window.SplashScreen
+import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.mobile.tskpersonelteminapp.ui.screens.OnboardingDialog
 import com.mobile.tskpersonelteminapp.ui.screens.SplashScreen
+import com.mobile.tskpersonelteminapp.utils.NotificationPermissionHelper
 import com.mobile.tskpersonelteminapp.viewmodels.SettingsViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.SuggestionViewModel
 
@@ -98,10 +103,15 @@ sealed class DestinationScreen(var route: String) {
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private lateinit var notificationPermissionHelper: NotificationPermissionHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        notificationPermissionHelper = NotificationPermissionHelper(this)
+        notificationPermissionHelper.requestNotificationPermission()
 
-        requestNotificationPermission()
+
         setContent {
             TskPersonelTeminAppTheme {
                 Surface(
@@ -115,20 +125,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun requestNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val hasPermissions = ContextCompat.checkSelfPermission(
-                this.applicationContext, Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-
-            if (!hasPermissions) {
-                ActivityCompat.requestPermissions(
-                    this, arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                    0
-                )
-            }
-        }
-    }
 
     @Composable
     fun AppNavigation() {
@@ -142,7 +138,18 @@ class MainActivity : ComponentActivity() {
         val settingsViewModel: SettingsViewModel by viewModels()
         val suggestionViewModel = hiltViewModel<SuggestionViewModel>()
 
+        var showOnboarding by remember { mutableStateOf(true) }
 
+        if (settingsViewModel.isFirstLaunch) {
+            //init default topic aboneliği ve first launch preferencei yönetiyor
+            Log.d("settingsViewModel", "init running")
+            if (showOnboarding) {
+                OnboardingDialog(
+                    onDismiss = {
+                        showOnboarding = false
+                    })
+            }
+        }
 
         NavHost(
             navController = navController,
@@ -153,7 +160,9 @@ class MainActivity : ComponentActivity() {
                 SplashScreen(
                     onNavigate = {
                         navController.navigate(DestinationScreen.Announcements.route) {
-                            popUpTo(DestinationScreen.Splash.route) { inclusive = true } // Splash'i kaldır
+                            popUpTo(DestinationScreen.Splash.route) {
+                                inclusive = true
+                            } // Splash'i kaldır
                         }
                     }
                 )

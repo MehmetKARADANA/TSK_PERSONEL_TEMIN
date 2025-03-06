@@ -2,9 +2,6 @@ package com.mobile.tskpersonelteminapp.viewmodels
 
 
 
-
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,11 +10,9 @@ import android.os.Build
 import android.provider.Settings
 import android.util.Log
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
-import com.mobile.tskpersonelteminapp.R
 import com.mobile.tskpersonelteminapp.data.FcmApi
 import com.mobile.tskpersonelteminapp.data.models.NotificationBody
 import com.mobile.tskpersonelteminapp.data.models.SendMessageDto
@@ -81,19 +76,6 @@ class NotificationViewModel : BaseViewModel() {
 
     var userToken: String? = null // Kullanıcı token'ı buraya kaydedilecek
 
-    init {
-       /* viewModelScope.launch {
-            try {
-                FirebaseMessaging.getInstance().subscribeToTopic("chat").await()
-                Log.d("FCM", "Chat konusuna başarıyla abone olundu")
-            } catch (e: Exception) {
-                Log.e("FCM", "Chat konusuna abone olunamadı", e)
-            }
-            fetchFirebaseToken()
-        }*/
-
-
-    }
 
     private fun fetchFirebaseToken() {
         FirebaseMessaging.getInstance().token

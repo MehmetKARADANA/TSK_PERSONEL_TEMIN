@@ -1,4 +1,4 @@
-package com.mobile.tskpersonelteminapp
+package com.mobile.tskpersonelteminapp.utils
 
 import android.content.Context
 import android.util.Log

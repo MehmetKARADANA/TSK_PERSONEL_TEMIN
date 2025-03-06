@@ -1,8 +1,5 @@
 package com.mobile.tskpersonelteminapp.utils
 
-import android.app.Application
-import android.app.NotificationManager
-import android.content.Context
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth

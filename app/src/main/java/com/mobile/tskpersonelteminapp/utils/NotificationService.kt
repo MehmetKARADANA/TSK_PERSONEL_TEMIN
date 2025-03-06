@@ -1,4 +1,4 @@
-package com.mobile.tskpersonelteminapp
+package com.mobile.tskpersonelteminapp.utils
 
 
 import android.annotation.SuppressLint
@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.mobile.tskpersonelteminapp.R
 
 
 class NotificationService : FirebaseMessagingService() {
