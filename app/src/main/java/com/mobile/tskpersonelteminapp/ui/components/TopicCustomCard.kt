@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
@@ -38,10 +39,12 @@ fun TopicCustomCard(
             .wrapContentHeight()
             .padding(4.dp)
     ) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .background(offWhite)
-            .padding(4.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(offWhite)
+                .padding(4.dp)
+        ) {
             Row(
                 modifier
                     .fillMaxWidth()
@@ -62,7 +65,11 @@ fun TopicCustomCard(
                 modifier = Modifier
                     .padding(4.dp)
                     .fillMaxWidth()
-            ) { Text(text = "\uD83D\uDCAC $content", color = line) }
+            ) {
+                SelectionContainer {
+                    Text(text = "\uD83D\uDCAC $content", color = line)
+                }
+            }
             Divider()
             Row(
                 modifier = Modifier
@@ -70,8 +77,8 @@ fun TopicCustomCard(
                     .padding(4.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Column { Text(text = formatTimestamp(date),color = line) }
-                Column { Text(text = userName,color = line) }
+                Column { Text(text = formatTimestamp(date), color = line) }
+                Column { Text(text = userName, color = line) }
             }
         }
     }

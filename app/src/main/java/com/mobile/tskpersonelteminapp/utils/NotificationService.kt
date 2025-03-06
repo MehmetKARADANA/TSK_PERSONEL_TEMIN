@@ -72,6 +72,7 @@ class NotificationService : FirebaseMessagingService() {
             Log.d("FCM_DEBUG", "Bildirim ve data içeriği boş, işlenecek bir şey yok")
         }
     }
+
     @SuppressLint("ObsoleteSdkInt")
     private fun showNotification(title: String, message: String) {
         val channelId = "default_channel"
