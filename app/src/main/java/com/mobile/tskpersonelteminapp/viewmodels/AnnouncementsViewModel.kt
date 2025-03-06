@@ -4,6 +4,7 @@ package com.mobile.tskpersonelteminapp.viewmodels
 import androidx.compose.runtime.mutableStateOf
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.toObjects
 import com.mobile.tskpersonelteminapp.data.ANNOUNCEMENTS
 import com.mobile.tskpersonelteminapp.data.models.Announcement
@@ -26,19 +27,25 @@ class AnnouncementsViewModel @Inject constructor(
     private fun getAnnouncements() {
         inProcess.value = true
 
-        db.collection(ANNOUNCEMENTS).where(
+        /*where(
             Filter.equalTo("state", "active")
-        ).addSnapshotListener { value, error ->
-            inProcess.value = false
-            if (error != null) {
-                handleException(error,error.message.toString())
-                error.printStackTrace()
-                return@addSnapshotListener
+        )*/
+        db.collection(ANNOUNCEMENTS).whereEqualTo("state", "active")
+            .addSnapshotListener { value, error ->
+                inProcess.value = false
+                if (error != null) {
+                    handleException(error, error.message.toString())
+                    error.printStackTrace()
+                    return@addSnapshotListener
+                }
+                if (value != null) {
+                    val announcementsList = value.toObjects<Announcement>()
+                    val sortedAnnouncements = announcementsList.sortedBy {
+                        it.created_at?.toDate() // "created" Timestamp'ini Date'e çevirerek sıralıyoruz
+                    }
+                    announcements.value = sortedAnnouncements
+                }
             }
-            if (value != null) {
-                announcements.value = value.toObjects<Announcement>()
-            }
-        }
 
     }
 

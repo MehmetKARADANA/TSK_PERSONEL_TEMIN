@@ -25,19 +25,23 @@ class RecruitmentViewModel @Inject constructor(
     private fun getRecruitment() {
         inProcess.value = true
 
-        db.collection(RECRUITMENTS).where(
-            Filter.equalTo("state", "active")
+        db.collection(RECRUITMENTS).whereEqualTo(
+            "state", "active"
         ).addSnapshotListener { value, error ->
             inProcess.value = false
             if (error != null) {
-                handleException(error,error.message.toString())
+                handleException(error, error.message.toString())
                 error.printStackTrace()
                 return@addSnapshotListener
             }
             if (value != null) {
-                recruitments.value = value.toObjects<Recruitment>()
+                //recruitments.value = value.toObjects<Recruitment>()
+                val recruitmentsList = value.toObjects<Recruitment>()
+                val sortedRecruitment = recruitmentsList.sortedBy {
+                    it.created_at?.toDate()
+                }
+                recruitments.value = sortedRecruitment
             }
-            inProcess.value = false
         }
     }
 }
