@@ -37,6 +37,7 @@ import kotlinx.coroutines.launch
 fun OnboardingDialog(onDismiss: () -> Unit) {
     val onboardingImages = listOf(
         R.drawable.announcements,
+        R.drawable.announcementdetails,
         R.drawable.recruitmentsscreen,
         R.drawable.comminity_screen,
         R.drawable.topicscreen,
@@ -57,7 +58,7 @@ fun OnboardingDialog(onDismiss: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            shape = RoundedCornerShape(16.dp),
+            shape = RoundedCornerShape(8.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
             Column(
@@ -70,7 +71,7 @@ fun OnboardingDialog(onDismiss: () -> Unit) {
                         contentDescription = "Onboarding Image",
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(400.dp)
+                            .height(500.dp)
                     )
                 }
 
