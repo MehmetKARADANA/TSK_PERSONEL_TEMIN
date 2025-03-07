@@ -35,7 +35,14 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun OnboardingDialog(onDismiss: () -> Unit) {
-    val onboardingImages = listOf(R.drawable.screenduyuru, R.drawable.screentemin, R.drawable.screentopic, R.drawable.screenmenu)
+    val onboardingImages = listOf(
+        R.drawable.announcements,
+        R.drawable.recruitmentsscreen,
+        R.drawable.comminity_screen,
+        R.drawable.topicscreen,
+        R.drawable.commentscreen,
+        R.drawable.menuscreen
+    )
     val pagerState = rememberPagerState(pageCount = { onboardingImages.size })
     val coroutineScope = rememberCoroutineScope()
 
@@ -97,7 +104,7 @@ fun OnboardingDialog(onDismiss: () -> Unit) {
                                 pagerState.animateScrollToPage(pagerState.currentPage + 1)
                             }
                         }
-                    },colors= buttonColor(),
+                    }, colors = buttonColor(),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(text = if (pagerState.currentPage == onboardingImages.lastIndex) "Tamam" else "İleri")
