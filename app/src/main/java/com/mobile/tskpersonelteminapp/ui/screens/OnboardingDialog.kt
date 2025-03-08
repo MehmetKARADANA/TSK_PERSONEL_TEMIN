@@ -36,13 +36,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun OnboardingDialog(onDismiss: () -> Unit) {
     val onboardingImages = listOf(
-        R.drawable.announcements,
-        R.drawable.announcementdetails,
-        R.drawable.recruitmentsscreen,
-        R.drawable.comminity_screen,
-        R.drawable.topicscreen,
-        R.drawable.commentscreen,
-        R.drawable.menuscreen
+        R.drawable.ss1r,
+        R.drawable.ss12,
+        R.drawable.ss2r,
+        R.drawable.ss3r,
+        R.drawable.ss31,
+        R.drawable.ss32,
+        R.drawable.ss4
     )
     val pagerState = rememberPagerState(pageCount = { onboardingImages.size })
     val coroutineScope = rememberCoroutineScope()
