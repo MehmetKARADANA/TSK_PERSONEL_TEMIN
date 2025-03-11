@@ -27,6 +27,7 @@ import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
 import com.mobile.tskpersonelteminapp.ui.components.CustomCard
 import com.mobile.tskpersonelteminapp.ui.components.EmptyHeader
 import com.mobile.tskpersonelteminapp.ui.theme.background
+import com.mobile.tskpersonelteminapp.ui.theme.line
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AnnouncementsViewModel
@@ -90,7 +91,7 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text("❌ Mevcut Duyuru Bulunmuyor", fontFamily = FontFamily.SansSerif)
+                    Text("❌ Mevcut Duyuru Bulunmuyor", fontFamily = FontFamily.SansSerif, color = line)
                 }
             }
 

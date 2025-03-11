@@ -25,6 +25,7 @@ import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
 import com.mobile.tskpersonelteminapp.ui.components.CustomCard
 import com.mobile.tskpersonelteminapp.ui.components.EmptyHeader
 import com.mobile.tskpersonelteminapp.ui.theme.background
+import com.mobile.tskpersonelteminapp.ui.theme.line
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.viewmodels.RecruitmentViewModel
 
@@ -73,7 +74,7 @@ fun RecruitmentScreen(navController: NavController,viewModel: RecruitmentViewMod
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text("❌ Mevcut Temin Bulunmuyor", fontFamily = FontFamily.SansSerif)
+                    Text("❌ Mevcut Temin Bulunmuyor", fontFamily = FontFamily.SansSerif, color = line)
                 }
             }
         }

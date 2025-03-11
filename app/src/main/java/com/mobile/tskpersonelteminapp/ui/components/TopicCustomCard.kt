@@ -74,7 +74,7 @@ fun TopicCustomCard(
                     Text(text = "\uD83D\uDCAC $content", color = line)
                 }
             }
-            Divider()
+            Divider(color = Color.Gray)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

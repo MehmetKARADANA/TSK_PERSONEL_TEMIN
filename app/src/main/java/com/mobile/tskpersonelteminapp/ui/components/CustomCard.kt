@@ -45,7 +45,7 @@ fun CustomCard(title: String, date: String, modifier: Modifier) {
                 fontFamily = FontFamily.Serif,
                 color = line
             )
-            Divider()
+            Divider(color = Color.Gray)
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
