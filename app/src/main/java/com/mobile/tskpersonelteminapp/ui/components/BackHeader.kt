@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
@@ -17,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -35,10 +37,12 @@ fun BackHeader(onBackClicked: () -> Unit, headerText: String) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Icon(Icons.Default.ArrowBack, contentDescription = "Back",
+        Icon(
+            Icons.Default.ArrowBack, contentDescription = "Back",
             modifier = Modifier
                 .padding(start = 8.dp)
                 .size(30.dp)
+                .shadow(24.dp, shape = RoundedCornerShape(12.dp), clip = false)
                 .clickable {
                     onBackClicked.invoke()
                 }, tint = offWhite
@@ -48,7 +52,9 @@ fun BackHeader(onBackClicked: () -> Unit, headerText: String) {
             fontWeight = FontWeight.W500,
             fontFamily = FontFamily.Serif,
             fontSize = 22.sp,
-            modifier = Modifier.padding(bottom = 10.dp, top = 10.dp),
+            modifier = Modifier
+                .padding(bottom = 10.dp, top = 10.dp)
+                .shadow(24.dp, shape = RoundedCornerShape(12.dp), clip = false),
             color = offWhite
         )
         Spacer(modifier = Modifier.padding(30.dp))

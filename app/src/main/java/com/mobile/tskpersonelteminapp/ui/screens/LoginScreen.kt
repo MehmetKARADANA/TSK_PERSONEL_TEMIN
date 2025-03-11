@@ -90,7 +90,7 @@ fun LoginScreen(navController: NavController, viewModel: AuthenticationViewModel
                     painter = painterResource(R.drawable.user),
                     contentDescription = "Logo",
                     modifier = Modifier
-                        .width(180.dp)
+                        .width(140.dp)
                         .padding(top = 16.dp)
                         .padding(8.dp)
                 )

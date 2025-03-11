@@ -109,7 +109,7 @@ fun ProfileContent(name: String?, email: String?) {
         painter = painterResource(R.drawable.user),
         contentDescription = "profile",
         modifier = Modifier
-            .width(180.dp)
+            .width(140.dp)
             .padding(top = 40.dp)
             .padding(8.dp)
     )
@@ -130,8 +130,8 @@ fun ProfileContent(name: String?, email: String?) {
         label = { Text(text = "Kullanıcı Adı") },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             disabledTextColor = Color.Black, // Metin rengi
-            disabledLabelColor = Color.Black, // Label rengi
-            disabledBorderColor = Color.Black // Çerçeve rengi
+            disabledLabelColor = Color.Gray, // Label rengi
+            disabledBorderColor = Color.Black// Çerçeve rengi
         )
     )
 
@@ -144,7 +144,7 @@ fun ProfileContent(name: String?, email: String?) {
         label = { Text(text = "Mail Adresi") },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             disabledTextColor = Color.Black, // Metin rengi
-            disabledLabelColor = Color.Black, // Label rengi
+            disabledLabelColor = Color.Gray, // Label rengi
             disabledBorderColor = Color.Black // Çerçeve rengi
         )
     )

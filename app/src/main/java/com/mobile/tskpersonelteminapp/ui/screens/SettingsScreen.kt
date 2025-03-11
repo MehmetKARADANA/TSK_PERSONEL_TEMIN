@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -81,14 +82,15 @@ fun SettingsScreen(
                         checkedTrackColor = toolbarColor, // Açıkken arka plan
                         uncheckedThumbColor = Color.Gray, // Kapalıyken düğme rengi
                         uncheckedTrackColor = Color.DarkGray // Kapalıyken arka plan
-                    )
+                    ),
                 )
             }
 
             Spacer(modifier = Modifier.padding(8.dp))
             Button(
                 onClick = { notificationViewModel.openNotificationSettings(context) },
-                colors = buttonColor()
+                colors = buttonColor(),
+                //elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 16.dp)
             ) {
                 Text("Bildirim Ayarları")
             }

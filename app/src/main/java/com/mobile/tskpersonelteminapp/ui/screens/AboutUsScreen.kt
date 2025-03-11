@@ -200,7 +200,7 @@ fun AboutUsScreen(navController: NavController) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         SelectionContainer {
                             Text(
-                                text = AnnotatedString("✉️ E-Posta: karadanam519@gmail.com"),
+                                text = AnnotatedString("✉️ E-Posta: mehmetkaradanasoftware@gmail.com"),
                                 fontSize = 16.sp,
                                 modifier = Modifier.padding(bottom = 8.dp),
                                 color = line

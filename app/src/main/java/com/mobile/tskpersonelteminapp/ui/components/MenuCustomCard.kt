@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,9 +29,13 @@ fun MenuCustomCard(content: String, image: Int, modifier: Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(4.dp)
+            .padding(4.dp), shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 12.dp)
     ) {
-        Column(modifier = Modifier.background(offWhite).padding(8.dp).fillMaxWidth()) {
+        Column(modifier = Modifier
+            .background(offWhite)
+            .padding(8.dp)
+            .fillMaxWidth()) {
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
@@ -40,7 +46,7 @@ fun MenuCustomCard(content: String, image: Int, modifier: Modifier) {
                     modifier = Modifier.size(24.dp),
                     tint = Color.Unspecified
                 )
-                Text(text = content,modifier = Modifier.padding(start = 4.dp), color = line)
+                Text(text = content, modifier = Modifier.padding(start = 4.dp), color = line)
             }
         }
     }
