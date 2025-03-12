@@ -4,12 +4,17 @@ package com.mobile.tskpersonelteminapp.utils
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.util.Log
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.mobile.tskpersonelteminapp.DestinationScreen
+import com.mobile.tskpersonelteminapp.MainActivity
 import com.mobile.tskpersonelteminapp.R
 
 
@@ -90,12 +95,29 @@ class NotificationService : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(channel) // 📌 Kanalı oluştur
         }
 
+
+        val intent=Intent(this,MainActivity::class.java).apply {
+            putExtra("isAnnouncement",title)
+            putExtra("title",message)
+            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
+
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.announcement)
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
             .setAutoCancel(true)
+
         val notificationId = System.currentTimeMillis().toInt() // Benzersiz ID
         notificationManager.notify(notificationId, notificationBuilder.build())
         //notificationManager.notify(0, notificationBuilder.build())

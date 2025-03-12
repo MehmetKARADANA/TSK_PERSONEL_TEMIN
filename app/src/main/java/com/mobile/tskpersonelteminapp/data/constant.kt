@@ -10,3 +10,6 @@ const val USERS = "Users"
 const val TOPICS  = "Topics"
 const val COMMENTS = "Comments"
 const val SUGGESTION = "Suggestion"
+//announcment notificaiton body
+const val NBANNOUNCEMENT = "Yeni duyuru yayınlandı!"
+const val NBRECRUITMENT = "Yeni temin yayınlandı!"

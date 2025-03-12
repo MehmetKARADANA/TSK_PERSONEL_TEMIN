@@ -1,6 +1,8 @@
 package com.mobile.tskpersonelteminapp.ui.screens
 
 
+import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,14 +15,21 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
+import com.mobile.tskpersonelteminapp.data.NBANNOUNCEMENT
+import com.mobile.tskpersonelteminapp.data.NBRECRUITMENT
+import com.mobile.tskpersonelteminapp.data.models.Announcement
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
@@ -43,12 +52,63 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
 
 
     val inProcess = viewModel.inProcess.value
-
     val announcements = viewModel.announcements.value
+    val context = LocalContext.current
+    val isAnnouncement = remember { mutableStateOf(true) }
+    val title = remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(Unit) {
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(color = background)) {
+        val activity = context as? Activity
+        val intent = activity?.intent
+        title.value = intent?.getStringExtra("title")
+        Log.d("isANNOUNCEMENT", "AnnouncementsScreen: " + isAnnouncement.value)
+        Log.d("isANNOUNCEMENT", "AnnouncementsScreen: intent value" + intent?.getStringExtra("isAnnouncement"))
+        Log.d("isANNOUNCEMENT", "AnnouncementsScreen: intent value" + intent?.getStringExtra("title"))
+
+        isAnnouncement.value =
+            if (intent?.getStringExtra("title") == NBANNOUNCEMENT)
+                true
+            else if (intent?.getStringExtra("title") == NBRECRUITMENT)
+                false
+            else {
+                Log.d("isANNOUNCEMENT", "AnnouncementsScreen: returnlaunchedeffect")
+                return@LaunchedEffect
+            }
+        //title.value = intent.getStringExtra("title")
+        Log.d("isANNOUNCEMENT", "AnnouncementsScreen: " + isAnnouncement.value)
+        Log.d("isANNOUNCEMENT", "AnnouncementsScreen: intent value isA " + intent.getStringExtra("isAnnouncement"))
+        Log.d("isANNOUNCEMENT", "AnnouncementsScreen: intent value title" + intent.getStringExtra("title"))
+
+
+        if (isAnnouncement.value && title.value != null) {
+            val notification_announcement = announcements.find {
+                it.title == title.value
+            }
+            Log.d("isANNOUNCEMENT", "AnnouncementsScreen: title" + notification_announcement?.title)
+            Log.d("isANNOUNCEMENT", "AnnouncementsScreen: uri: " + notification_announcement?.detail_url)
+
+
+            notification_announcement?.let {
+                navigateTo(
+                    navController,
+                    route = DestinationScreen.AnnouncementDetail.createRoute(it.detail_url!!)
+                )
+            }
+
+        } else {
+            navigateTo(
+                navController,
+                route = DestinationScreen.CurrentRecruitment.route
+            )
+        }
+
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = background)
+    ) {
         EmptyHeader("Duyurular")
         if (inProcess) {
             CommonProgressBar()
@@ -91,7 +151,11 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text("❌ Mevcut Duyuru Bulunmuyor", fontFamily = FontFamily.SansSerif, color = line)
+                    Text(
+                        "❌ Mevcut Duyuru Bulunmuyor",
+                        fontFamily = FontFamily.SansSerif,
+                        color = line
+                    )
                 }
             }
 

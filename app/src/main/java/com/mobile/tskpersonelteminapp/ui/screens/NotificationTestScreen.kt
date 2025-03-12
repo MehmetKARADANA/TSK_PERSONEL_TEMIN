@@ -71,7 +71,7 @@ fun NotificationScreen(viewModel: NotificationViewModel) {
 
         Button(
             onClick = {
-                viewModel.sendMessage(message, isBroadcast)
+               /* viewModel.sendMessage(message, isBroadcast)*/
             },
             modifier = Modifier.fillMaxWidth()
         ) {

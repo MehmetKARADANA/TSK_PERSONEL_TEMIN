@@ -168,8 +168,6 @@ class MainActivity : ComponentActivity() {
                 )
             }
             composable(DestinationScreen.Announcements.route) {
-                //announcement screen
-                //   screentest()
                 AnnouncementsScreen(navController, announcementsViewModel)
             }
             composable(DestinationScreen.TestNotification.route) {
@@ -187,7 +185,6 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(DestinationScreen.CommunityAdmin.route) {
-                //    ComminityAdminScreen(navController, viewModel = authenticationViewModel)
                 ComminityAdminScreen(comminityViewModel)
             }
 

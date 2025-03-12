@@ -66,7 +66,7 @@ class NotificationViewModel : BaseViewModel() {
             handleException(customMessage = "Beklenmeyen bir hata oluştu: ${e.localizedMessage}")
         }
     }
-
+/*
 //kalkıcak
     private val api: FcmApi = Retrofit.Builder()
         .baseUrl("http://10.0.2.2:8080/") // Local backend için
@@ -122,5 +122,5 @@ class NotificationViewModel : BaseViewModel() {
                 Log.e("FCM_SEND", "Hata oluştu", e)
             }
         }
-    }
+    }*/
 }
