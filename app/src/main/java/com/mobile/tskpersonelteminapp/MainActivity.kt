@@ -1,6 +1,7 @@
 package com.mobile.tskpersonelteminapp
 
 import android.app.Application
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -111,7 +112,11 @@ class MainActivity : ComponentActivity() {
         notificationPermissionHelper = NotificationPermissionHelper(this)
         notificationPermissionHelper.requestNotificationPermission()
 
+        val notificationTitle = intent?.getStringExtra("notification_title")
+        val announcementTitle = intent?.getStringExtra("announcement_title")
 
+        Log.d("DEBUG", "onCreate - notification_title: $notificationTitle")
+        Log.d("DEBUG", "onCreate - announcement_title: $announcementTitle")
         setContent {
             TskPersonelTeminAppTheme {
                 Surface(
@@ -124,7 +129,16 @@ class MainActivity : ComponentActivity() {
 
         }
     }
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
 
+        val notificationTitle = intent?.getStringExtra("notification_title")
+        val announcementTitle = intent?.getStringExtra("announcement_title")
+
+        Log.d("DEBUG", "Updated notification_title: $notificationTitle")
+        Log.d("DEBUG", "Updated announcement_title: $announcementTitle")
+    }
 
     @Composable
     fun AppNavigation() {

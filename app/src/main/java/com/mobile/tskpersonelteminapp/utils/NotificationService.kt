@@ -97,8 +97,8 @@ class NotificationService : FirebaseMessagingService() {
 
 
         val intent=Intent(this,MainActivity::class.java).apply {
-            putExtra("isAnnouncement",title)
-            putExtra("title",message)
+            putExtra("notification_title",title)
+            putExtra("announcement_title",message)
             addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
 
