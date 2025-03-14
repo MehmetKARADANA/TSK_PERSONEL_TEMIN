@@ -1,6 +1,7 @@
 package com.mobile.tskpersonelteminapp.ui.screens
 
-import android.app.Activity
+import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,21 +11,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.DestinationScreen
+import com.mobile.tskpersonelteminapp.data.NBANNOUNCEMENT
 import com.mobile.tskpersonelteminapp.data.NBRECRUITMENT
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
@@ -36,7 +37,7 @@ import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.viewmodels.RecruitmentViewModel
 
 @Composable
-fun RecruitmentScreen(navController: NavController,viewModel: RecruitmentViewModel) {
+fun RecruitmentScreen(navController: NavController,viewModel: RecruitmentViewModel,latestIntent : State<Intent?>) {
 
     val errorMessage by viewModel.errorMessage
 
@@ -46,24 +47,36 @@ fun RecruitmentScreen(navController: NavController,viewModel: RecruitmentViewMod
     val inProcess=viewModel.inProcess.value
     val recruitments = viewModel.recruitments.value
 
-    val context = LocalContext.current
-    val isRecruitment = remember { mutableStateOf(true) }
-    val title = remember { mutableStateOf<String?>(null) }
-    LaunchedEffect (Unit){
-        val activity = context as? Activity
-        val intent = activity?.intent
-        isRecruitment.value= intent?.getStringExtra("isAnnouncement") == NBRECRUITMENT
-        title.value = intent?.getStringExtra("title")
+    val notificationTitle = remember{ mutableStateOf<String?>(null) }
+    val recruitmentTitle = remember{ mutableStateOf<String?>(null) }
+    val isAnnouncement = remember {  mutableStateOf<Boolean?>(null)}
 
-        if (isRecruitment.value && title!=null){
+    LaunchedEffect(latestIntent) {
+        recruitmentTitle.value=latestIntent.value?.getStringExtra("announcement_title")
+        notificationTitle.value=latestIntent.value?.getStringExtra("notification_title")
+        isAnnouncement.value =
+            when (notificationTitle.value) {
+                NBANNOUNCEMENT -> true
+                NBRECRUITMENT -> false
+                else -> {
+                    Log.d("Intent:", "AnnouncementsScreen: return launchedeffect")
+                    return@LaunchedEffect
+                }
+            }
+
+        if (!isAnnouncement.value!!) {
+            latestIntent.value?.removeExtra("announcement_title")
+            latestIntent.value?.removeExtra("notification_title")
             val notification_recruitment = recruitments.find {
-                it.title ==title.value
+                it.title == recruitmentTitle.value
             }
 
             notification_recruitment?.let {
-                navigateTo(navController, route = DestinationScreen.AnnouncementDetail.createRoute(it.detail_url!!))
+                navigateTo(
+                    navController,
+                    route = DestinationScreen.AnnouncementDetail.createRoute(it.detail_url!!)
+                )
             }
-
         }
     }
 

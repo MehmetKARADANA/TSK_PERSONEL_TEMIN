@@ -106,17 +106,17 @@ sealed class DestinationScreen(var route: String) {
 class MainActivity : ComponentActivity() {
 
     private lateinit var notificationPermissionHelper: NotificationPermissionHelper
-
+    private val _latestIntent = mutableStateOf<Intent?>(null)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        _latestIntent.value = intent
         notificationPermissionHelper = NotificationPermissionHelper(this)
         notificationPermissionHelper.requestNotificationPermission()
-
         val notificationTitle = intent?.getStringExtra("notification_title")
         val announcementTitle = intent?.getStringExtra("announcement_title")
 
-        Log.d("DEBUG", "onCreate - notification_title: $notificationTitle")
-        Log.d("DEBUG", "onCreate - announcement_title: $announcementTitle")
+        Log.d("Intent:", "onCreate - notification_title: $notificationTitle")
+        Log.d("Intent:", "onCreate - announcement_title: $announcementTitle")
         setContent {
             TskPersonelTeminAppTheme {
                 Surface(
@@ -132,12 +132,12 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
+        _latestIntent.value = intent
+        val notificationTitle = intent.getStringExtra("notification_title")
+        val announcementTitle = intent.getStringExtra("announcement_title")
 
-        val notificationTitle = intent?.getStringExtra("notification_title")
-        val announcementTitle = intent?.getStringExtra("announcement_title")
-
-        Log.d("DEBUG", "Updated notification_title: $notificationTitle")
-        Log.d("DEBUG", "Updated announcement_title: $announcementTitle")
+        Log.d("Intent:", "Updated notification_title: $notificationTitle")
+        Log.d("Intent:", "Updated announcement_title: $announcementTitle")
     }
 
     @Composable
@@ -182,7 +182,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
             composable(DestinationScreen.Announcements.route) {
-                AnnouncementsScreen(navController, announcementsViewModel)
+                AnnouncementsScreen(navController, announcementsViewModel,_latestIntent)
             }
             composable(DestinationScreen.TestNotification.route) {
                 NotificationScreen(notificationViewModel)
@@ -190,7 +190,7 @@ class MainActivity : ComponentActivity() {
 
             composable(DestinationScreen.CurrentRecruitment.route) {
                 // screen
-                RecruitmentScreen(navController, recruitmentViewModel)
+                RecruitmentScreen(navController, recruitmentViewModel,_latestIntent)
             }
 
             composable(DestinationScreen.Menu.route) {

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -34,7 +35,7 @@ class NotificationService : FirebaseMessagingService() {
         Log.d("FCM_RECEIVE", "Data var mı: ${message.data.isNotEmpty()}")
         Log.d("FCM_RECEIVE", "Tüm veri: ${message.data}")
 
-        // Hiçbir koşulun atlanmaması için her durumu ayrı kontrol edelim
+        // Hiçbir koşulun atlanmaması için her durumu ayrı kontrol edelim (DATA MESAJI GELECEK)
         if (message.notification != null) {
             Log.d("FCM_RECEIVE", "Bildirim başlığı: ${message.notification?.title}")
             Log.d("FCM_RECEIVE", "Bildirim içeriği: ${message.notification?.body}")
@@ -48,7 +49,7 @@ class NotificationService : FirebaseMessagingService() {
             } catch (e: Exception) {
                 Log.e("FCM_ERROR", "Notification bildirimi gösterme hatası", e)
             }
-        }else if (message.data.isNotEmpty()) {
+        } else if (message.data.isNotEmpty()) {
             Log.d("FCM_RECEIVE", "Data mesajı içeriği: ${message.data}")
 
             try {
@@ -96,19 +97,19 @@ class NotificationService : FirebaseMessagingService() {
         }
 
 
-        val intent=Intent(this,MainActivity::class.java).apply {
-            putExtra("notification_title",title)
-            putExtra("announcement_title",message)
-            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("notification_title", title)
+            putExtra("announcement_title", message)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        // addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-
+        val notificationId = System.currentTimeMillis().toInt() // Benzersiz ID
         val pendingIntent = PendingIntent.getActivity(
             this,
-            0,
+            notificationId,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.announcement)
@@ -118,7 +119,7 @@ class NotificationService : FirebaseMessagingService() {
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
-        val notificationId = System.currentTimeMillis().toInt() // Benzersiz ID
+
         notificationManager.notify(notificationId, notificationBuilder.build())
         //notificationManager.notify(0, notificationBuilder.build())
     }

@@ -2,6 +2,7 @@ package com.mobile.tskpersonelteminapp.ui.screens
 
 
 import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,18 +20,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
-
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.data.NBANNOUNCEMENT
 import com.mobile.tskpersonelteminapp.data.NBRECRUITMENT
-import com.mobile.tskpersonelteminapp.data.models.Announcement
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
 import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
@@ -41,10 +37,10 @@ import com.mobile.tskpersonelteminapp.ui.theme.line
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AnnouncementsViewModel
-
+import androidx.compose.runtime.*
 
 @Composable
-fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsViewModel) {
+fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsViewModel,latestIntent: State<Intent?>) {
 
     val errorMessage by viewModel.errorMessage
 
@@ -54,37 +50,40 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
 
     val inProcess = viewModel.inProcess.value
     val announcements = viewModel.announcements.value
-    val context = LocalContext.current
-    val intent = (context as? Activity)?.intent
-    var notificationTitle = remember{intent?.getStringExtra("notification_title")}
-    var announcementTitle = remember{intent?.getStringExtra("announcement_title")}
+
+    val notificationTitle = remember{ mutableStateOf<String?>(null) }
+    val announcementTitle = remember{ mutableStateOf<String?>(null) }
     val isAnnouncement = remember {  mutableStateOf<Boolean?>(null)}
 
-    LaunchedEffect(notificationTitle, announcementTitle) {
-        Log.d("DEBUG", "LaunchedEffect - notification_title: $notificationTitle")
-        Log.d("DEBUG", "LaunchedEffect - announcement_title: $announcementTitle")
+    LaunchedEffect(latestIntent.value) {
 
+        announcementTitle.value=latestIntent.value?.getStringExtra("announcement_title")
+        notificationTitle.value=latestIntent.value?.getStringExtra("notification_title")
+        Log.d("Intent:", "LaunchedEffect - notification_title: $notificationTitle")
+        Log.d("Intent:", "LaunchedEffect - announcement_title: $announcementTitle")
         isAnnouncement.value =
-            if (intent?.getStringExtra("notification_title") == NBANNOUNCEMENT)
-                true
-            else if (intent?.getStringExtra("notification_title") == NBRECRUITMENT)
-                false
-            else {
-                Log.d("isANNOUNCEMENT", "AnnouncementsScreen: return launchedeffect")
-                return@LaunchedEffect
+            when (notificationTitle.value) {
+                NBANNOUNCEMENT -> true
+                NBRECRUITMENT -> false
+                else -> {
+                    Log.d("Intent:", "AnnouncementsScreen: return launchedeffect")
+                    return@LaunchedEffect
+                }
             }
         //title.value = intent.getStringExtra("title")
-        Log.d("isANNOUNCEMENT", "AnnouncementsScreen: " + isAnnouncement.value)
-        Log.d("isANNOUNCEMENT", "AnnouncementsScreen: intent value isA " + intent.getStringExtra("notification_title"))
-        Log.d("isANNOUNCEMENT", "AnnouncementsScreen: intent value title" + intent.getStringExtra("announcement_title"))
+        Log.d("Intent:", "AnnouncementsScreen: " + isAnnouncement.value)
+        Log.d("Intent:", "AnnouncementsScreen: intent value isA " + latestIntent.value?.getStringExtra("notification_title"))
+        Log.d("Intent:", "AnnouncementsScreen: intent value title" + latestIntent.value?.getStringExtra("announcement_title"))
 
 
-        if (isAnnouncement.value!! && announcementTitle != null) {
+        if (isAnnouncement.value!!) {
+            latestIntent.value?.removeExtra("announcement_title")
+            latestIntent.value?.removeExtra("notification_title")
             val notification_announcement = announcements.find {
-                it.title == announcementTitle
+                it.title == announcementTitle.value
             }
-            Log.d("isANNOUNCEMENT", "AnnouncementsScreen: title" + notification_announcement?.title)
-            Log.d("isANNOUNCEMENT", "AnnouncementsScreen: uri: " + notification_announcement?.detail_url)
+            Log.d("Intent", "AnnouncementsScreen: title" + notification_announcement?.title)
+            Log.d("Intent", "AnnouncementsScreen: uri: " + notification_announcement?.detail_url)
 
 
             notification_announcement?.let {
@@ -93,69 +92,13 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
                     route = DestinationScreen.AnnouncementDetail.createRoute(it.detail_url!!)
                 )
             }
-            // Intent'in tekrar kullanılmasını önlemek için intent'ten aldığımız verileri null yap
-            notificationTitle = null
-            announcementTitle = null
         } else {
             navigateTo(
                 navController,
                 route = DestinationScreen.CurrentRecruitment.route
             )
         }
-
     }
- /**   val isAnnouncement = remember { mutableStateOf(true) }
-    val title = remember { mutableStateOf<String?>(null) }
-
-
-    LaunchedEffect(Unit) {
-
-        val activity = context as? Activity
-        val intent = activity?.intent
-        Log.d("INTENT_DEBUG", "Activity null mu? ${activity == null}")
-        title.value = intent?.getStringExtra("announcement_title")
-        Log.d("isANNOUNCEMENT", "AnnouncementsScreen: " + isAnnouncement.value)
-        Log.d("isANNOUNCEMENT", "AnnouncementsScreen: intent value " + intent?.getStringExtra("notification_title"))
-        Log.d("isANNOUNCEMENT", "AnnouncementsScreen: intent value " + intent?.getStringExtra("announcement_title"))
-
-        isAnnouncement.value =
-            if (intent?.getStringExtra("notification_title") == NBANNOUNCEMENT)
-                true
-            else if (intent?.getStringExtra("notification_title") == NBRECRUITMENT)
-                false
-            else {
-                Log.d("isANNOUNCEMENT", "AnnouncementsScreen: return launchedeffect")
-                return@LaunchedEffect
-            }
-        //title.value = intent.getStringExtra("title")
-        Log.d("isANNOUNCEMENT", "AnnouncementsScreen: " + isAnnouncement.value)
-        Log.d("isANNOUNCEMENT", "AnnouncementsScreen: intent value isA " + intent.getStringExtra("notification_title"))
-        Log.d("isANNOUNCEMENT", "AnnouncementsScreen: intent value title" + intent.getStringExtra("announcement_title"))
-
-
-        if (isAnnouncement.value && title.value != null) {
-            val notification_announcement = announcements.find {
-                it.title == title.value
-            }
-            Log.d("isANNOUNCEMENT", "AnnouncementsScreen: title" + notification_announcement?.title)
-            Log.d("isANNOUNCEMENT", "AnnouncementsScreen: uri: " + notification_announcement?.detail_url)
-
-
-            notification_announcement?.let {
-                navigateTo(
-                    navController,
-                    route = DestinationScreen.AnnouncementDetail.createRoute(it.detail_url!!)
-                )
-            }
-
-        } else {
-            navigateTo(
-                navController,
-                route = DestinationScreen.CurrentRecruitment.route
-            )
-        }
-
-    }*/
 
     Column(
         modifier = Modifier
