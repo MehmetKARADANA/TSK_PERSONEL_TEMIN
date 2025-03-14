@@ -51,7 +51,7 @@ fun RecruitmentScreen(navController: NavController,viewModel: RecruitmentViewMod
     val recruitmentTitle = remember{ mutableStateOf<String?>(null) }
     val isAnnouncement = remember {  mutableStateOf<Boolean?>(null)}
 
-    LaunchedEffect(latestIntent) {
+    LaunchedEffect(latestIntent.value) {
         recruitmentTitle.value=latestIntent.value?.getStringExtra("announcement_title")
         notificationTitle.value=latestIntent.value?.getStringExtra("notification_title")
         isAnnouncement.value =

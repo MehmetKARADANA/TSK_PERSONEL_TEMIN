@@ -112,11 +112,6 @@ class MainActivity : ComponentActivity() {
         _latestIntent.value = intent
         notificationPermissionHelper = NotificationPermissionHelper(this)
         notificationPermissionHelper.requestNotificationPermission()
-        val notificationTitle = intent?.getStringExtra("notification_title")
-        val announcementTitle = intent?.getStringExtra("announcement_title")
-
-        Log.d("Intent:", "onCreate - notification_title: $notificationTitle")
-        Log.d("Intent:", "onCreate - announcement_title: $announcementTitle")
         setContent {
             TskPersonelTeminAppTheme {
                 Surface(
@@ -133,11 +128,6 @@ class MainActivity : ComponentActivity() {
         super.onNewIntent(intent)
         setIntent(intent)
         _latestIntent.value = intent
-        val notificationTitle = intent.getStringExtra("notification_title")
-        val announcementTitle = intent.getStringExtra("announcement_title")
-
-        Log.d("Intent:", "Updated notification_title: $notificationTitle")
-        Log.d("Intent:", "Updated announcement_title: $announcementTitle")
     }
 
     @Composable

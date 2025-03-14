@@ -59,22 +59,14 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
 
         announcementTitle.value=latestIntent.value?.getStringExtra("announcement_title")
         notificationTitle.value=latestIntent.value?.getStringExtra("notification_title")
-        Log.d("Intent:", "LaunchedEffect - notification_title: $notificationTitle")
-        Log.d("Intent:", "LaunchedEffect - announcement_title: $announcementTitle")
         isAnnouncement.value =
             when (notificationTitle.value) {
                 NBANNOUNCEMENT -> true
                 NBRECRUITMENT -> false
                 else -> {
-                    Log.d("Intent:", "AnnouncementsScreen: return launchedeffect")
                     return@LaunchedEffect
                 }
             }
-        //title.value = intent.getStringExtra("title")
-        Log.d("Intent:", "AnnouncementsScreen: " + isAnnouncement.value)
-        Log.d("Intent:", "AnnouncementsScreen: intent value isA " + latestIntent.value?.getStringExtra("notification_title"))
-        Log.d("Intent:", "AnnouncementsScreen: intent value title" + latestIntent.value?.getStringExtra("announcement_title"))
-
 
         if (isAnnouncement.value!!) {
             latestIntent.value?.removeExtra("announcement_title")
@@ -82,9 +74,6 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
             val notification_announcement = announcements.find {
                 it.title == announcementTitle.value
             }
-            Log.d("Intent", "AnnouncementsScreen: title" + notification_announcement?.title)
-            Log.d("Intent", "AnnouncementsScreen: uri: " + notification_announcement?.detail_url)
-
 
             notification_announcement?.let {
                 navigateTo(
