@@ -44,10 +44,10 @@ fun CheckSignedIn(
 ) {
     val signIn = viewModel.signIn.value
     if(signIn){
-        navigateTo(navController,DestinationScreen.Menu.route)
+        navigateTo(navController,DestinationScreen.Profile.route)
     }
-
 }
+
 
 fun isShortOrLong(input: String): Boolean {
     return input.length < 6

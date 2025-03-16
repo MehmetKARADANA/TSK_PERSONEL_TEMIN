@@ -15,11 +15,9 @@ import com.mobile.tskpersonelteminapp.DestinationScreen
 import com.mobile.tskpersonelteminapp.R
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenu
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
-import com.mobile.tskpersonelteminapp.ui.components.ComminityCustomCard
 import com.mobile.tskpersonelteminapp.ui.components.EmptyHeader
 import com.mobile.tskpersonelteminapp.ui.components.MenuCustomCard
 import com.mobile.tskpersonelteminapp.ui.theme.background
-import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 
 enum class MenuItem(val itemName: String, val navDestinationScreen: DestinationScreen,val image : Int) {

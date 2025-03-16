@@ -20,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.navigation.NavController
 import com.mobile.tskpersonelteminapp.ui.components.BottomNavigationMenuItem
@@ -114,7 +115,7 @@ fun RecruitmentScreen(navController: NavController,viewModel: RecruitmentViewMod
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text("❌ Mevcut Temin Bulunmuyor", fontFamily = FontFamily.SansSerif, color = line)
+                    Text("❌ Mevcut Temin Bulunmuyor", fontFamily = FontFamily.SansSerif, color = Color.Gray)
                 }
             }
         }

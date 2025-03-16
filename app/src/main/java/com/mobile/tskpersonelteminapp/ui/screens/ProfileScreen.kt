@@ -56,13 +56,13 @@ fun ProfileScreen(navController: NavController, viewModel: AuthenticationViewMod
     } else {
         val name by remember {
             mutableStateOf(
-                userData?.name ?: ""
+                userData?.name ?: "Henüz Giriş Yapmadınız!"
             )
         }
 
         val email by remember {
             mutableStateOf(
-                userData?.email ?: ""
+                userData?.email ?: "Henüz Giriş Yapmadınız!"
             )
         }
         Column(modifier = Modifier

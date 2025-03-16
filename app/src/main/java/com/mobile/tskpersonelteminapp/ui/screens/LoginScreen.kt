@@ -6,14 +6,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,9 +34,7 @@ import com.mobile.tskpersonelteminapp.ui.components.CommonProgressBar
 import com.mobile.tskpersonelteminapp.ui.theme.background
 import com.mobile.tskpersonelteminapp.ui.theme.buttonColor
 import com.mobile.tskpersonelteminapp.ui.theme.line
-import com.mobile.tskpersonelteminapp.ui.theme.offWhite
 import com.mobile.tskpersonelteminapp.ui.theme.outlinedColor
-import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
 import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
@@ -51,7 +47,7 @@ fun LoginScreen(navController: NavController, viewModel: AuthenticationViewModel
 
     // Hata mesajını dinle ve göster
     ObserveErrorMessage(errorMessage)
-    CheckSignedIn(viewModel, navController)
+    CheckSignedIn(viewModel,navController)
     //authenticate kontrol fonksiyonu
     val inProcess = viewModel.inProcess.value
     if (inProcess) {

@@ -9,19 +9,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
@@ -35,16 +30,11 @@ import com.mobile.tskpersonelteminapp.ui.theme.adContainerColor
 import com.mobile.tskpersonelteminapp.ui.theme.background
 import com.mobile.tskpersonelteminapp.ui.theme.buttonColor
 import com.mobile.tskpersonelteminapp.ui.theme.line
-import com.mobile.tskpersonelteminapp.ui.theme.offWhite
 import com.mobile.tskpersonelteminapp.ui.theme.outlinedColor
-import com.mobile.tskpersonelteminapp.ui.theme.primaryColor
-import com.mobile.tskpersonelteminapp.ui.theme.toolbarColor
-import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
 import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AuthenticationViewModel
 import com.mobile.tskpersonelteminapp.viewmodels.ComminityViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun CommentScreen(

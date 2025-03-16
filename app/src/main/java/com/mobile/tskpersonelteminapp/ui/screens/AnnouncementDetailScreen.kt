@@ -4,22 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import android.util.Log
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.navigation.NavController
-import com.mobile.tskpersonelteminapp.DestinationScreen
-import com.mobile.tskpersonelteminapp.utils.CheckSignedIn
-import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
-import com.mobile.tskpersonelteminapp.utils.navigateTo
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable

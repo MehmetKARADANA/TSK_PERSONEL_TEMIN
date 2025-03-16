@@ -38,6 +38,7 @@ import com.mobile.tskpersonelteminapp.utils.ObserveErrorMessage
 import com.mobile.tskpersonelteminapp.utils.navigateTo
 import com.mobile.tskpersonelteminapp.viewmodels.AnnouncementsViewModel
 import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsViewModel,latestIntent: State<Intent?>) {
@@ -139,7 +140,7 @@ fun AnnouncementsScreen(navController: NavController, viewModel: AnnouncementsVi
                     Text(
                         "❌ Mevcut Duyuru Bulunmuyor",
                         fontFamily = FontFamily.SansSerif,
-                        color = line
+                        color = Color.Gray
                     )
                 }
             }
