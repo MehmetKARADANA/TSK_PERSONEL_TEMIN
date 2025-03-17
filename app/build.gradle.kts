@@ -15,8 +15,8 @@ android {
         applicationId = "com.mobile.tskpersonelteminapp"
         minSdk = 28
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -59,7 +59,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.11.0") // Gson kütüphanesi 2.10.1
     ksp(libs.hilt.android.compiler)
     implementation(libs.firebase.firestore)
-    val nav_version = "2.8.4"
+    //val nav_version = "2.8.4"
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

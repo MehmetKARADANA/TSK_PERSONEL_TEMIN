@@ -92,7 +92,7 @@ fun AboutUsScreen(navController: NavController) {
                 item {
                     // About Us Content
                     Text(
-                        text = "TSK Personel Temin Uygulaması, Türk Silahlı Kuvvetleri'ne personel alımı süreçlerini takip etmenizi kolaylaştıran bir mobil uygulamadır. Bu uygulama sayesinde, güncel alım duyurularını takip edebilir, başvuru şartlarını inceleyebilir ve sürecinizin hangi aşamada olduğunu kolayca öğrenebilirsiniz.",
+                        text = "PERTEM Uygulaması, Türk Silahlı Kuvvetleri'ne personel alımı süreçlerini takip etmenizi kolaylaştıran bir mobil uygulamadır. Bu uygulama sayesinde, güncel alım duyurularını takip edebilir, başvuru şartlarını inceleyebilir ve sürecinizin hangi aşamada olduğunu kolayca öğrenebilirsiniz.",
                         fontSize = 16.sp,
                         modifier = Modifier.padding(bottom = 16.dp),
                         color = line
@@ -113,7 +113,7 @@ fun AboutUsScreen(navController: NavController) {
                 item {
                     // Mission Content
                     Text(
-                        text = "Adayların, TSK personel alım süreçlerine hızlı ve güvenilir bir şekilde erişim sağlamasına yardımcı olmak.",
+                        text = "Adayların, personel alım süreçlerine hızlı ve güvenilir bir şekilde erişim sağlamasına yardımcı olmak.",
                         fontSize = 16.sp,
                         modifier = Modifier.padding(bottom = 16.dp),
                         color = line
@@ -171,28 +171,6 @@ fun AboutUsScreen(navController: NavController) {
                         modifier = Modifier.padding(bottom = 8.dp),
                         color = line
                     )
-                }
-
-                item {
-                    // Contact and Support Content
-                    Text(
-                        text = "Resmî duyurular ve güncellemeler için TSK Personel Temin Merkezi resmî web sitesini ziyaret edebilirsiniz:",
-                        fontSize = 16.sp,
-                        modifier = Modifier.padding(bottom = 8.dp),
-                        color = line
-                    )
-                }
-
-                item {
-                    // Official website link
-                    SelectionContainer {
-                        Text(
-                            text = "personeltemin.msb.gov.tr",
-                            fontSize = 16.sp,
-                            modifier = Modifier.padding(bottom = 16.dp),
-                            color = line
-                        )
-                    }
                 }
 
                 item {
